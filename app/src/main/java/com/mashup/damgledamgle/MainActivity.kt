@@ -7,7 +7,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.mashup.damgledamgle.presentation.navigation.DamgleDamgleNavGraph
 import com.mashup.damgledamgle.ui.theme.DamgleDamgleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
