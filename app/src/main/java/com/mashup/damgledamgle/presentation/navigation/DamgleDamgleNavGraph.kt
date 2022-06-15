@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.mashup.damgledamgle.presentation.feature.SplashScreen
+import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 
 @Composable
 fun DamgleDamgleNavGraph(navController: NavHostController) {

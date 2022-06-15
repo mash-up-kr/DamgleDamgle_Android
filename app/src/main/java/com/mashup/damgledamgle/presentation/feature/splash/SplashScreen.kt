@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature
+package com.mashup.damgledamgle.presentation.feature.splash
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
