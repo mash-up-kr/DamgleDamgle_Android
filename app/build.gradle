@@ -8,6 +8,10 @@ plugins {
 android {
     compileSdk 32
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def naver_client_id =properties.getProperty("naver_client_id")
+
     defaultConfig {
         applicationId "com.mashup.damgledamgle"
         minSdk 26
@@ -19,6 +23,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        manifestPlaceholders = [NAVER_CLIENT_ID:naver_client_id]
     }
 
     buildTypes {
@@ -73,4 +79,8 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:$coil_version")
+
+    //Naver Map
+    implementation "com.naver.maps:map-sdk:$naver_map_version"
+
 }
