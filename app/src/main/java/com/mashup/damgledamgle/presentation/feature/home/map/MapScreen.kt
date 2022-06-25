@@ -2,6 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import com.naver.maps.map.compose.*
@@ -20,6 +21,8 @@ fun MapScreen() {
         )
     }
     Box(Modifier.fillMaxSize()) {
-        NaverMap(properties = mapProperties, uiSettings = mapUiSettings)
+        NaverMap(properties = mapProperties, uiSettings = mapUiSettings) {
+            Marker()
+        }
     }
 }

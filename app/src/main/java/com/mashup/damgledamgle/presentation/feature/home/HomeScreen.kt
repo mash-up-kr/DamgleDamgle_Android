@@ -7,13 +7,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.presentation.navigation.Screen
+import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
-    Scaffold {
+    Scaffold(
+        topBar = {
+            MainToolBar(
+                title = "Position"
+            )
+        }
+    ) {
         BottomSheetScaffold(
                 sheetBackgroundColor = Color.Gray,
                 sheetShape = RoundedCornerShape(

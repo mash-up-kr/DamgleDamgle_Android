@@ -12,7 +12,7 @@ import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 fun DamgleDamgleNavGraph(navController: NavHostController) {
     NavHost(
             navController = navController,
-            startDestination = Screen.Home.route
+            startDestination = Screen.Splash.route
     ) {
         composable(route = Screen.Splash.route) {
             SplashScreen(navController = navController)
