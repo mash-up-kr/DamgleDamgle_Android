@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
@@ -25,6 +26,11 @@ fun HomeScreen(navController: NavHostController) {
                 sheetPeekHeight = 100.dp,
                 scaffoldState = bottomSheetScaffoldState,
         ) {
+            // TODO(minji): 임시 버튼. 추후 삭제 필요.
+            Button(onClick = { navController.navigate(Screen.Mypage.route) }) {
+                Text(text = "Mypage")
+            }
+
             MapScreen()
         }
     }

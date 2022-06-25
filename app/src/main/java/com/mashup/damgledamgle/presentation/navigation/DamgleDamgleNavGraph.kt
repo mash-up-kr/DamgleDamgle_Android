@@ -1,10 +1,11 @@
 package com.mashup.damgledamgle.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.*
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
+import com.mashup.damgledamgle.presentation.feature.mypage.MypageScreen
 import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 
 @Composable
@@ -18,6 +19,9 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
         }
         composable(route = Screen.Home.route) {
             HomeScreen(navController = navController)
+        }
+        composable(route = Screen.Mypage.route) {
+            MypageScreen(navController = navController)
         }
     }
 }
