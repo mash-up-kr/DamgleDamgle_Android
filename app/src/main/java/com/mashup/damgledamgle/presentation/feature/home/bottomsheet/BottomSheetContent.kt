@@ -5,13 +5,9 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetExpandedContent
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -33,15 +29,12 @@ fun BottomSheetContent(bottomSheetScaffoldState: BottomSheetScaffoldState) {
                     color = Color.DarkGray,
                     thickness = 2.dp
             )
-            Text(
-                    modifier = Modifier
-                            .padding(top = 20.dp)
-                            .alpha(getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)),
-                    color = Color.Black,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    text = stringResource(R.string.home_leave_my_story)
-            )
+            val alpha = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
+            if (alpha >= 0.7f) {
+                BottomSheetCollapsedContent(alpha = alpha)
+            } else {
+                BottomSheetExpandedContent(alpha = 1 - alpha)
+            }
         }
     }
 }
