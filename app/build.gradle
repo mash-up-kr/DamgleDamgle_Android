@@ -82,5 +82,6 @@ dependencies {
 
     //Naver Map
     implementation "com.naver.maps:map-sdk:$naver_map_version"
+    implementation 'io.github.fornewid:naver-map-compose:1.1.3'
 
 }

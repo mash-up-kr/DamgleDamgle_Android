@@ -6,8 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.naver.maps.map.compose.ExperimentalNaverMapApi
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
@@ -19,11 +20,13 @@ fun HomeScreen(navController: NavHostController) {
                         topEnd = 24.dp
                 ),
                 sheetContent = {
-                    BottomSheetInner(bottomSheetScaffoldState)
+                    BottomSheetContent(bottomSheetScaffoldState)
                 },
                 sheetPeekHeight = 100.dp,
                 scaffoldState = bottomSheetScaffoldState,
-        ) {}
+        ) {
+            MapScreen()
+        }
     }
 }
 
