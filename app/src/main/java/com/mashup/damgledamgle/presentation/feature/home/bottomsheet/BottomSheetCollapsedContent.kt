@@ -24,6 +24,6 @@ fun BottomSheetCollapsedContent(
             color = Color.Black,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            text = stringResource(R.string.home_leave_my_story)
+            text = stringResource(R.string.home_bottomsheet_leave_my_story)
     )
 }

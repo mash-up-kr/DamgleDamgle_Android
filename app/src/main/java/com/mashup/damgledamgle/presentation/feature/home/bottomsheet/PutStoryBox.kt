@@ -7,7 +7,9 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.mashup.damgledamgle.R
 
 @Composable
 fun PutStoryBox(
@@ -37,7 +39,7 @@ fun PutStoryBox(
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent
                 ),
-                label = { Text("나만의 사연을 남겨보세요") }
+                label = { Text(text = stringResource(id = R.string.home_bottomsheet_leave_your_own_story)) }
         )
     }
 }

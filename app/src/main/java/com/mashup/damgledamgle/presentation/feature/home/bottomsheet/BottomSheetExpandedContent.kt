@@ -35,12 +35,12 @@ fun BottomSheetExpandedContent(
             Text(
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
-                    text = stringResource(R.string.home_leave_story_on_this_place)
+                    text = stringResource(R.string.home_bottomsheet_leave_story_on_this_place)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                     fontSize = 13.sp,
-                    text = stringResource(R.string.home_story_lefted_here_disappears_after_a_month)
+                    text = stringResource(R.string.home_bottomsheet_story_left_here_disappears_after_a_month)
             )
             Spacer(modifier = Modifier.height(32.dp))
             PutStoryBox(backGroundColor = Color.White, textColor = Color.Black)
@@ -52,7 +52,7 @@ fun BottomSheetExpandedContent(
                         .height(64.dp)
                         .fillMaxWidth(),
         ) {
-            Text(text = "글 남기기")
+            Text(text = stringResource(id = R.string.home_bottomsheet_leave_a_story))
         }
     }
 }
