@@ -10,7 +10,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PutStoryBox(backGroundColor: Color, textColor: Color) {
+fun PutStoryBox(
+        modifier: Modifier = Modifier,
+        backGroundColor: Color,
+        textColor: Color
+) {
     Card(
             modifier = Modifier
                     .height(320.dp)

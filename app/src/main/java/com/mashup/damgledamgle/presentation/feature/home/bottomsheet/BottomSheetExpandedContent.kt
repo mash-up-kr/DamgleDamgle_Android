@@ -15,8 +15,15 @@ import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 
 @Composable
-fun BottomSheetExpandedContent(alpha: Float) {
-    Column {
+fun BottomSheetExpandedContent(
+        modifier: Modifier = Modifier,
+        alpha: Float,
+) {
+    Column(
+            modifier = modifier
+                    .fillMaxHeight(),
+            verticalArrangement = Arrangement.SpaceBetween
+    ) {
         Column(
                 modifier = Modifier
                         .alpha(alpha)
@@ -36,20 +43,16 @@ fun BottomSheetExpandedContent(alpha: Float) {
                     text = stringResource(R.string.home_story_lefted_here_disappears_after_a_month)
             )
             Spacer(modifier = Modifier.height(32.dp))
-            PutStoryBox(Color.White, Color.Black)
+            PutStoryBox(backGroundColor = Color.White, textColor = Color.Black)
         }
-        Column(
-                modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.Bottom
+
+        Button(
+                onClick = {},
+                modifier = Modifier
+                        .height(64.dp)
+                        .fillMaxWidth(),
         ) {
-            Button(
-                    onClick = {},
-                    modifier = Modifier
-                            .height(64.dp)
-                            .fillMaxWidth(),
-            ) {
-                Text(text = "글 남기기")
-            }
+            Text(text = "글 남기기")
         }
     }
 }

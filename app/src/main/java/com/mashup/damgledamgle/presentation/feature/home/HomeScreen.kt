@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
@@ -37,8 +38,8 @@ fun HomeScreen(navController: NavHostController) {
             Button(onClick = { navController.navigate(Screen.Mypage.route) }) {
                 Text(text = "Mypage")
             }
-
             MapScreen()
+
         }
     }
 }

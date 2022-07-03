@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.home
+package com.mashup.damgledamgle.presentation.feature.home.bottomsheet
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -14,7 +14,10 @@ import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 
 @Composable
-fun BottomSheetCollapsedContent(alpha: Float) {
+fun BottomSheetCollapsedContent(
+        modifier: Modifier = Modifier,
+        alpha: Float
+) {
     Spacer(modifier = Modifier.height(20.dp))
     Text(
             modifier = Modifier.alpha(alpha),
