@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.StatusBar
 import com.mashup.damgledamgle.ui.theme.Grey500
 import kotlinx.coroutines.delay
 
@@ -40,6 +41,7 @@ fun SplashScreen(navController: NavHostController) {
         navController.navigate("home_screen")
     }
 
+    StatusBar(color = Grey500, darkIcon = true)
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
