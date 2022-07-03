@@ -25,3 +25,6 @@ val Gray700 = Color(0xFF616161)
 val Gray600 = Color(0xFF9E9E9E)
 val Gray400 = Color(0xFFE0E0E0)
 val White = Color(0xFFFFFFFF)
+
+// Error
+val SystemRed = Color(0xFFFF3B30)

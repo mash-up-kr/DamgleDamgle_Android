@@ -1,18 +1,29 @@
 package com.mashup.damgledamgle.presentation.feature.home.bottomsheet
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mashup.damgledamgle.ui.theme.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheetContent(bottomSheetScaffoldState: BottomSheetScaffoldState) {
     Box(
             modifier = Modifier
+                    .background(
+                            brush = Brush.verticalGradient(
+                                    0.15f to Grey500,
+                                    0.4f to Orange400,
+                                    0.6f to Orange600,
+                                    0.85f to Grey500,
+                            )
+                    )
                     .fillMaxWidth()
                     .fillMaxHeight()
     ) {
