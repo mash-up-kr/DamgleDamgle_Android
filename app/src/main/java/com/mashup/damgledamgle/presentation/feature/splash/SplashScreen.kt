@@ -19,7 +19,7 @@ fun SplashScreen(navController: NavHostController) {
             }
     )
     LaunchedEffect(key1 = true) {
-        delay(3000L)
+        delay(1000L)
         navController.navigate("home_screen")
     }
 }
