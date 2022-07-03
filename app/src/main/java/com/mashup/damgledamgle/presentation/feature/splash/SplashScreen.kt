@@ -22,7 +22,7 @@ import com.mashup.damgledamgle.ui.theme.Grey500
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
+fun SplashScreen(navController: NavHostController, viewModel: SplashViewModel) {
     val scale = remember {
         androidx.compose.animation.core.Animatable(0f)
     }
@@ -37,8 +37,15 @@ fun SplashScreen(navController: NavHostController) {
                 }
             )
         )
+
         delay(3000L)
-        navController.navigate("home_screen")
+
+        if (viewModel.isUserRegistered.value == true) {
+            navController.navigate("home_screen")
+        } else {
+            // TODO(minji): move to onboarding page
+            navController.navigate("home_screen") // 임시
+        }
     }
 
     StatusBar(color = Grey500, darkIcon = true)
