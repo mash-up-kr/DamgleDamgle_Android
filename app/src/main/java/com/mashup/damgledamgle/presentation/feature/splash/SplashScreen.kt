@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.splash
 
 import android.view.animation.OvershootInterpolator
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.StatusBar
@@ -22,9 +24,10 @@ import com.mashup.damgledamgle.ui.theme.Grey500
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController, viewModel: SplashViewModel) {
+fun SplashScreen(navController: NavHostController) {
+    val viewModel: SplashViewModel = hiltViewModel()
     val scale = remember {
-        androidx.compose.animation.core.Animatable(0f)
+        Animatable(0f)
     }
 
     LaunchedEffect(key1 = true) {

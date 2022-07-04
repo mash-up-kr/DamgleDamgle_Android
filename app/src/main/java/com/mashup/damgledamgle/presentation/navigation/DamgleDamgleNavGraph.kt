@@ -10,13 +10,13 @@ import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 import com.mashup.damgledamgle.presentation.feature.splash.SplashViewModel
 
 @Composable
-fun DamgleDamgleNavGraph(navController: NavHostController, splashViewModel: SplashViewModel) {
+fun DamgleDamgleNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = Screen.Splash.route
     ) {
         composable(route = Screen.Splash.route) {
-            SplashScreen(navController = navController, viewModel = splashViewModel)
+            SplashScreen(navController = navController)
         }
         composable(route = Screen.Home.route) {
             HomeScreen(navController = navController)
