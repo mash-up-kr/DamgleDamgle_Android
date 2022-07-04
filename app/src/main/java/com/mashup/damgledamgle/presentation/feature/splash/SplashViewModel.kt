@@ -14,7 +14,7 @@ import javax.inject.Inject
  *  SplashViewModel.kt
  *
  *  Created by Minji Jeong on 2022/07/04
- *  Copyright © 2022 GwanakMT All rights reserved.
+ *  Copyright © 2022 MashUp All rights reserved.
  */
 
 @HiltViewModel
@@ -24,7 +24,11 @@ class SplashViewModel @Inject constructor(
     private val _isUserRegistered = MutableStateFlow<Boolean?>(null)
     val isUserRegistered: StateFlow<Boolean?> = _isUserRegistered.asStateFlow()
 
-    fun getIsUserRegistered() {
+    init {
+        getIsUserRegistered()
+    }
+
+    private fun getIsUserRegistered() {
         viewModelScope.launch {
             _isUserRegistered.value = getIsUserRegisteredUseCase()
         }

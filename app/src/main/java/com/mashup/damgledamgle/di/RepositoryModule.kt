@@ -20,5 +20,5 @@ import javax.inject.Singleton
 abstract class RepositoryModule {
     @Singleton
     @Binds
-    abstract fun provideDataStoreRepository(impl: DataStoreRepositoryImpl): DataStoreRepository
+    abstract fun bindDataStoreRepository(impl: DataStoreRepositoryImpl): DataStoreRepository
 }

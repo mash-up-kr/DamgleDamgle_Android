@@ -22,39 +22,39 @@ class DataStoreRepositoryImpl @Inject constructor(
 ) : DataStoreRepository {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "DamgleDamgle_DataStore")
 
-    override fun getDataStoreInt(key: String): Flow<Int?> {
+    override fun getIntPreference(key: String): Flow<Int?> {
         return getDataStore(intPreferencesKey(key))
     }
 
-    override fun getDataStoreBoolean(key: String): Flow<Boolean?> {
+    override fun getBooleanPreference(key: String): Flow<Boolean?> {
         return getDataStore(booleanPreferencesKey(key))
     }
 
-    override fun getDataStoreString(key: String): Flow<String?> {
+    override fun getStringPreference(key: String): Flow<String?> {
         return getDataStore(stringPreferencesKey(key))
     }
 
-    override suspend fun getDataStoreIntOnce(key: String): Int? {
+    override suspend fun getIntPreferenceOnce(key: String): Int? {
         return getDataStore(intPreferencesKey(key)).first()
     }
 
-    override suspend fun getDataStoreBooleanOnce(key: String): Boolean? {
+    override suspend fun getBooleanPreferenceOnce(key: String): Boolean? {
         return getDataStore(booleanPreferencesKey(key)).first()
     }
 
-    override suspend fun getDataStoreStringOnce(key: String): String? {
+    override suspend fun getStringPreferenceOnce(key: String): String? {
         return getDataStore(stringPreferencesKey(key)).first()
     }
 
-    override suspend fun setDataStoreInt(key: String, value: Int) {
+    override suspend fun setIntPreference(key: String, value: Int) {
         return setDataStore(intPreferencesKey(key), value)
     }
 
-    override suspend fun setDataStoreBoolean(key: String, value: Boolean) {
+    override suspend fun setBooleanPreference(key: String, value: Boolean) {
         return setDataStore(booleanPreferencesKey(key), value)
     }
 
-    override suspend fun setDataStoreString(key: String, value: String) {
+    override suspend fun setStringPreference(key: String, value: String) {
         return setDataStore(stringPreferencesKey(key), value)
     }
 
