@@ -14,7 +14,7 @@ import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.component.ErrorText
 
 @Composable
-fun PutStoryBox(
+fun DamgleStoryBox(
         modifier: Modifier = Modifier,
         backGroundColor: Color,
         textColor: Color
