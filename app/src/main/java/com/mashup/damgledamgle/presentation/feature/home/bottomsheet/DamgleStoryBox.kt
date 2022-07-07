@@ -1,13 +1,17 @@
 package com.mashup.damgledamgle.presentation.feature.home.bottomsheet
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
@@ -66,13 +70,35 @@ fun DamgleStoryBox(
                             text = stringResource(id = R.string.home_bottomsheet_you_can_enter_up_to_100_characters)
                     )
             }
-            Row(
+            Box(
                     modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+                            .fillMaxWidth()
+                            .wrapContentHeight()
             ) {
-                Text(text = "${text.count()}/100자")
+                Image(
+                        painter = painterResource(R.drawable.ic_doodle1),
+                        contentDescription = null,
+                        modifier = Modifier
+                                .align(Alignment.BottomStart)
+                                .scale(1f)
+                                .offset(x = 43.dp, y = (-67).dp)
+
+                )
+                Image(
+                        painter = painterResource(R.drawable.ic_doodle2),
+                        contentDescription = null,
+                        modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .scale(1f)
+                                .offset(x = (20).dp, y = (-35).dp)
+                )
+                Text(
+                        modifier = Modifier
+                                .padding(16.dp)
+                                .wrapContentWidth()
+                                .align(Alignment.BottomEnd),
+                        text = "${text.count()}/100 자"
+                )
             }
         }
     }
