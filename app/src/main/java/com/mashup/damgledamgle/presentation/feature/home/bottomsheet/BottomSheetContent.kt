@@ -2,10 +2,12 @@ package com.mashup.damgledamgle.presentation.feature.home.bottomsheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -38,9 +40,10 @@ fun BottomSheetContent(bottomSheetScaffoldState: BottomSheetScaffoldState) {
             Divider(
                     modifier = Modifier
                             .padding(top = 16.dp)
-                            .width(64.dp),
-                    color = Color.DarkGray,
-                    thickness = 2.dp
+                            .width(64.dp)
+                            .clip(RoundedCornerShape(2.dp)),
+                    color = Gray600,
+                    thickness = 5.dp,
             )
             val alpha = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
             if (alpha >= 0.7f) {
