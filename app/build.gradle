@@ -72,6 +72,9 @@ dependencies {
     // Compose Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // System UI Library
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$system_ui_version"
+
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
