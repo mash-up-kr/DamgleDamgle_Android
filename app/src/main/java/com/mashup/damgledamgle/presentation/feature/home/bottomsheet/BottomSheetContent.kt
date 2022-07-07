@@ -8,9 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.ui.theme.*
 
@@ -45,11 +43,13 @@ fun BottomSheetContent(bottomSheetScaffoldState: BottomSheetScaffoldState) {
                     color = Gray600,
                     thickness = 5.dp,
             )
-            val alpha = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
-            if (alpha >= 0.7f) {
-                BottomSheetCollapsedContent(alpha = alpha)
+
+            val bottomSheetSlide = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
+
+            if (bottomSheetSlide >= BOTTOM_SHEET_SLIDE_THRESHOLD) {
+                BottomSheetCollapsedContent(alpha = (bottomSheetSlide - BOTTOM_SHEET_SLIDE_THRESHOLD) / (1 + ADDITIONAL_FLOAT - BOTTOM_SHEET_SLIDE_THRESHOLD))
             } else {
-                BottomSheetExpandedContent(alpha = 1 - alpha)
+                BottomSheetExpandedContent(alpha = 1 - (bottomSheetSlide / BOTTOM_SHEET_SLIDE_THRESHOLD + ADDITIONAL_FLOAT))
             }
         }
     }
@@ -66,3 +66,6 @@ fun getBottomSheetSlide(state: BottomSheetState): Float {
         else -> fraction
     }
 }
+
+const val BOTTOM_SHEET_SLIDE_THRESHOLD = 0.7f
+const val ADDITIONAL_FLOAT = 0.001f
