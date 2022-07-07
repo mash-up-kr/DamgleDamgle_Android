@@ -14,7 +14,9 @@ import com.naver.maps.map.compose.ExperimentalNaverMapApi
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
+
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+
     Scaffold {
         BottomSheetScaffold(
                 sheetBackgroundColor = Color.Gray,
