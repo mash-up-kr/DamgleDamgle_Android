@@ -42,7 +42,7 @@ fun BottomSheetExpandedContent(
                     text = stringResource(R.string.home_bottomsheet_story_left_here_disappears_after_a_month)
             )
             Spacer(modifier = Modifier.height(32.dp))
-            DamgleStoryBox(backGroundColor = White, textColor = Black)
+            DamgleStoryBox(backGroundColor = Gray400, textColor = Gray900)
         }
 
         // TODO 글자수에 따라 Clickable, 디자인 변경
