@@ -2,7 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.home.bottomsheet
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -18,6 +18,16 @@ fun BottomSheetExpandedContent(
         modifier: Modifier = Modifier,
         alpha: Float,
 ) {
+    val openLeaveStoryDialog = remember { mutableStateOf(false) }
+
+    if (openLeaveStoryDialog.value) {
+        LeaveStoryDialog(
+                openLeaveStoryDialog,
+                { openLeaveStoryDialog.value = false },
+                { openLeaveStoryDialog.value = false }
+        )
+    }
+
     Column(
             modifier = modifier
                     .fillMaxHeight(),
@@ -47,7 +57,9 @@ fun BottomSheetExpandedContent(
 
         // TODO 글자수에 따라 Clickable, 디자인 변경
         Button(
-                onClick = {},
+                onClick = {
+                    openLeaveStoryDialog.value = true
+                },
                 modifier = Modifier
                         .height(64.dp)
                         .fillMaxWidth(),
