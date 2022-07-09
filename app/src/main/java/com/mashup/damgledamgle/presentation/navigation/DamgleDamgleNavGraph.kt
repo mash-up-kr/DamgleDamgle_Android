@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
+import com.mashup.damgledamgle.presentation.feature.leave_story.LeaveStoryScreen
 import com.mashup.damgledamgle.presentation.feature.mypage.MypageScreen
 import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 import com.mashup.damgledamgle.ui.theme.Black
@@ -17,8 +18,8 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
     val systemUiController = rememberSystemUiController()
 
     NavHost(
-            navController = navController,
-            startDestination = Screen.Splash.route
+        navController = navController,
+        startDestination = Screen.Splash.route
     ) {
         composable(route = Screen.Splash.route) {
             systemUiController.setSystemBarsColor(color = Grey500)
@@ -30,6 +31,10 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
         }
         composable(route = Screen.Mypage.route) {
             MypageScreen(navController = navController)
+        }
+        composable(route = Screen.LeaveStory.route) {
+            systemUiController.setSystemBarsColor(color = Grey500)
+            LeaveStoryScreen(navController = navController)
         }
     }
 }
