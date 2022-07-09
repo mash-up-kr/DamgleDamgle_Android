@@ -10,46 +10,51 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.ui.theme.*
 
 @Composable
 fun BottomSheetExpandedContent(
-        modifier: Modifier = Modifier,
-        alpha: Float,
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    alpha: Float,
 ) {
     val openLeaveStoryDialog = remember { mutableStateOf(false) }
 
     if (openLeaveStoryDialog.value) {
         LeaveStoryDialog(
-                openLeaveStoryDialog,
-                { openLeaveStoryDialog.value = false },
-                { openLeaveStoryDialog.value = false }
+            openLeaveStoryDialog,
+            { openLeaveStoryDialog.value = false },
+            {
+                openLeaveStoryDialog.value = false
+                navController.navigate("leave_story_screen")
+            }
         )
     }
 
     Column(
-            modifier = modifier
-                    .fillMaxHeight(),
-            verticalArrangement = Arrangement.SpaceBetween
+        modifier = modifier
+            .fillMaxHeight(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
-                modifier = Modifier
-                        .alpha(alpha)
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.Start
+            modifier = Modifier
+                .alpha(alpha)
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.Start
         ) {
             Spacer(modifier = Modifier.height(56.dp))
             Text(
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                    text = stringResource(R.string.home_bottomsheet_leave_story_on_this_place)
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                text = stringResource(R.string.home_bottomsheet_leave_story_on_this_place)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                    fontSize = 13.sp,
-                    text = stringResource(R.string.home_bottomsheet_story_left_here_disappears_after_a_month)
+                fontSize = 13.sp,
+                text = stringResource(R.string.home_bottomsheet_story_left_here_disappears_after_a_month)
             )
             Spacer(modifier = Modifier.height(32.dp))
             DamgleStoryBox(backGroundColor = Gray400, textColor = Gray900)
@@ -57,18 +62,18 @@ fun BottomSheetExpandedContent(
 
         // TODO 글자수에 따라 Clickable, 디자인 변경
         Button(
-                onClick = {
-                    openLeaveStoryDialog.value = true
-                },
-                modifier = Modifier
-                        .height(64.dp)
-                        .fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Gray600)
+            onClick = {
+                openLeaveStoryDialog.value = true
+            },
+            modifier = Modifier
+                .height(64.dp)
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Gray600)
         ) {
             Text(
-                    text = stringResource(id = R.string.home_bottomsheet_leave_a_story),
-                    fontSize = 18.sp,
-                    color = Gray400
+                text = stringResource(id = R.string.home_bottomsheet_leave_a_story),
+                fontSize = 18.sp,
+                color = Gray400
             )
         }
     }

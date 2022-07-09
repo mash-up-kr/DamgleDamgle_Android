@@ -19,16 +19,16 @@ fun HomeScreen(navController: NavHostController) {
 
     Scaffold {
         BottomSheetScaffold(
-                sheetBackgroundColor = Color.Gray,
-                sheetShape = RoundedCornerShape(
-                        topStart = 24.dp,
-                        topEnd = 24.dp
-                ),
-                sheetContent = {
-                    BottomSheetContent(bottomSheetScaffoldState)
-                },
-                sheetPeekHeight = 100.dp,
-                scaffoldState = bottomSheetScaffoldState,
+            sheetBackgroundColor = Color.Gray,
+            sheetShape = RoundedCornerShape(
+                topStart = 24.dp,
+                topEnd = 24.dp
+            ),
+            sheetContent = {
+                BottomSheetContent(navController, bottomSheetScaffoldState)
+            },
+            sheetPeekHeight = 100.dp,
+            scaffoldState = bottomSheetScaffoldState,
         ) {
             MainToolBar(title = "Position")
             // TODO(minji): 임시 버튼. 추후 삭제 필요.
