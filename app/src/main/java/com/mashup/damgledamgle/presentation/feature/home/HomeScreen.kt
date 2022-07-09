@@ -48,18 +48,16 @@ fun HomeScreen(navController: NavHostController) {
                 MainToolBar(
                     title = currentLocation?.let { convertMyLocationToAddress(it, mContext) }
                 ) { navController.navigate(Screen.MyPage.route) }
-            },
-            sheetBackgroundColor = Color.Gray,
+            },sheetBackgroundColor = Color.Gray,
             sheetShape = RoundedCornerShape(
                 topStart = 24.dp,
                 topEnd = 24.dp
             ),
             sheetContent = {
-                BottomSheetContent(bottomSheetScaffoldState)
+                BottomSheetContent(navController, bottomSheetScaffoldState)
             },
             sheetPeekHeight = 100.dp,
-            scaffoldState = bottomSheetScaffoldState,
-            floatingActionButton = {
+            scaffoldState = bottomSheetScaffoldState,floatingActionButton = {
                 Spacer(modifier = Modifier.height(240.dp))
                 FloatingActionButton(
                     fabIcon = R.drawable.ic_refresh,
