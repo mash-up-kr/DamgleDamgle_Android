@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
             ProvideLocationSource(locationSource = locationSource) {
                 DamgleDamgleTheme {
                     navController = rememberNavController()
-                    DamgleDamgleNavGraph(navController = navController)
+                    DamgleDamgleNavGraph(navController = navController,this)
                 }
             }
         }
