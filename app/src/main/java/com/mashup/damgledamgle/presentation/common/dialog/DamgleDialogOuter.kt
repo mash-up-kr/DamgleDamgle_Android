@@ -12,22 +12,15 @@ import com.mashup.damgledamgle.ui.theme.Gray400
 
 @Composable
 fun DamgleDialogOuter(
-        modifier: Modifier = Modifier,
-        content: @Composable () -> Unit
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
 ) {
     Card(
-            modifier = Modifier
-                    .wrapContentHeight()
-                    .wrapContentWidth(),
-            shape = RoundedCornerShape(14.dp),
-            backgroundColor = Gray400
+        modifier = Modifier
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(24.dp),
+        backgroundColor = Gray400
     ) {
-        Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                        .width(IntrinsicSize.Max)
-        ) {
-            content()
-        }
+        content()
     }
 }
