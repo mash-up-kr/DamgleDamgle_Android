@@ -18,7 +18,7 @@ fun LeaveStoryDialog(
         DamgleDialogOuter {
             DamgleDialogTwoButtonInner(
                     title = "이야기를 이대로 남기시겠어요?",
-                    description = "이번달 말에 담벼락이 지워지 전까지 \n" +
+                    description = "이번달 말에 담벼락이 지워지기 전까지 \n" +
                             "이야기를 수정 · 삭제할 수 없어요!",
                     firstButtonText = "다시 확인하기",
                     firstButtonAction = onRecheckButtonClick,
