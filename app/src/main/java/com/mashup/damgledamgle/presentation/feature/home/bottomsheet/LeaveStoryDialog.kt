@@ -20,12 +20,6 @@ fun LeaveStoryDialog(
         onRecheckButtonClick: () -> Unit,
         onLeaveStoryButtonClick: () -> Unit,
 ) {
-    Row(
-            modifier = Modifier
-                    .height(10.dp)
-                    .fillMaxWidth()
-                    .background(Color.Black)
-    ) {}
     Dialog(
             onDismissRequest = {
                 openLeaveStoryDialog.value = false
