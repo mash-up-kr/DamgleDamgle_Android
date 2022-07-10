@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DamgleDamgle</string>
+    <string name="app_name">담글담글</string>
     <string name="home.bottomsheet.leave_my_story">나의 이야기 남기기</string>
     <string name="home.bottomsheet.leave_story_on_this_place">이 장소에 이야기를\n남겨보세요.</string>
     <string name="home.bottomsheet.story_left_here_disappears_after_a_month">남긴 이야기는 한 달 뒤에 사라져요</string>
