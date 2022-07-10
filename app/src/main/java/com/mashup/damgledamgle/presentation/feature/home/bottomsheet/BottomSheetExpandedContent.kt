@@ -1,11 +1,13 @@
 package com.mashup.damgledamgle.presentation.feature.home.bottomsheet
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -40,9 +42,9 @@ fun BottomSheetExpandedContent(
     ) {
         Column(
             modifier = Modifier
-                .alpha(alpha)
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
+                    .alpha(alpha)
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Spacer(modifier = Modifier.height(56.dp))
@@ -66,8 +68,8 @@ fun BottomSheetExpandedContent(
                 openLeaveStoryDialog.value = true
             },
             modifier = Modifier
-                .height(64.dp)
-                .fillMaxWidth(),
+                    .height(64.dp)
+                    .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Gray600)
         ) {
             Text(
