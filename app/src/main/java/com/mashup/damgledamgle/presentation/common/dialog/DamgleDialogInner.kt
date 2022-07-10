@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.ui.theme.Black
@@ -14,61 +15,59 @@ import com.mashup.damgledamgle.ui.theme.Gray600
 
 @Composable
 fun DamgleDialogTwoButtonInner(
-    title: String,
-    description: String,
-    firstButtonText: String,
-    firstButtonAction: () -> Unit,
-    secondButtonText: String,
-    secondButtonAction: () -> Unit,
+        title: String,
+        description: String,
+        firstButtonText: String,
+        firstButtonAction: () -> Unit,
+        secondButtonText: String,
+        secondButtonAction: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                    .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = title,
-            color = Black,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            maxLines = 1,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                text = title,
+                color = Black,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = description,
-            fontSize = 14.sp,
-            color = Gray600,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                text = description,
+                fontSize = 14.sp,
+                color = Gray600,
         )
         Spacer(modifier = Modifier.height(24.dp))
         Column(
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .width(288.dp),
+                modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .width(288.dp),
         ) {
             Text(
-                modifier = Modifier
-                    .clickable { firstButtonAction() }
-                    .padding(vertical = 13.dp)
-                    .fillMaxWidth(),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                text = firstButtonText,
-                color = Black
+                    modifier = Modifier
+                            .clickable { firstButtonAction() }
+                            .padding(vertical = 13.dp)
+                            .fillMaxWidth(),
+                    fontSize = 16.sp,
+                    textAlign = Center,
+                    fontWeight = FontWeight.Bold,
+                    text = firstButtonText,
+                    color = Black
             )
             Text(
-                modifier = Modifier
-                    .clickable { secondButtonAction() }
-                    .padding(vertical = 13.dp)
-                    .fillMaxWidth(),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                text = secondButtonText,
-                color = Black
+                    modifier = Modifier
+                            .clickable { secondButtonAction() }
+                            .padding(vertical = 13.dp)
+                            .fillMaxWidth(),
+                    fontSize = 16.sp,
+                    textAlign = Center,
+                    fontWeight = FontWeight.Bold,
+                    text = secondButtonText,
+                    color = Black
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
