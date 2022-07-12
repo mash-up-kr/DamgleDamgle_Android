@@ -20,14 +20,14 @@ import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
 import com.mashup.damgledamgle.ui.theme.Grey500
 
 /**
- *  MypageScreen.kt
+ *  MyPageScreen.kt
  *
  *  Created by Minji Jeong on 2022/06/25
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
 @Composable
-fun MypageScreen(navController: NavHostController) {
+fun MyPageScreen(navController: NavHostController) {
     var currentPage by remember { mutableStateOf(TabPage.MyDamgle) }
 
     Scaffold {
@@ -49,7 +49,7 @@ fun MypageScreen(navController: NavHostController) {
 
             MyProfile()
 
-            MypageTabBar(
+            MyPageTabBar(
                 tabPage = currentPage,
                 onTabSelected = { currentPage = it }
             )
