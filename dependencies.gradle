@@ -4,7 +4,7 @@ ext {
     hilt_version = "2.38.1"
     coil_version = "2.1.0"
     naver_map_version = "3.15.0"
-    naver_map_compose_version = "1.1.5"
+    naver_map_compose_version = "1.2.0"
     datastore_version = "1.0.0"
     coroutine_version = "1.6.0"
     system_ui_version = "0.17.0"

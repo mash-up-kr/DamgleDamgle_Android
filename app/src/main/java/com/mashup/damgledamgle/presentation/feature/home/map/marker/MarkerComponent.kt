@@ -15,10 +15,10 @@ import com.mashup.damgledamgle.R
 
 @Composable
 fun MarkerBox(isRead : Boolean, isDuple : Boolean, iconRes : Int, cnt : String) {
-    Box() {
+    Box {
         Box(modifier = Modifier.padding(6.dp)){
             Image(
-                painter = painterResource(id = R.drawable.ic_balloon),
+                painter = painterResource(id = R.drawable.ic_balloon_comm),
                 contentDescription = ""
             )
             Image(

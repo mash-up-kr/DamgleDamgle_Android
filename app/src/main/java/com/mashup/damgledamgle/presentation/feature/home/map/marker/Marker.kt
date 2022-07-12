@@ -23,7 +23,7 @@ fun Marker() {
     com.naver.maps.map.compose.Marker(
         state = rememberMarkerState(
             position = LatLng(37.5666102, 126.9783881)
-        ),
+        )
     )
 }
 
@@ -32,7 +32,7 @@ fun Marker() {
 fun CustomMarker() {
     Box{
         Image(
-            painter = painterResource(id = R.drawable.ic_balloon),
+            painter = painterResource(id = R.drawable.ic_balloon_comm),
             contentDescription = ""
         )
         Image(
@@ -50,7 +50,7 @@ fun CustomMarker() {
 fun MarkerWithReadCheck() {
     Box(){
         Image(
-            painter = painterResource(id = R.drawable.ic_balloon),
+            painter = painterResource(id = R.drawable.ic_balloon_me),
             contentDescription = ""
         )
         Image(
@@ -78,7 +78,7 @@ fun MarkerWithNotify() {
             modifier = Modifier.padding(6.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_balloon),
+                painter = painterResource(id = R.drawable.ic_balloon_me),
                 contentDescription = ""
             )
             Image(

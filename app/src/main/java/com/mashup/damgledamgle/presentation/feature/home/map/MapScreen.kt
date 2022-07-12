@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerCustomView
 import com.naver.maps.geometry.LatLng
@@ -38,7 +39,10 @@ fun MapScreen(context: Context) {
         mutableStateOf(MarkerCustomView(context))
     }
 
+    settingMarker(false, false, R.drawable.ic_heart, "")
+
     val cameraPositionState = rememberCameraPositionState()
+
     Box(Modifier.fillMaxSize()) {
         NaverMap(
             cameraPositionState = cameraPositionState,
@@ -46,6 +50,11 @@ fun MapScreen(context: Context) {
             uiSettings = mapUiSettings,
             locationSource = LocalLocationSource.current
         ){
+            MapEffect{ map ->
+                map.locationOverlay.icon = OverlayImage.fromResource(R.drawable.ic_my_position)
+
+            }
+
             Marker(
                 state = MarkerState(position = LatLng(37.5459113, 127.0657051)),
                 icon = OverlayImage.fromView(markerCustomView),
@@ -67,7 +76,9 @@ fun MapScreen(context: Context) {
         }
     }
 
-    AndroidView(modifier = Modifier.wrapContentSize().alpha(0f),
+    AndroidView(modifier = Modifier
+        .wrapContentSize()
+        .alpha(0f),
         factory = {
             MarkerCustomView(context).apply {
                 post {
@@ -79,4 +90,9 @@ fun MapScreen(context: Context) {
 
 }
 
-
+fun settingMarker(isRead : Boolean, isDuple : Boolean, resId : Int, cnt : String) {
+    MarkerCustomView.cnt = cnt
+    MarkerCustomView.isRead = isRead
+    MarkerCustomView.isDuple = isDuple
+    MarkerCustomView.resId = resId
+}
