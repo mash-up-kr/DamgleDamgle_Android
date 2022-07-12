@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
@@ -29,6 +30,8 @@ import com.mashup.damgledamgle.ui.theme.Grey500
 @Composable
 fun MyPageScreen(navController: NavHostController) {
     var currentPage by remember { mutableStateOf(TabPage.MyDamgle) }
+    val myPageViewModel: MyPageViewModel = hiltViewModel()
+    val userProfile by myPageViewModel.userProfile.collectAsState()
 
     Scaffold {
         Column(
@@ -44,10 +47,10 @@ fun MyPageScreen(navController: NavHostController) {
                     .padding(20.dp)
                     .size(24.dp)
                     .align(Alignment.End)
-                    .clickable { navController.popBackStack()},
+                    .clickable { navController.popBackStack() },
             )
 
-            MyProfile()
+            MyProfile(userProfile?.nickName)
 
             MyPageTabBar(
                 tabPage = currentPage,
@@ -63,10 +66,9 @@ fun MyPageScreen(navController: NavHostController) {
 }
 
 @Composable
-fun MyProfile() {
-    // TODO(minji): 임시 이미지, 텍스트. 추후 교체 필요.
+fun MyProfile(userName: String?) {
     Image(
-        painter = painterResource(R.drawable.ic_myprofile),
+        painter = painterResource(R.drawable.ic_mypage_profile),
         contentDescription = "my profile image",
         modifier = Modifier
             .padding(top = 24.dp)
@@ -74,7 +76,7 @@ fun MyProfile() {
     )
 
     Text(
-        text = "1번째 말많은 코알라",
+        text = userName ?: "",
         modifier = Modifier.padding(top = 8.dp)
     )
 }
