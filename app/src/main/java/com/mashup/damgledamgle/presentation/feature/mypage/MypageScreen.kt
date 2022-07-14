@@ -58,7 +58,7 @@ fun MyPageScreen(navController: NavHostController) {
             )
 
             when (currentPage) {
-                TabPage.MyDamgle -> TabMyDanglePage()
+                TabPage.MyDamgle -> TabMyDamglePage()
                 TabPage.Setting -> TabSettingPage()
             }
         }
