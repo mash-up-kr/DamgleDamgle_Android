@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.all_damgle_list
+package com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.*
