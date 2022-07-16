@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.all_damgle_list
+package com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
