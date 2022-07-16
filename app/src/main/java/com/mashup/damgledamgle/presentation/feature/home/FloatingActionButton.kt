@@ -8,15 +8,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import com.mashup.damgledamgle.R
-import com.naver.maps.map.compose.LocationTrackingMode
 
 //TODO - onclick 파라미터로 받기
 @Composable
-fun FloatingActionButton(fabIcon : Int, description : String, modifier: Modifier) {
+fun FloatingActionButton(fabIcon : Int, description : String, modifier: Modifier, onClick : () -> Unit) {
     FloatingActionButton(
         modifier = modifier,
         backgroundColor = colorResource(id = R.color.damgle_default_black),
-        onClick = { LocationTrackingMode.Follow }) {
+        onClick = onClick
+    ) {
         Icon(
             painterResource(id = fabIcon),
             description,

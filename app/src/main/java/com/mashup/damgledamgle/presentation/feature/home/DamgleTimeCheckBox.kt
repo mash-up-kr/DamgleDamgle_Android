@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 
-@Preview
+//TODO - 남은 시간 계산 함수 작성 후 넘겨주기
 @Composable
-fun DamgleTimeCheckBox() {
+fun DamgleTimeCheckBox(time : String) {
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = colorResource(id = R.color.damgle_main_orange)
@@ -44,7 +44,7 @@ fun DamgleTimeCheckBox() {
                 color = Color.White,
 
             )
-            Text(text = "D-30",
+            Text(text = time,
                 fontSize = 12.sp,
                 color = Color.White,
             )

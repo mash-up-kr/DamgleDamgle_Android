@@ -17,17 +17,19 @@ import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 
 @Composable
-fun MainToolBar(title: String, action: () -> Unit,) {
+fun MainToolBar(title: String?, action: () -> Unit,) {
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxWidth(),
                 Alignment.Center) {
-                Text(
-                    text = title,
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
-                )
+                if (title != null) {
+                    Text(
+                        text = title,
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center,
+                    )
+                }
                 IconButton(
                     onClick = action,
                     modifier = Modifier.align(Alignment.CenterEnd)) {

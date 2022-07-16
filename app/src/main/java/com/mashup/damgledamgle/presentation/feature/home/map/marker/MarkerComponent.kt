@@ -19,11 +19,11 @@ fun MarkerBox(isRead : Boolean, isDuple : Boolean, iconRes : Int, cnt : String) 
         Box(modifier = Modifier.padding(6.dp)){
             Image(
                 painter = painterResource(id = R.drawable.ic_balloon_comm),
-                contentDescription = ""
+                contentDescription = "balloon"
             )
             Image(
                 painter = painterResource(id = iconRes),
-                contentDescription = "",
+                contentDescription = "icons",
                 modifier = Modifier
                     .align(Alignment.Center)
                     .size(25.dp)
@@ -31,7 +31,7 @@ fun MarkerBox(isRead : Boolean, isDuple : Boolean, iconRes : Int, cnt : String) 
             if(!isRead) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_notify),
-                    contentDescription = "",
+                    contentDescription = "isRead",
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(6.dp)
@@ -44,7 +44,7 @@ fun MarkerBox(isRead : Boolean, isDuple : Boolean, iconRes : Int, cnt : String) 
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_count_background),
-                    contentDescription = "",
+                    contentDescription = "Duple",
                     modifier = Modifier.size(22.dp)
                 )
                 Text(text = cnt,

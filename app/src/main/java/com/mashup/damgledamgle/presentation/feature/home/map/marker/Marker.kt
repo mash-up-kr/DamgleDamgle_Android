@@ -36,7 +36,7 @@ fun CustomMarker() {
             contentDescription = ""
         )
         Image(
-            painter = painterResource(id = R.drawable.ic_heart),
+            painter = painterResource(id = R.drawable.ic_heart_small),
             contentDescription = "",
             modifier = Modifier
                 .align(Alignment.Center)
@@ -54,7 +54,7 @@ fun MarkerWithReadCheck() {
             contentDescription = ""
         )
         Image(
-            painter = painterResource(id = R.drawable.ic_heart),
+            painter = painterResource(id = R.drawable.ic_heart_small),
             contentDescription = "",
             modifier = Modifier
                 .align(Alignment.Center)
@@ -82,7 +82,7 @@ fun MarkerWithNotify() {
                 contentDescription = ""
             )
             Image(
-                painter = painterResource(id = R.drawable.ic_heart),
+                painter = painterResource(id = R.drawable.ic_heart_small),
                 contentDescription = "",
                 modifier = Modifier
                     .align(Alignment.Center)

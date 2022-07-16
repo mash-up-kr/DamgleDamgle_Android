@@ -6,23 +6,34 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
+import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
+import com.mashup.damgledamgle.presentation.feature.home.MakerInfo
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerCustomView
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
+import com.naver.maps.map.util.MapConstants
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlin.coroutines.CoroutineContext
 
-
-@OptIn(ExperimentalNaverMapApi::class)
 @Composable
-fun MapScreen(context: Context) {
+fun MapScreen(cameraPositionState: CameraPositionState) {
+    val mContext = LocalContext.current
+    val homeViewModel = HomeViewModel()
+
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
-                locationTrackingMode = LocationTrackingMode.Follow
+                locationTrackingMode = LocationTrackingMode.Follow,
+                minZoom = 16.0,
+                maxZoom = 12.0,
             )
         )
     }
@@ -35,13 +46,28 @@ fun MapScreen(context: Context) {
         )
     }
 
+    MapContent(
+        cameraPositionState = cameraPositionState,
+        mapProperties = mapProperties,
+        mapUiSettings = mapUiSettings,
+        homeViewModel.getMakerList(),
+        mContext
+    )
+}
+
+
+@OptIn(ExperimentalNaverMapApi::class)
+@Composable
+fun MapContent(
+    cameraPositionState: CameraPositionState,
+    mapProperties: MapProperties,
+    mapUiSettings: MapUiSettings,
+    list: ArrayList<MakerInfo>,
+    mContext: Context
+) {
     var markerCustomView by remember {
-        mutableStateOf(MarkerCustomView(context))
+        mutableStateOf(MarkerCustomView(mContext))
     }
-
-    settingMarker(false, false, R.drawable.ic_heart, "")
-
-    val cameraPositionState = rememberCameraPositionState()
 
     Box(Modifier.fillMaxSize()) {
         NaverMap(
@@ -51,20 +77,22 @@ fun MapScreen(context: Context) {
             locationSource = LocalLocationSource.current
         ){
             MapEffect{ map ->
-                map.locationOverlay.icon = OverlayImage.fromResource(R.drawable.ic_my_position)
-
+                map.locationOverlay.bearing = 0f
+                map.locationOverlay.icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker)
             }
 
-            Marker(
-                state = MarkerState(position = LatLng(37.5459113, 127.0657051)),
-                icon = OverlayImage.fromView(markerCustomView),
-            )
-            Marker(
-                state = MarkerState(position = LatLng(37.232400, 127.0657051)),
-                icon = OverlayImage.fromView(markerCustomView),
-            )
-            Marker(
-                state = MarkerState(position = LatLng(37.232400, 127.024612)))
+            list.forEach { makerInfo ->
+                val icons = makerInfo.resId
+                val latitude = makerInfo.latitude
+                val longitude = makerInfo.longitude
+                val isRead = makerInfo.isRead
+                settingMarker(isRead, false, icons, "")
+
+                Marker(
+                    state = MarkerState(position = LatLng(latitude, longitude)),
+                    icon = OverlayImage.fromView(markerCustomView),
+                )
+            }
 
         }
         Column(
@@ -72,22 +100,20 @@ fun MapScreen(context: Context) {
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
         ) {
-            DamgleTimeCheckBox()
+            DamgleTimeCheckBox("")
         }
-    }
-
-    AndroidView(modifier = Modifier
-        .wrapContentSize()
-        .alpha(0f),
-        factory = {
-            MarkerCustomView(context).apply {
-                post {
-                    markerCustomView = this
+        AndroidView(modifier = Modifier
+            .wrapContentSize()
+            .alpha(0f),
+            factory = {
+                MarkerCustomView(mContext).apply {
+                    post {
+                        markerCustomView = this
+                    }
                 }
             }
-        }
-    )
-
+        )
+    }
 }
 
 fun settingMarker(isRead : Boolean, isDuple : Boolean, resId : Int, cnt : String) {

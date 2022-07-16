@@ -58,12 +58,12 @@ fun SplashScreen(navController: NavHostController) {
             .fillMaxSize()
             .background(Grey500)
     ) {
-//        Image(
-//            painter = painterResource(id = R.drawable.damgle_splash),
-//            contentDescription = "DamgleDamgle Splash Image",
-//            modifier = Modifier
-//                .width(210.dp)
-//                .scale(scale.value)
-//        )
+        Image(
+            painter = painterResource(id = R.drawable.damgle_splash),
+            contentDescription = "DamgleDamgle Splash Image",
+            modifier = Modifier
+                .width(210.dp)
+                .scale(scale.value)
+        )
     }
 }

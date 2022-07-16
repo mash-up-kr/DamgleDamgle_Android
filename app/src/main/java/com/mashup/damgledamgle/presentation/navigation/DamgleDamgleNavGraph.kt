@@ -20,7 +20,7 @@ fun DamgleDamgleNavGraph(navController: NavHostController, context : Context) {
             SplashScreen(navController = navController)
         }
         composable(route = Screen.Home.route) {
-            HomeScreen(navController = navController, context = context)
+            HomeScreen(navController = navController)
         }
         composable(route = Screen.Mypage.route) {
             MypageScreen(navController = navController)
