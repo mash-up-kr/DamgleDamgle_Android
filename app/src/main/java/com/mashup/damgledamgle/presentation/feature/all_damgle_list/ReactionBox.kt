@@ -16,14 +16,24 @@ fun ReactionBox(
         onClickReaction: (Reaction) -> Unit,
 ) {
 
-    val boxExtendState by animateDpAsState(if (reactionBoxState.isExtended) 48.dp else 0.dp)
+    val offsetBetweenReactionHolder = 8.dp
+    val mainReactionHolderWidth = 74.dp
+    val baseReactionHolderWidth = 40.dp
+
+    val animatedBoxExtendedStateDp by animateDpAsState(
+            if (reactionBoxState.isExtended) baseReactionHolderWidth + offsetBetweenReactionHolder
+            else 0.dp
+    )
 
     Box(modifier = Modifier.fillMaxWidth()) {
 
         Reaction.values().forEachIndexed { index, reaction ->
             ReactionHolder(
                     modifier = Modifier
-                            .offset(x = boxExtendState * (index + 2) * -1)
+                            .offset(
+                                    x = ((animatedBoxExtendedStateDp * (index) +
+                                            if (reactionBoxState.isExtended) mainReactionHolderWidth + offsetBetweenReactionHolder else 0.dp)) * -1
+                            )
                             .align(Alignment.BottomEnd),
                     onClickReactionHolder = { onClickReaction(reaction) },
                     when (reaction) {
@@ -36,7 +46,7 @@ fun ReactionBox(
         ReactionHolder(
                 modifier = Modifier
                         .align(Alignment.BottomEnd)
-                        .width(74.dp),
+                        .width(mainReactionHolderWidth),
                 onClickReactionHolder = { onClickNowReaction() },
                 when {
                     reactionBoxState.selectedReaction == null -> R.drawable.ic_best_inactive
