@@ -2,20 +2,15 @@ package com.mashup.damgledamgle.presentation.feature.onboarding
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
+import com.mashup.damgledamgle.presentation.common.checkPermissionSelf
 
 /**
  *  OnboardingScreen.kt
@@ -36,14 +31,6 @@ fun OnboardingScreen(navController: NavHostController) {
         if (isGranted) {
             isLocationPermissionAllowed = true
         } else {
-            // Permission Denied
-            // TODO: 거부했을 때 앱 권한 설정으로 이동할 것인지 물어보는 Dialog 필요
-
-//            val appIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${context.packageName}"))
-//            appIntent.addCategory(Intent.CATEGORY_DEFAULT)
-//            appIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//            context.startActivity(appIntent) // TODO: 권한 받게 시키고 종료시킬까 그냥 이어서 온보딩 시킬까??
-
             Toast.makeText(context, "위치 권한에 동의해야 앱 사용이 가능합니다.", Toast.LENGTH_SHORT).show()
         }
     }
@@ -68,8 +55,4 @@ fun OnboardingScreen(navController: NavHostController) {
     } else {
         NickNameScreen { navController.navigate("home_screen") }
     }
-}
-
-fun checkPermissionSelf(context: Context, permission: String): Boolean {
-    return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 }
