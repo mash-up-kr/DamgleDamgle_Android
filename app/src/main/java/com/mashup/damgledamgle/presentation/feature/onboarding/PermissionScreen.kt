@@ -1,6 +1,9 @@
 package com.mashup.damgledamgle.presentation.feature.onboarding
 
 import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.shouldShowPermissionRationale
 import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
@@ -38,6 +42,8 @@ fun PermissionScreen(
     permissionLauncher: ManagedActivityResultLauncher<String, Boolean>?,
     permission: String,
 ) {
+    val context = LocalContext.current
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -68,7 +74,15 @@ fun PermissionScreen(
     }
 
     LocalLifecycleOwner.current.lifecycleScope.launchWhenResumed {
-        permissionLauncher?.launch(permission)
+        if (!shouldShowPermissionRationale(context, permission)) {
+            permissionLauncher?.launch(permission)
+        } else {
+            // TODO: 앱 설정으로 이동할지 여부 물어보는 Dialog 필요
+            val appIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${context.packageName}"))
+            appIntent.addCategory(Intent.CATEGORY_DEFAULT)
+            appIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(appIntent)
+        }
     }
 }
 
