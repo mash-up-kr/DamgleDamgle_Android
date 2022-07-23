@@ -32,8 +32,8 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
         mutableStateOf(
             MapProperties(
                 locationTrackingMode = LocationTrackingMode.Follow,
-                minZoom = 16.0,
-                maxZoom = 12.0,
+//                minZoom = 16.0,
+//                maxZoom = 12.0,
             )
         )
     }
@@ -86,7 +86,6 @@ fun MapContent(
                 val latitude = makerInfo.latitude
                 val longitude = makerInfo.longitude
                 val isRead = makerInfo.isRead
-                settingMarker(isRead, false, icons, "")
 
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
@@ -102,23 +101,5 @@ fun MapContent(
         ) {
             DamgleTimeCheckBox("")
         }
-        AndroidView(modifier = Modifier
-            .wrapContentSize()
-            .alpha(0f),
-            factory = {
-                MarkerCustomView(mContext).apply {
-                    post {
-                        markerCustomView = this
-                    }
-                }
-            }
-        )
     }
-}
-
-fun settingMarker(isRead : Boolean, isDuple : Boolean, resId : Int, cnt : String) {
-    MarkerCustomView.cnt = cnt
-    MarkerCustomView.isRead = isRead
-    MarkerCustomView.isDuple = isDuple
-    MarkerCustomView.resId = resId
 }

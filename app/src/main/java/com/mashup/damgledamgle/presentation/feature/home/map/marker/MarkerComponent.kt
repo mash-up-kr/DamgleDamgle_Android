@@ -1,13 +1,15 @@
 package com.mashup.damgledamgle.presentation.feature.home.map.marker
 
+import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -15,6 +17,10 @@ import com.mashup.damgledamgle.R
 
 @Composable
 fun MarkerBox(isRead : Boolean, isDuple : Boolean, iconRes : Int, cnt : String) {
+    val icons by remember {
+        mutableStateOf(iconRes)
+    }
+
     Box {
         Box(modifier = Modifier.padding(6.dp)){
             Image(
@@ -22,7 +28,7 @@ fun MarkerBox(isRead : Boolean, isDuple : Boolean, iconRes : Int, cnt : String) 
                 contentDescription = "balloon"
             )
             Image(
-                painter = painterResource(id = iconRes),
+                painter = painterResource(id = icons),
                 contentDescription = "icons",
                 modifier = Modifier
                     .align(Alignment.Center)
@@ -49,9 +55,11 @@ fun MarkerBox(isRead : Boolean, isDuple : Boolean, iconRes : Int, cnt : String) 
                 )
                 Text(text = cnt,
                     modifier = Modifier.align(Alignment.Center),
-                    fontSize = 8.sp)
+                    fontSize = 8.sp
+                )
             }
         }
     }
 
 }
+

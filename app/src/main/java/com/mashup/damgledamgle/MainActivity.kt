@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ProvideLocationSource(locationSource = locationSource) {
-                myLocation = getMyLocation()
                 DamgleDamgleTheme {
                     navController = rememberNavController()
                     DamgleDamgleNavGraph(navController = navController,this)

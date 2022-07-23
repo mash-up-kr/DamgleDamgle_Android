@@ -1,13 +1,27 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
+import android.graphics.Bitmap
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mashup.damgledamgle.R
 
 class HomeViewModel : ViewModel()  {
 
+    private val _iconRes = mutableStateOf(R.drawable.ic_angry_small)
+    val iconsRes  : State<Int> = _iconRes
 
-    fun getMyLocation() {
+    fun changeMarkerValue(resId : Int) {
+        _iconRes.value = resId
+    }
 
+    private var _onBitmapCreated = MutableLiveData<Bitmap?>(null)
+    var onBitmapGenerated: LiveData<Bitmap?> = _onBitmapCreated
+
+    fun bitmapCreated(bitmap: Bitmap?) {
+        _onBitmapCreated.value = bitmap
     }
 
     //서버에서 받는 마커 표시 위치 ArrayList<Info>
