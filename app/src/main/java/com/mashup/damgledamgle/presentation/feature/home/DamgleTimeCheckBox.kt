@@ -1,5 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
+import android.graphics.fonts.FontStyle
+import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -22,10 +24,14 @@ import com.mashup.damgledamgle.R
 
 //TODO - 남은 시간 계산 함수 작성 후 넘겨주기
 @Composable
-fun DamgleTimeCheckBox(time : String) {
+fun DamgleTimeCheckBox(time : String, oneDay : Boolean) {
+
     Card(
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = colorResource(id = R.color.damgle_main_orange)
+        backgroundColor = if(oneDay)
+            colorResource(id = R.color.damgle_main_orange) else {
+            colorResource(id = R.color.damgle_default_black)
+        }
     ) {
         Row(
             Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 8.dp),
@@ -35,7 +41,9 @@ fun DamgleTimeCheckBox(time : String) {
             Image(
                 painterResource(id = R.drawable.ic_paint),
                 contentDescription = "paint_icon",
-                Modifier.padding(end = 8.dp).size(24.dp)
+                Modifier
+                    .padding(end = 8.dp)
+                    .size(24.dp)
             )
             Text(
                 text = stringResource(id = R.string.home_map_paint_text),
@@ -44,9 +52,10 @@ fun DamgleTimeCheckBox(time : String) {
                 color = Color.White,
 
             )
-            Text(text = time,
+            Text(
+                text = time,
                 fontSize = 12.sp,
-                color = Color.White,
+                color = colorResource(id = R.color.damgle_light_green)
             )
         }
     }

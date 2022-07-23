@@ -26,9 +26,7 @@ import com.mashup.damgledamgle.R
 
 @SuppressLint("ViewConstructor")
 @ExperimentalMaterialApi
-class MarkerView(context : Context,  bitmapCreated: (bitmap: Bitmap) -> Unit) : LinearLayoutCompat(context) {
-
-    val res = mutableStateOf<Int>(0)
+class MarkerView(private val resId : Int, context : Context,  bitmapCreated: (bitmap: Bitmap) -> Unit) : LinearLayoutCompat(context) {
 
     init {
         val width = 200
@@ -40,7 +38,7 @@ class MarkerView(context : Context,  bitmapCreated: (bitmap: Bitmap) -> Unit) : 
         this.addView(view)
 
         view.setContent {
-            MarkerBox(false, false,res.value , "0")
+            MarkerBox(false, false, resId , "0")
         }
 
         viewTreeObserver.addOnGlobalLayoutListener(object :

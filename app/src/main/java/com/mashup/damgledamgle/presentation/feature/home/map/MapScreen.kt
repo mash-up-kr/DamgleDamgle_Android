@@ -2,38 +2,33 @@ package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.MakerInfo
-import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerCustomView
+import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerView
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.MapConstants
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlin.coroutines.CoroutineContext
 
+val homeViewModel = HomeViewModel()
 @Composable
 fun MapScreen(cameraPositionState: CameraPositionState) {
     val mContext = LocalContext.current
-    val homeViewModel = HomeViewModel()
 
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
                 locationTrackingMode = LocationTrackingMode.Follow,
-//                minZoom = 16.0,
-//                maxZoom = 12.0,
+                minZoom = 14.8,
             )
         )
     }
@@ -56,7 +51,7 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
 }
 
 
-@OptIn(ExperimentalNaverMapApi::class)
+@OptIn(ExperimentalNaverMapApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun MapContent(
     cameraPositionState: CameraPositionState,
@@ -65,9 +60,6 @@ fun MapContent(
     list: ArrayList<MakerInfo>,
     mContext: Context
 ) {
-    var markerCustomView by remember {
-        mutableStateOf(MarkerCustomView(mContext))
-    }
 
     Box(Modifier.fillMaxSize()) {
         NaverMap(
@@ -86,11 +78,15 @@ fun MapContent(
                 val latitude = makerInfo.latitude
                 val longitude = makerInfo.longitude
                 val isRead = makerInfo.isRead
+                homeViewModel.changeMarkerValue(makerInfo.resId)
 
-                Marker(
-                    state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = OverlayImage.fromView(markerCustomView),
-                )
+                if(homeViewModel.onBitmapGenerated.observeAsState().value != null) {
+                    Marker(
+                        state = MarkerState(position = LatLng(latitude, longitude)),
+                        icon = OverlayImage.fromBitmap(homeViewModel.onBitmapGenerated.observeAsState().value!!),
+                    )
+                }
+
             }
 
         }
@@ -99,7 +95,17 @@ fun MapContent(
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
         ) {
-            DamgleTimeCheckBox("")
+            DamgleTimeCheckBox( homeViewModel.getCalendarLastDay(), false)
         }
+        AndroidView(
+            factory = { context ->
+                val markerView = MarkerView(homeViewModel.iconsRes.value, context = context) { bitmap ->
+                    homeViewModel.bitmapCreated(bitmap)
+                }
+
+                markerView
+            })
+
+
     }
 }
