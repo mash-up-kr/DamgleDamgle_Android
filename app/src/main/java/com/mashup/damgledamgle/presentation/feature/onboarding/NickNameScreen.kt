@@ -7,15 +7,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.ui.theme.Grey500
-import com.mashup.damgledamgle.ui.theme.Orange500
-import com.mashup.damgledamgle.ui.theme.White
+import com.mashup.damgledamgle.ui.theme.*
 
 /**
  *  NickNameScreen.kt
@@ -28,7 +25,8 @@ import com.mashup.damgledamgle.ui.theme.White
 fun NickNameScreen(
     finishMakeNickName: (() -> Unit)? = null
 ) {
-    // TODO(minji): UI 작업 필요
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,7 +34,19 @@ fun NickNameScreen(
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
         Column {
+            Text(
+                text = context.getString(R.string.nickname_maintext),
+                style = pretendardTextStyle.title1Bold32,
+                color = Gray1000,
+                modifier = Modifier.padding(top = 94.dp, bottom = 8.dp, start = 20.dp),
+            )
 
+            Text(
+                text = context.getString(R.string.nickname_subtext),
+                style = pretendardTextStyle.bodyMedium13,
+                color = Gray900,
+                modifier = Modifier.padding(start = 20.dp)
+            )
         }
 
         Column(modifier = Modifier.weight(1f, false)) {
@@ -50,17 +60,15 @@ fun NickNameScreen(
 
             Text(
                 textAlign = TextAlign.Center,
-                text = "시작하기",
+                text = context.getString(R.string.nickname_button_start),
                 modifier = Modifier
                     .background(Orange500)
                     .fillMaxWidth()
                     .height(64.dp)
                     .clickable { finishMakeNickName?.invoke() }
                     .padding(vertical = 20.dp),
-                style = TextStyle(
-                    color = White,
-                    fontSize = 18.sp,
-                )
+                style = pretendardTextStyle.bodyMedium18,
+                color = White
             )
         }
     }
