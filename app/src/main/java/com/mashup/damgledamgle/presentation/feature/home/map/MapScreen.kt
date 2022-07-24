@@ -1,10 +1,16 @@
 package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.content.Context
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -68,6 +74,7 @@ fun MapContent(
             uiSettings = mapUiSettings,
             locationSource = LocalLocationSource.current
         ){
+
             MapEffect{ map ->
                 map.locationOverlay.bearing = 0f
                 map.locationOverlay.icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker)
@@ -95,7 +102,14 @@ fun MapContent(
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
         ) {
-            DamgleTimeCheckBox( homeViewModel.getCalendarLastDay(), false)
+            val result = homeViewModel.getCalendarLastDay()
+            if(result.contains("D"))
+                DamgleTimeCheckBox(result, false)
+            else {
+                homeViewModel.startTimer()
+                val time by homeViewModel.time.observeAsState()
+                time?.let { DamgleTimeCheckBox(it, true) }
+            }
         }
         AndroidView(
             factory = { context ->

@@ -6,7 +6,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,17 +18,23 @@ import com.mashup.damgledamgle.R
 
 @Composable
 fun MainToolBar(title: String?, action: () -> Unit,) {
+
+    var location by remember {
+        mutableStateOf(title)
+    }
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxWidth(),
                 Alignment.Center) {
                 if (title != null) {
-                    Text(
-                        text = title,
-                        color = Color.White,
-                        fontSize = 16.sp,
-                        textAlign = TextAlign.Center,
-                    )
+                    location?.let {
+                        Text(
+                            text = it,
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
                 }
                 IconButton(
                     onClick = action,

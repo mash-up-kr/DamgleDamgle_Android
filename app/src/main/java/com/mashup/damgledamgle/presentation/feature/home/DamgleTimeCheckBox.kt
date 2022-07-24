@@ -1,7 +1,5 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
-import android.graphics.fonts.FontStyle
-import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,14 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 
-//TODO - 남은 시간 계산 함수 작성 후 넘겨주기
 @Composable
-fun DamgleTimeCheckBox(time : String, oneDay : Boolean) {
+fun DamgleTimeCheckBox(restTime : String, oneDay : Boolean) {
 
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -53,7 +49,7 @@ fun DamgleTimeCheckBox(time : String, oneDay : Boolean) {
 
             )
             Text(
-                text = time,
+                text = restTime,
                 fontSize = 12.sp,
                 color = colorResource(id = R.color.damgle_light_green)
             )

@@ -25,6 +25,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ProvideLocationSource(locationSource = locationSource) {
+                getMyLocation()
                 DamgleDamgleTheme {
                     navController = rememberNavController()
                     DamgleDamgleNavGraph(navController = navController,this)
@@ -39,7 +40,8 @@ class MainActivity : ComponentActivity() {
         grantResults: IntArray,
     ) {
         if (locationSource.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
-            myLocation = getMyLocation()
+            if(requestCode == LOCATION_PERMISSION_REQUEST_CODE)
+                myLocation = getMyLocation()
             return
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
