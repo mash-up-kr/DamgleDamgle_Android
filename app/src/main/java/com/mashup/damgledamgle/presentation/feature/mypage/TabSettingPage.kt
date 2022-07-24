@@ -1,14 +1,19 @@
 package com.mashup.damgledamgle.presentation.feature.mypage
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.damgledamgle.ui.theme.Gray400
+import androidx.compose.ui.unit.sp
+import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.ui.theme.Gray600
 
 /**
  *  TabSettingPage.kt
@@ -19,13 +24,36 @@ import com.mashup.damgledamgle.ui.theme.Gray400
 
 @Composable
 fun TabSettingPage() {
-    Text(
-        text = "설정",
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .padding(top = 20.dp)
-            .background(Gray400)
-            .fillMaxSize()
-    )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxHeight(),
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Image(
+                painter = painterResource(id = R.drawable.background_horizontal_orange_gradient),
+                contentDescription = "Orange Gradient Background",
+            )
+
+            PushSettingItem()
+        }
+
+        Text(
+            text = "서비스 그만 사용하기",
+            modifier = Modifier
+                .weight(1f, false)
+                .padding(vertical = 32.dp)
+                .clickable { },
+            style = TextStyle(
+                fontSize = 13.sp,
+                color = Gray600,
+            ),
+        )
+    }
+}
+
+@Composable
+@Preview(showSystemUi = true)
+fun PreviewTabSettingPage() {
+    TabSettingPage()
 }
