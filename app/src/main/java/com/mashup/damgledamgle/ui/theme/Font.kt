@@ -65,7 +65,7 @@ val pretendardTextStyle = Pretendard(
     ),
     bodyMedium18 = TextStyle(
         fontFamily = pretendard,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Medium,
         fontSize = 18.sp,
         letterSpacing = (-0.3).sp
     ),
