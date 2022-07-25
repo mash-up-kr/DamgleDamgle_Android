@@ -17,8 +17,14 @@ import javax.inject.Inject
 class OnboardingRepositoryImpl @Inject constructor(
     private val nickNameMapper: NickNameMapper
 ) : OnboardingRepository {
-    override suspend fun getNickName(): NetworkResponse<NickName> {
-        val resultData = ServiceBuilder.damgleApi.getNickName()
+    override suspend fun getNickName(adjective: String?, noun: String?): NetworkResponse<NickName> {
+        val resultData = if (adjective != null) {
+            ServiceBuilder.damgleApi.getNickName(adjective = adjective)
+        } else if (noun != null) {
+            ServiceBuilder.damgleApi.getNickName(noun = noun)
+        } else {
+            ServiceBuilder.damgleApi.getNickName()
+        }
 
         return try {
             NetworkResponse.Success(nickNameMapper.mapToEntity(resultData))

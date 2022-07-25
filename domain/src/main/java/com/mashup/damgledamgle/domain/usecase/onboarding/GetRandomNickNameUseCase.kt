@@ -15,7 +15,7 @@ import javax.inject.Inject
 class GetRandomNickNameUseCase @Inject constructor(
     private val onboardingRepository: OnboardingRepository
 ) {
-    suspend operator fun invoke(): NetworkResponse<NickName> {
-        return onboardingRepository.getNickName()
+    suspend operator fun invoke(adjective: String? = null, noun: String? = null): NetworkResponse<NickName> {
+        return onboardingRepository.getNickName(adjective, noun)
     }
 }
