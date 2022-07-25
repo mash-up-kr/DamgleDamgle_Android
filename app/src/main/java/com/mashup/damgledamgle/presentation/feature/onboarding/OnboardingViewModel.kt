@@ -2,6 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.damgledamgle.domain.entity.NickName
 import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 import com.mashup.damgledamgle.domain.usecase.onboarding.GetRandomNickNameUseCase
 import com.mashup.damgledamgle.presentation.feature.onboarding.model.NickNameModel
@@ -31,25 +32,29 @@ class OnboardingViewModel @Inject constructor(
         getNickName()
     }
 
-    fun getNickName() {
+    private fun getNickName() {
         viewModelScope.launch {
-            when(val result = getRandomNickNameUseCase()) {
-                is NetworkResponse.Success -> {
-                    _nickName.value = nickNameMapper.mapToModel(result.data)
-                }
-                is NetworkResponse.Error -> {
-
-                }
-            }
+            setNickName(getRandomNickNameUseCase())
         }
     }
 
     fun refreshNickName(nickName: NickNameModel) {
         viewModelScope.launch {
             if (nickName.adjective.isEmpty()) {
-                // TODO: 형용사 다시 조회
+                setNickName(getRandomNickNameUseCase(noun = nickName.noun))
             } else if (nickName.noun.isEmpty()) {
-                // TODO: 명사 다시 조회
+                setNickName(getRandomNickNameUseCase(adjective = nickName.adjective))
+            }
+        }
+    }
+
+    private fun setNickName(result: NetworkResponse<NickName>) {
+        when(result) {
+            is NetworkResponse.Success -> {
+                _nickName.value = nickNameMapper.mapToModel(result.data)
+            }
+            is NetworkResponse.Error -> {
+
             }
         }
     }
