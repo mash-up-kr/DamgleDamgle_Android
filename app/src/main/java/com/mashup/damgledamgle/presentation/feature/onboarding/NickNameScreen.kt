@@ -33,9 +33,6 @@ fun NickNameScreen(
     val context = LocalContext.current
     val viewModel: OnboardingViewModel = hiltViewModel()
 
-    // init data
-    viewModel.getNickName()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
