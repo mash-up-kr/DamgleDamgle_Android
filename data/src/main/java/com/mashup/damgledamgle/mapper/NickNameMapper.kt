@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.mapper
 
 import com.mashup.damgledamgle.domain.entity.NickName
-import com.mashup.damgledamgle.repository.spec.NickNameRequest
+import com.mashup.damgledamgle.repository.spec.NickNameResponse
 import javax.inject.Inject
 
 /**
@@ -12,7 +12,7 @@ import javax.inject.Inject
  */
 
 class NickNameMapper @Inject constructor() {
-    fun mapToEntity(spec: NickNameRequest): NickName {
+    fun mapToEntity(spec: NickNameResponse): NickName {
         return NickName(
             name = spec.name,
             adjective = spec.adjective,
