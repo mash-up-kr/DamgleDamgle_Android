@@ -107,7 +107,7 @@ fun NickNameScreen(
                             .background(Orange500)
                             .fillMaxWidth()
                             .height(64.dp)
-                            .clickable { finishMakeNickName?.invoke() }
+                            .clickable { viewModel.signUp(viewModel.nickName.value.fullName) }
                             .padding(vertical = 20.dp),
                         style = pretendardTextStyle.bodyMedium18,
                         color = White
@@ -118,6 +118,10 @@ fun NickNameScreen(
 
         if (viewModel.uiState.collectAsState().value is ViewState.Loading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center), color = Orange500)
+        }
+
+        if (viewModel.authState.collectAsState().value is ViewState.Success) {
+            finishMakeNickName?.invoke()
         }
     }
 }

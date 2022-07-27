@@ -1,10 +1,14 @@
 package com.mashup.damgledamgle.repository.remote
 
 import com.mashup.damgledamgle.domain.entity.NickName
+import com.mashup.damgledamgle.domain.entity.User
 import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 import com.mashup.damgledamgle.domain.repository.OnboardingRepository
+import com.mashup.damgledamgle.mapper.AuthMapper
 import com.mashup.damgledamgle.mapper.NickNameMapper
+import com.mashup.damgledamgle.repository.network.DamgleApi
 import com.mashup.damgledamgle.repository.network.ServiceBuilder
+import com.mashup.damgledamgle.repository.spec.NickNameRequest
 import javax.inject.Inject
 
 /**
@@ -15,19 +19,32 @@ import javax.inject.Inject
  */
 
 class OnboardingRepositoryImpl @Inject constructor(
-    private val nickNameMapper: NickNameMapper
+    private val nickNameMapper: NickNameMapper,
+    private val authMapper: AuthMapper,
 ) : OnboardingRepository {
-    override suspend fun getNickName(adjective: String?, noun: String?): NetworkResponse<NickName> {
-        val resultData = if (adjective != null) {
-            ServiceBuilder.damgleApi.getNickName(adjective = adjective)
-        } else if (noun != null) {
-            ServiceBuilder.damgleApi.getNickName(noun = noun)
-        } else {
-            ServiceBuilder.damgleApi.getNickName()
-        }
 
+    private val damgleApi by lazy { ServiceBuilder.buildService<DamgleApi>() }
+
+    override suspend fun getNickName(adjective: String?, noun: String?): NetworkResponse<NickName> {
         return try {
+            val resultData = if (adjective != null) {
+                damgleApi.getNickName(adjective = adjective)
+            } else if (noun != null) {
+                damgleApi.getNickName(noun = noun)
+            } else {
+                damgleApi.getNickName()
+            }
+
             NetworkResponse.Success(nickNameMapper.mapToEntity(resultData))
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun signUp(nickName: String): NetworkResponse<User> {
+        return try {
+            val resultData = damgleApi.signUp(NickNameRequest(nickName))
+            NetworkResponse.Success(authMapper.mapToEntity(resultData))
         } catch (e: Exception) {
             NetworkResponse.Error(e)
         }

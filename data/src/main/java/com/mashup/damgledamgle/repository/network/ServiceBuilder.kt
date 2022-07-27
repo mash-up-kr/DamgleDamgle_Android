@@ -37,7 +37,7 @@ object ServiceBuilder {
         }.build()
     }
 
-    private val retrofit: Retrofit by lazy {
+    val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://api-dev.damgle.com/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -45,9 +45,7 @@ object ServiceBuilder {
             .build()
     }
 
-    val damgleApi by lazy { buildService<DamgleApi>() }
-
-    private inline fun <reified T> buildService(): T {
+    inline fun <reified T> buildService(): T {
         return retrofit.create(T::class.java)
     }
 }
