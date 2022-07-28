@@ -15,13 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
-import com.mashup.damgledamgle.presentation.feature.home.MakerInfo
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeMarkerCustomBitmap
+import com.mashup.damgledamgle.presentation.feature.home.timer.DamgleTimeCheckBox
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
+import com.mashup.damgledamgle.presentation.feature.home.map.MarkerInfo
 
 val homeViewModel = HomeViewModel()
 @Composable
@@ -60,7 +60,7 @@ fun MapContent(
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
-    list: ArrayList<MakerInfo>,
+    list: ArrayList<MarkerInfo>,
     mContext: Context
 ) {
 
@@ -77,21 +77,17 @@ fun MapContent(
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
             }
 
-            list.forEach { makerInfo ->
-                val icons = makerInfo.resId
-                val latitude = makerInfo.latitude
-                val longitude = makerInfo.longitude
-                val isRead = makerInfo.isRead
-                val isMine = makerInfo.isMine
+            list.forEach { markerInfo ->
+                val icons = markerInfo.resId
+                val latitude = markerInfo.latitude
+                val longitude = markerInfo.longitude
+                val isRead = markerInfo.isRead
+                val isMine = markerInfo.isMine
 
-                makeMarkerCustomBitmap(mContext, icons, isMine, isRead, makerInfo.size)
-                    ?.let { OverlayImage.fromBitmap(it) }
-                    ?.let {
-                        Marker(
-                            state = MarkerState(position = LatLng(latitude, longitude)),
-                            icon = it,
-                        )
-                    }
+                Marker(
+                    state = MarkerState(position = LatLng(latitude, longitude)),
+                    icon = OverlayImage.fromBitmap( makeMarkerCustomBitmap(mContext, icons, isMine, isRead, markerInfo.size)),
+                )
             }
 
         }

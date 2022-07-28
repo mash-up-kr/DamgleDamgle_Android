@@ -93,4 +93,6 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
+    implementation "com.airbnb.android:lottie-compose:$lottie_version"
+
 }

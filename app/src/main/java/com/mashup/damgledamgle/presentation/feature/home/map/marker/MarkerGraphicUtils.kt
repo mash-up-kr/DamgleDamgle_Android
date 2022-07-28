@@ -2,11 +2,9 @@ package com.mashup.damgledamgle.presentation.feature.home.map.marker
 
 import android.content.Context
 import android.graphics.*
-import android.view.View
-import androidx.appcompat.widget.LinearLayoutCompat
 import com.mashup.damgledamgle.R
 
-fun makeMarkerCustomBitmap(context: Context, iconRes : Int, isMine : Boolean, isRead : Boolean, count : Int): Bitmap? {
+fun makeMarkerCustomBitmap(context: Context, iconRes : Int, isMine : Boolean, isRead : Boolean, count : Int): Bitmap {
     val conf = Bitmap.Config.ARGB_8888
     val bmp = Bitmap.createBitmap(250, 250, conf)
     val canvas = Canvas(bmp)
@@ -31,19 +29,20 @@ fun makeMarkerCustomBitmap(context: Context, iconRes : Int, isMine : Boolean, is
         ), 50F, 48F, drawPaint
     )
 
-    if(!isRead && count <=1) {
+    if(!isRead && count <= 1) {
         val notifyCircle = Paint()
-        notifyCircle.color = Color.parseColor("#DBFD56")
+        notifyCircle.color = context.getColor(R.color.damgle_light_green)
         canvas.drawCircle(170f,56f,16f,notifyCircle)
     }
+
     else if(count > 1) {
         val totalResult = if(count > 100) "99+" else "$count"
 
         val countCircle = Paint()
-        countCircle.color = Color.parseColor("#DBFD56")
+        countCircle.color = context.getColor(R.color.damgle_light_green)
 
         canvas.drawCircle(192f,40f,40f,countCircle)
-        countCircle.color = Color.parseColor("#212121")
+        countCircle.color = context.getColor(R.color.damgle_default_black)
         countCircle.strokeWidth = 3f
         countCircle.style = Paint.Style.STROKE
         canvas.drawCircle(192f,42f,40f,countCircle)

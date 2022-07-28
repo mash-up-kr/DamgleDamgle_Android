@@ -64,6 +64,9 @@ fun HomeScreen(navController: NavHostController) {
                 description = "refresh_btn",
                 modifier = Modifier.size(48.dp, 48.dp),
                 onClick = {
+                    /**
+                     * 위치랑 서버 새로고침 로띠,
+                     */
                 }
             )
             FloatingActionButton(

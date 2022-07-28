@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import com.naver.maps.geometry.LatLng
 
 object LocationManager {
-    
+
     @SuppressLint("MissingPermission")
     fun getMyLocation(context: Context): LatLng? {
         val locationManager = context.getSystemService(ComponentActivity.LOCATION_SERVICE) as LocationManager
@@ -16,5 +16,7 @@ object LocationManager {
 
         return currentLocation?.latitude?.let { LatLng(it, currentLocation.longitude) }
     }
+
+
 
 }

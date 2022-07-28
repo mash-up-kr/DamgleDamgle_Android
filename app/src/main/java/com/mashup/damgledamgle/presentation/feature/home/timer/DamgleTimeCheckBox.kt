@@ -21,7 +21,6 @@ import com.mashup.damgledamgle.R
 
 @Composable
 fun DamgleTimeCheckBox(restTime : String, oneDay : Boolean) {
-
     Card(
         shape = RoundedCornerShape(8.dp),
         backgroundColor = if(oneDay)
