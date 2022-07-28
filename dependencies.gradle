@@ -9,5 +9,6 @@ ext {
     coroutine_version = "1.6.0"
     system_ui_version = "0.17.0"
     gms_location_version = "20.0.0"
+    room_version = "2.4.2"
 }
 

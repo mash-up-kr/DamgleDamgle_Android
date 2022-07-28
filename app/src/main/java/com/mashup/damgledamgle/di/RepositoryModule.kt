@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.di
 
 import com.mashup.damgledamgle.domain.repository.DataStoreRepository
-import com.mashup.damgledamgle.repository.datastore.DataStoreRepositoryImpl
+import com.mashup.damgledamgle.repository.datastore.repository.DataStoreRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
