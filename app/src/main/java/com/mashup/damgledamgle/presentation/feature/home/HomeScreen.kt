@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.MainActivity
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.feature.home.map.LocationManager
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
@@ -34,8 +35,9 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 fun HomeScreen(navController: NavHostController) {
     val mContext = LocalContext.current
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+
     val cameraPositionState = rememberCameraPositionState()
-    val currentLocation = MainActivity.myLocation
+    val currentLocation = LocationManager.getMyLocation(mContext)
     currentLocation?.let { latLng ->
         cameraPositionState.move(CameraUpdate.scrollTo(latLng)) }
 

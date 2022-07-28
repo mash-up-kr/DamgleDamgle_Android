@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -15,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
@@ -33,8 +31,7 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
-                locationTrackingMode = LocationTrackingMode.Follow,
-                minZoom = 14.8,
+               // minZoom = 14.8,
             )
         )
     }
@@ -71,13 +68,13 @@ fun MapContent(
         NaverMap(
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
-            uiSettings = mapUiSettings,
-            locationSource = LocalLocationSource.current
+            uiSettings = mapUiSettings
         ){
 
-            MapEffect{ map ->
-                map.locationOverlay.bearing = 0f
-                map.locationOverlay.icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker)
+            LocationManager.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
+                Marker(
+                    state = it,
+                    icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
             }
 
             list.forEach { makerInfo ->
@@ -103,15 +100,19 @@ fun MapContent(
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
         ) {
-            val result = homeViewModel.getCalendarLastDay()
-            if(result.contains("D"))
-                DamgleTimeCheckBox(result, false)
-            else {
-                homeViewModel.startTimer()
-                val time by homeViewModel.time.observeAsState()
-                time?.let { DamgleTimeCheckBox(it, true) }
-            }
+            CheckDamgleTime()
         }
+    }
+}
 
+@Composable
+fun CheckDamgleTime() {
+    val result = homeViewModel.getCalendarLastDay()
+    if(result.contains("D"))
+        DamgleTimeCheckBox(result, false)
+    else {
+        homeViewModel.startTimer()
+        val time by homeViewModel.time.observeAsState()
+        time?.let { DamgleTimeCheckBox(it, true) }
     }
 }
