@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.home
+package com.mashup.damgledamgle.presentation.feature.home.timer
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +24,10 @@ fun DamgleTimeCheckBox(restTime : String, oneDay : Boolean) {
 
     Card(
         shape = RoundedCornerShape(8.dp),
-        backgroundColor =
-        if(oneDay) colorResource(id = R.color.damgle_main_orange)
-        else colorResource(id = R.color.damgle_default_black)
+        backgroundColor = if(oneDay)
+            colorResource(id = R.color.damgle_main_orange) else {
+            colorResource(id = R.color.damgle_default_black)
+        }
     ) {
         Row(
             Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 8.dp),

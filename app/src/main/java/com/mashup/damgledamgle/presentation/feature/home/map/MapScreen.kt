@@ -20,7 +20,7 @@ import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.MakerInfo
-import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerView
+import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeMarkerCustomBitmap
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
@@ -57,7 +57,7 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
 }
 
 
-@OptIn(ExperimentalNaverMapApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapContent(
     cameraPositionState: CameraPositionState,
@@ -85,15 +85,16 @@ fun MapContent(
                 val latitude = makerInfo.latitude
                 val longitude = makerInfo.longitude
                 val isRead = makerInfo.isRead
-                homeViewModel.changeMarkerValue(makerInfo.resId)
+                val isMine = makerInfo.isMine
 
-                if(homeViewModel.onBitmapGenerated.observeAsState().value != null) {
-                    Marker(
-                        state = MarkerState(position = LatLng(latitude, longitude)),
-                        icon = OverlayImage.fromBitmap(homeViewModel.onBitmapGenerated.observeAsState().value!!),
-                    )
-                }
-
+                makeMarkerCustomBitmap(mContext, icons, isMine, isRead, makerInfo.size)
+                    ?.let { OverlayImage.fromBitmap(it) }
+                    ?.let {
+                        Marker(
+                            state = MarkerState(position = LatLng(latitude, longitude)),
+                            icon = it,
+                        )
+                    }
             }
 
         }
@@ -111,15 +112,6 @@ fun MapContent(
                 time?.let { DamgleTimeCheckBox(it, true) }
             }
         }
-        AndroidView(
-            factory = { context ->
-                val markerView = MarkerView(homeViewModel.iconsRes.value, context = context) { bitmap ->
-                    homeViewModel.bitmapCreated(bitmap)
-                }
-
-                markerView
-            })
-
 
     }
 }
