@@ -6,13 +6,13 @@ object TimeUtil {
         return System.currentTimeMillis()
     }
 
-    fun getFormattedTimeDiff(now: Long) {
-        when (val timeDiff = now - getCurrentTime()) {
+    fun getFormattedTimeDiff(now: Long): String {
+        return when (val timeDiff = getCurrentTime() - now) {
             in (0..MINUTE_MILLISECOND) -> "${timeDiff / SECOND_MILLISECOND}초전"
             in (0..HOUR_MILLISECOND) -> "${timeDiff / MINUTE_MILLISECOND}분전"
             in (0..DAY_MILLISECOND) -> "${timeDiff / HOUR_MILLISECOND}시간전"
-            in (0..WEEK_MILLISECOND) -> "${timeDiff / HOUR_MILLISECOND}시간전"
-            else -> "${timeDiff / MINUTE_MILLISECOND}주전"
+            in (0..WEEK_MILLISECOND) -> "${timeDiff / DAY_MILLISECOND}시간전"
+            else -> "${timeDiff / WEEK_MILLISECOND}주전"
         }
     }
 
