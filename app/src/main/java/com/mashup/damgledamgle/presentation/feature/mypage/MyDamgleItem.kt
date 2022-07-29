@@ -57,6 +57,7 @@ fun MyDamgleItem() {
                     modifier = Modifier
                         .padding(bottom = 4.dp, start = 12.dp)
                         .height(42.dp)
+                        .weight(1f, false)
                         .align(CenterVertically),
                 )
             }

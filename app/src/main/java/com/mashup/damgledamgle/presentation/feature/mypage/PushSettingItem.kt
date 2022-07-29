@@ -76,7 +76,6 @@ fun PushSettingItem() {
                     uncheckedTrackColor = Gray600,
                 ),
                 modifier = Modifier
-                    .weight(1f, false)
                     .fillMaxHeight()
                     .background(Grey500)
             )

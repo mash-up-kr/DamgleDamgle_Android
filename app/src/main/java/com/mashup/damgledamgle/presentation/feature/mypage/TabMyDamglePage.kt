@@ -30,7 +30,7 @@ fun TabMyDamglePage() {
             modifier = Modifier.fillMaxWidth()
         )
 
-        // TODO(minji): RowColumn으로 교체 및 데이터 모델 전달하도록 수정
+        // TODO(minji): LazyColumn으로 교체 및 데이터 모델 전달하도록 수정
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier.padding(top = 20.dp)

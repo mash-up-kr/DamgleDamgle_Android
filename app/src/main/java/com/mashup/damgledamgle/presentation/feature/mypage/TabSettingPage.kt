@@ -41,7 +41,6 @@ fun TabSettingPage() {
         Text(
             text = "서비스 그만 사용하기",
             modifier = Modifier
-                .weight(1f, false)
                 .padding(vertical = 32.dp)
                 .clickable { },
             style = TextStyle(
