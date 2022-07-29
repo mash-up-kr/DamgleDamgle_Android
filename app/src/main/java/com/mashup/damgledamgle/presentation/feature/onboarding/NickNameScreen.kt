@@ -8,6 +8,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.ui.theme.*
@@ -30,7 +32,7 @@ import com.mashup.damgledamgle.ui.theme.*
 
 @Composable
 fun NickNameScreen(
-    finishMakeNickName: (() -> Unit)? = null
+    navController: NavHostController
 ) {
     val context = LocalContext.current
     val viewModel: OnboardingViewModel = hiltViewModel()
@@ -109,7 +111,16 @@ fun NickNameScreen(
         }
 
         if (viewModel.uiState.collectAsState().value is ViewState.Loading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center), color = Orange500)
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = Orange500
+            )
+        }
+
+        LaunchedEffect(key1 = viewModel.authState.collectAsState().value) {
+            if (viewModel.authState.value is ViewState.Success) {
+                navController.navigate("home_screen")
+            }
         }
     }
 }

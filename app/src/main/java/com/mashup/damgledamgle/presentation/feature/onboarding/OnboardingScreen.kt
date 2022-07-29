@@ -53,6 +53,6 @@ fun OnboardingScreen(navController: NavHostController) {
             permission = Manifest.permission.ACCESS_FINE_LOCATION
         )
     } else {
-        NickNameScreen { navController.navigate("home_screen") }
+        NickNameScreen(navController)
     }
 }
