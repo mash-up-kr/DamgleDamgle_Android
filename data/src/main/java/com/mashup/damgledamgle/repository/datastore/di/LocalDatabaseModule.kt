@@ -21,7 +21,7 @@ class LocalDatabaseModule {
 
     @Singleton
     @Provides
-    fun provideDamgleDao(appDB: AppDatabase): ReadMarkerCheckDao {
+    fun providereadCheckDao(appDB: AppDatabase): ReadMarkerCheckDao {
         return appDB.readCheckDao()
     }
 }
