@@ -19,11 +19,12 @@ import javax.inject.Inject
  */
 
 class OnboardingRepositoryImpl @Inject constructor(
+    private val serviceBuilder: ServiceBuilder,
     private val nickNameMapper: NickNameMapper,
     private val authMapper: AuthMapper,
 ) : OnboardingRepository {
 
-    private val damgleApi by lazy { ServiceBuilder.buildService<DamgleApi>() }
+    private val damgleApi by lazy { serviceBuilder.buildService<DamgleApi>() }
 
     override suspend fun getNickName(adjective: String?, noun: String?): NetworkResponse<NickName> {
         return try {
