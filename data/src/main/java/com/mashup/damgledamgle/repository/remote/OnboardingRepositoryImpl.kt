@@ -27,12 +27,10 @@ class OnboardingRepositoryImpl @Inject constructor(
 
     override suspend fun getNickName(adjective: String?, noun: String?): NetworkResponse<NickName> {
         return try {
-            val resultData = if (adjective != null) {
-                damgleApi.getNickName(adjective = adjective)
-            } else if (noun != null) {
-                damgleApi.getNickName(noun = noun)
-            } else {
-                damgleApi.getNickName()
+            val resultData = when {
+                adjective != null -> damgleApi.getNickName(adjective = adjective)
+                noun != null -> damgleApi.getNickName(noun = noun)
+                else -> damgleApi.getNickName()
             }
 
             NetworkResponse.Success(nickNameMapper.mapToEntity(resultData))

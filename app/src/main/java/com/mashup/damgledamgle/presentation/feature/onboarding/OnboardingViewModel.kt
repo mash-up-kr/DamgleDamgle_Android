@@ -50,15 +50,17 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
-    fun refreshNickName(nickName: NickNameModel) {
+    fun refreshNickNameNoun(adjective: String) {
         viewModelScope.launch {
             _uiState.emit(ViewState.Loading)
+            setNickName(getRandomNickNameUseCase(adjective = adjective))
+        }
+    }
 
-            if (nickName.adjective.isEmpty()) {
-                setNickName(getRandomNickNameUseCase(noun = nickName.noun))
-            } else if (nickName.noun.isEmpty()) {
-                setNickName(getRandomNickNameUseCase(adjective = nickName.adjective))
-            }
+    fun refreshNickNameAdjective(noun: String) {
+        viewModelScope.launch {
+            _uiState.emit(ViewState.Loading)
+            setNickName(getRandomNickNameUseCase(noun = noun))
         }
     }
 

@@ -74,19 +74,11 @@ fun NickNameScreen(
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)
                     ) {
                         NickNameBox(viewModel.nickName.value.adjective) {
-                            viewModel.refreshNickName(
-                                viewModel.nickName.value.copy(
-                                    adjective = ""
-                                )
-                            )
+                            viewModel.refreshNickNameAdjective(viewModel.nickName.value.noun)
                         }
 
                         NickNameBox(viewModel.nickName.value.noun) {
-                            viewModel.refreshNickName(
-                                viewModel.nickName.value.copy(
-                                    noun = ""
-                                )
-                            )
+                            viewModel.refreshNickNameNoun(viewModel.nickName.value.adjective)
                         }
                     }
                 }
@@ -118,10 +110,6 @@ fun NickNameScreen(
 
         if (viewModel.uiState.collectAsState().value is ViewState.Loading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center), color = Orange500)
-        }
-
-        if (viewModel.authState.collectAsState().value is ViewState.Success) {
-            finishMakeNickName?.invoke()
         }
     }
 }
@@ -157,7 +145,7 @@ fun NickNameBox(
             contentDescription = "",
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .padding(end = 4.dp)
+                .padding(end = 4.dp, top = 6.dp)
                 .size(24.dp)
                 .clickable { onClickRefresh?.invoke() }
         )

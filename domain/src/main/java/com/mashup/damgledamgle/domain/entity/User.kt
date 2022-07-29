@@ -11,4 +11,5 @@ data class User(
     val nickName: String,
     val userNo: Int,
     val token: String,
+    val refreshToken: String,
 )
