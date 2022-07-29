@@ -144,7 +144,7 @@ fun NickNameBox(
             painter = painterResource(id = R.drawable.ic_refresh),
             contentDescription = "",
             modifier = Modifier
-                .align(Alignment.CenterEnd)
+                .align(Alignment.TopEnd)
                 .padding(end = 4.dp, top = 6.dp)
                 .size(24.dp)
                 .clickable { onClickRefresh?.invoke() }
