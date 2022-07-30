@@ -7,6 +7,7 @@ import com.mashup.damgledamgle.domain.entity.NickName
 import com.mashup.damgledamgle.domain.entity.User
 import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 import com.mashup.damgledamgle.domain.usecase.onboarding.GetRandomNickNameUseCase
+import com.mashup.damgledamgle.domain.usecase.onboarding.PickNickNameUseCase
 import com.mashup.damgledamgle.domain.usecase.onboarding.SignUpUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.onboarding.model.NickNameModel
@@ -30,6 +31,7 @@ class OnboardingViewModel @Inject constructor(
     private val getRandomNickNameUseCase: GetRandomNickNameUseCase,
     private val nickNameMapper: NickNameMapper,
     private val signUpUseCase: SignUpUseCase,
+    private val pickNickNameUseCase: PickNickNameUseCase,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<ViewState<*>>(ViewState.Loading)
     val uiState: StateFlow<ViewState<*>> = _uiState.asStateFlow()
@@ -78,14 +80,21 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
-    fun signUp(nickName: String, notification: Boolean) {
+    fun signUp(nickName: NickNameModel, notification: Boolean) {
         viewModelScope.launch {
-            when(val result = signUpUseCase(nickName, notification)) {
+            when(val pickedNickNameResult = pickNickNameUseCase(nickName.adjective, nickName.noun)) {
                 is NetworkResponse.Success -> {
-                    _authState.emit(ViewState.Success(result.data))
+                    when(val result = signUpUseCase(pickedNickNameResult.data.name, notification)) {
+                        is NetworkResponse.Success -> {
+                            _authState.emit(ViewState.Success(result.data))
+                        }
+                        is NetworkResponse.Error -> {
+                            _authState.emit(ViewState.Error(result.exception.message.toString()))
+                        }
+                    }
                 }
                 is NetworkResponse.Error -> {
-                    _authState.emit(ViewState.Error(result.exception.message.toString()))
+                    _authState.emit(ViewState.Error(pickedNickNameResult.exception.message.toString()))
                 }
             }
         }

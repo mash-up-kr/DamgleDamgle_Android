@@ -2,7 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.damgledamgle.domain.usecase.onboarding.GetIsUserRegisteredUseCase
+import com.mashup.damgledamgle.domain.usecase.token.GetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val getIsUserRegisteredUseCase: GetIsUserRegisteredUseCase
+    private val getTokenUseCase: GetTokenUseCase
 ): ViewModel() {
     private val _isUserRegistered = MutableStateFlow<Boolean?>(null)
     val isUserRegistered: StateFlow<Boolean?> = _isUserRegistered.asStateFlow()
@@ -30,7 +30,8 @@ class SplashViewModel @Inject constructor(
 
     private fun getIsUserRegistered() {
         viewModelScope.launch {
-            _isUserRegistered.emit(getIsUserRegisteredUseCase())
+            val isRegistered = getTokenUseCase().isNotEmpty()
+            _isUserRegistered.emit(isRegistered)
         }
     }
 }
