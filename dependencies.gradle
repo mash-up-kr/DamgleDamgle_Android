@@ -10,5 +10,6 @@ ext {
     retrofit_version = "2.9.0"
     okhttp_version = "4.3.1"
     moshi_version = "1.9.3"
+    lottie_version = "5.2.0"
 }
 
