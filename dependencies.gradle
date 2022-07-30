@@ -7,6 +7,9 @@ ext {
     datastore_version = "1.0.0"
     coroutine_version = "1.6.0"
     system_ui_version = "0.17.0"
+    retrofit_version = "2.9.0"
+    okhttp_version = "4.3.1"
+    moshi_version = "1.9.3"
     lottie_version = "5.2.0"
 }
 

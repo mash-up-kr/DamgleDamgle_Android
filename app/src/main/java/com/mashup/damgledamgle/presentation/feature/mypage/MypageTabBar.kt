@@ -20,14 +20,14 @@ import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.ui.theme.White
 
 /**
- *  MypageTabBar.kt
+ *  MyPageTabBar.kt
  *
  *  Created by Minji Jeong on 2022/06/25
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
 @Composable
-fun MypageTabBar(
+fun MyPageTabBar(
     tabPage: TabPage,
     onTabSelected: (tabPage: TabPage) -> Unit
 ) {
@@ -67,7 +67,7 @@ fun Tab(
                 color = if (isSelected) Black else Grey500,
                 shape = RoundedCornerShape(8.dp)
             )
-            .clickable { onClick.invoke() }
+            .clickable { onClick() }
             .height(40.dp)
             .wrapContentHeight(),
         textAlign = Center,
