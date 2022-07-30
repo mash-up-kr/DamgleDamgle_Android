@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
  *  PermissionFunctions.kt
  *
  *  Created by Minji Jeong on 2022/07/22
- *  Copyright © 2022 GwanakMT All rights reserved.
+ *  Copyright © 2022 MashUp All rights reserved.
  */
 
 /**

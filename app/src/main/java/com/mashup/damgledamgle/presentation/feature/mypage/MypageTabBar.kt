@@ -67,7 +67,7 @@ fun Tab(
                 color = if (isSelected) Black else Grey500,
                 shape = RoundedCornerShape(8.dp)
             )
-            .clickable { onClick.invoke() }
+            .clickable { onClick() }
             .height(40.dp)
             .wrapContentHeight(),
         textAlign = Center,
