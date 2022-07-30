@@ -1,11 +1,18 @@
 package com.mashup.damgledamgle.presentation.feature.home.map.marker
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.*
+import android.util.DisplayMetrics
+import android.util.Log
+import android.util.TypedValue
+import android.view.View
 import com.mashup.damgledamgle.R
+
 
 fun makeMarkerCustomBitmap(context: Context, iconRes : Int, isMine : Boolean, isRead : Boolean, count : Int): Bitmap {
     val conf = Bitmap.Config.ARGB_8888
+    val scale = context.resources.displayMetrics.density
     val bmp = Bitmap.createBitmap(250, 250, conf)
     val canvas = Canvas(bmp)
 

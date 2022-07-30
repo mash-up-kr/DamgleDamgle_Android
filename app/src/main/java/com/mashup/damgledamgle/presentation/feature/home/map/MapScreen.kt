@@ -21,7 +21,6 @@ import com.mashup.damgledamgle.presentation.feature.home.timer.DamgleTimeCheckBo
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
-import com.mashup.damgledamgle.presentation.feature.home.map.MarkerInfo
 
 val homeViewModel = HomeViewModel()
 @Composable
@@ -86,7 +85,7 @@ fun MapContent(
 
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = OverlayImage.fromBitmap( makeMarkerCustomBitmap(mContext, icons, isMine, isRead, markerInfo.size)),
+                    icon = OverlayImage.fromBitmap(makeMarkerCustomBitmap(mContext, icons, isMine, isRead, markerInfo.size)),
                 )
             }
 

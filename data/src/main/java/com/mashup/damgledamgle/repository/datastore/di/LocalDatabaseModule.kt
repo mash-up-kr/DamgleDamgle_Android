@@ -1,7 +1,8 @@
 package com.mashup.damgledamgle.repository.datastore.di
 
 import android.app.Application
-import com.mashup.damgledamgle.repository.datastore.dao.ReadMarkerCheckDao
+
+import com.mashup.damgledamgle.repository.datastore.dao.ReadMarkerDao
 import com.mashup.damgledamgle.repository.datastore.database.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,7 +22,7 @@ class LocalDatabaseModule {
 
     @Singleton
     @Provides
-    fun providereadCheckDao(appDB: AppDatabase): ReadMarkerCheckDao {
+    fun providereadCheckDao(appDB: AppDatabase): ReadMarkerDao {
         return appDB.readCheckDao()
     }
 }

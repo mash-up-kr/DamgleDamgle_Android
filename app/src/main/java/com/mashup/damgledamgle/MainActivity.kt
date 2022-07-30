@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DamgleDamgleTheme {
                 navController = rememberNavController()
-                DamgleDamgleNavGraph(navController = navController,this)
+                DamgleDamgleNavGraph(navController = navController)
             }
         }
     }
