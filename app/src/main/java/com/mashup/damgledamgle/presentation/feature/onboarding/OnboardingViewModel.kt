@@ -80,7 +80,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun signUp(nickName: String, notification: Boolean) {
         viewModelScope.launch {
-            when(val result = signUpUseCase("물에빠진 두번째 병아리", notification)) {
+            when(val result = signUpUseCase(nickName, notification)) {
                 is NetworkResponse.Success -> {
                     _authState.emit(ViewState.Success(result.data))
                 }
