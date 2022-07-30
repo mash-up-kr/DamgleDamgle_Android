@@ -10,4 +10,5 @@ package com.mashup.damgledamgle.presentation.feature.mypage.model
 data class UserProfile(
     val userId: String,
     val nickName: String,
+    val notification: Boolean,
 )
