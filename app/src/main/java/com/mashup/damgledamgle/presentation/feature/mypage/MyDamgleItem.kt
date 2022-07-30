@@ -50,7 +50,7 @@ fun MyDamgleItem() {
                 .padding(horizontal = 20.dp),
         ) {
             Row {
-                MyDamgleEmoji(R.drawable.ic_heart_big, 11)
+                MyDamgleEmoji(R.drawable.ic_heart_big, 11, Modifier.weight(1f, false))
                 Text(
                     text = "GANGNAMGU\nYEOKSAMDONG",
                     style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
@@ -73,7 +73,7 @@ fun MyDamgleItem() {
 }
 
 @Composable
-fun MyDamgleEmoji(emojiDrawableId: Int, count: Int) {
+fun MyDamgleEmoji(emojiDrawableId: Int, count: Int, modifier: Modifier) {
     val context = LocalContext.current
     val (w, h) = with(LocalDensity.current) {
         16.dp.roundToPx() to 16.dp.roundToPx()
@@ -84,7 +84,7 @@ fun MyDamgleEmoji(emojiDrawableId: Int, count: Int) {
     }
 
     Box(
-        modifier = Modifier.size(60.dp),
+        modifier = modifier.size(60.dp),
         contentAlignment = Alignment.BottomEnd
     ) {
         Image(
@@ -118,5 +118,5 @@ fun PreviewMyDamgleItem() {
 @Preview
 @Composable
 fun PreviewMyDamgleEmoji() {
-    MyDamgleEmoji(emojiDrawableId = R.drawable.ic_heart_big, count = 11)
+    MyDamgleEmoji(emojiDrawableId = R.drawable.ic_heart_big, count = 11, modifier = Modifier)
 }
