@@ -15,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.common.DisabledInteractionSource
 import com.mashup.damgledamgle.ui.theme.*
 
 /**
@@ -67,7 +66,7 @@ fun PushSettingItem() {
             // 푸시 알림 동의 스위치
             Switch(
                 checked = pushAllowState.value,
-                interactionSource = remember { DisabledInteractionSource() },
+                //interactionSource = remember { DisabledInteractionSource() },
                 onCheckedChange = { pushAllowState.value = it },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Orange500,

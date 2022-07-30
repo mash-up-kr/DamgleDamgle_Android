@@ -1,7 +1,7 @@
-package com.mashup.damgledamgle.repository.datastore.dao
+package com.mashup.damgledamgle.room.dao
 
 import androidx.room.*
-import com.mashup.damgledamgle.repository.datastore.model.ReadMarker
+import com.mashup.damgledamgle.room.model.ReadMarker
 
 @Dao
 interface ReadMarkerDao {

@@ -1,9 +1,9 @@
-package com.mashup.damgledamgle.repository.datastore.di
+package com.mashup.damgledamgle.room.di
 
 import android.app.Application
 
-import com.mashup.damgledamgle.repository.datastore.dao.ReadMarkerDao
-import com.mashup.damgledamgle.repository.datastore.database.AppDatabase
+import com.mashup.damgledamgle.room.dao.ReadMarkerDao
+import com.mashup.damgledamgle.room.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

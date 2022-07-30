@@ -1,8 +1,6 @@
 package com.mashup.damgledamgle.repository.network
 
-import com.mashup.damgledamgle.repository.spec.NickNameRequest
-import com.mashup.damgledamgle.repository.spec.NickNameResponse
-import com.mashup.damgledamgle.repository.spec.UserResponse
+import com.mashup.damgledamgle.repository.spec.*
 import retrofit2.http.*
 
 /**
@@ -28,4 +26,8 @@ interface DamgleApi {
      */
     @POST("/v1/auth/signup")
     suspend fun signUp(@Body request: NickNameRequest): UserResponse
+
+    @GET("/v1/story/feed")
+    suspend fun getStoryFeed(
+        @Body storyFeedRequest: StoryFeedRequest) : StoryFeedResponse
 }
