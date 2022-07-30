@@ -1,14 +1,14 @@
-package com.mashup.damgledamgle.presentation.feature.mypage.model
+package com.mashup.damgledamgle.domain.entity
 
 /**
  *  UserProfile.kt
  *
- *  Created by Minji Jeong on 2022/07/08
+ *  Created by Minji Jeong on 2022/07/30
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
 data class UserProfile(
-    val userId: String,
+    val userNo: Int,
     val nickName: String,
     val notification: Boolean,
 )

@@ -26,8 +26,10 @@ import com.mashup.damgledamgle.ui.theme.*
  */
 
 @Composable
-fun PushSettingItem() {
-    val pushAllowState = remember { mutableStateOf(false) }
+fun PushSettingItem(
+    notification: Boolean
+) {
+    val pushAllowState = remember { mutableStateOf(notification) }
 
     Box(
         modifier = Modifier

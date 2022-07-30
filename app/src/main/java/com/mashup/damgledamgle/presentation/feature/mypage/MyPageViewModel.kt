@@ -2,7 +2,11 @@ package com.mashup.damgledamgle.presentation.feature.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.damgledamgle.presentation.feature.mypage.model.UserProfile
+import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.usecase.user.GetUserProfileUserCase
+import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.feature.mypage.model.UserProfileModel
+import com.mashup.damgledamgle.presentation.feature.mypage.model.mapper.UserProfileMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,9 +22,12 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor(): ViewModel() {
-    private val _userProfile = MutableStateFlow<UserProfile?>(null)
-    val userProfile: StateFlow<UserProfile?> = _userProfile.asStateFlow()
+class MyPageViewModel @Inject constructor(
+    private val getUserProfileUserCase: GetUserProfileUserCase,
+    private val userProfileMapper: UserProfileMapper,
+): ViewModel() {
+    private val _userProfileState = MutableStateFlow<ViewState<UserProfileModel>>(ViewState.Loading)
+    val userProfileState: StateFlow<ViewState<UserProfileModel>> = _userProfileState.asStateFlow()
 
     init {
         getUserProfileInfo()
@@ -28,7 +35,10 @@ class MyPageViewModel @Inject constructor(): ViewModel() {
 
     private fun getUserProfileInfo() {
         viewModelScope.launch {
-            _userProfile.emit(UserProfile("user id", "솜사탕씻은 너구리", true)) // 임시데이터
+            when(val result = getUserProfileUserCase()) {
+                is NetworkResponse.Success -> _userProfileState.emit(ViewState.Success(userProfileMapper.mapToModel(result.data)))
+                is NetworkResponse.Error -> _userProfileState.emit(ViewState.Error(result.exception.message.toString()))
+            }
         }
     }
 }
