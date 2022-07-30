@@ -3,6 +3,7 @@ package com.mashup.damgledamgle.repository.network
 import com.mashup.damgledamgle.repository.spec.NickNameRequest
 import com.mashup.damgledamgle.repository.spec.NickNameResponse
 import com.mashup.damgledamgle.repository.spec.PickNickNameRequest
+import com.mashup.damgledamgle.repository.spec.UserProfileResponse
 import com.mashup.damgledamgle.repository.spec.UserResponse
 import retrofit2.http.*
 
@@ -35,4 +36,10 @@ interface DamgleApi {
      */
     @POST("/v1/auth/signup")
     suspend fun signUp(@Body request: NickNameRequest): UserResponse
+
+    /**
+     * Auth - Me : 내 정보
+     */
+    @GET("/v1/auth/me")
+    suspend fun getUserProfile(): UserProfileResponse
 }

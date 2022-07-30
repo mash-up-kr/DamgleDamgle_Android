@@ -23,7 +23,9 @@ import com.mashup.damgledamgle.ui.theme.Gray600
  */
 
 @Composable
-fun TabSettingPage() {
+fun TabSettingPage(
+    notification: Boolean
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
@@ -35,7 +37,7 @@ fun TabSettingPage() {
                 contentDescription = "Orange Gradient Background",
             )
 
-            PushSettingItem()
+            PushSettingItem(notification)
         }
 
         Text(
@@ -54,5 +56,5 @@ fun TabSettingPage() {
 @Composable
 @Preview(showSystemUi = true)
 fun PreviewTabSettingPage() {
-    TabSettingPage()
+    TabSettingPage(true)
 }
