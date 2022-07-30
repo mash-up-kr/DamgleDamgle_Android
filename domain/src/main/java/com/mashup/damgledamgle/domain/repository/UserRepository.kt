@@ -12,4 +12,5 @@ import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 
 interface UserRepository {
     suspend fun getUserProfile(): NetworkResponse<UserProfile>
+    suspend fun deleteUserProfile(): NetworkResponse<String>
 }

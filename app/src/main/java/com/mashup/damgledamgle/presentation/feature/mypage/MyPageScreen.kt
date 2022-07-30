@@ -18,6 +18,7 @@ import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
 import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.ui.theme.Orange500
+import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 /**
  *  MyPageScreen.kt
@@ -31,7 +32,11 @@ fun MyPageScreen(navController: NavHostController) {
     var currentPage by remember { mutableStateOf(TabPage.MyDamgle) }
     val myPageViewModel: MyPageViewModel = hiltViewModel()
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Grey500)
+    ) {
         when (val profile = myPageViewModel.userProfileState.collectAsState().value) {
             is ViewState.Loading -> {
                 CircularProgressIndicator(
@@ -66,7 +71,7 @@ fun MyPageScreen(navController: NavHostController) {
 
                     when (currentPage) {
                         TabPage.MyDamgle -> TabMyDamglePage()
-                        TabPage.Setting -> TabSettingPage(profile.data.notification)
+                        TabPage.Setting -> TabSettingPage(navController, profile.data.notification)
                     }
                 }
             }
@@ -86,6 +91,7 @@ fun MyProfile(userName: String?) {
 
     Text(
         text = userName ?: "",
-        modifier = Modifier.padding(top = 8.dp)
+        modifier = Modifier.padding(top = 8.dp),
+        style = pretendardTextStyle.bodyMedium13
     )
 }

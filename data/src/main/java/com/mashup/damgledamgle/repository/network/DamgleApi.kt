@@ -1,10 +1,6 @@
 package com.mashup.damgledamgle.repository.network
 
-import com.mashup.damgledamgle.repository.spec.NickNameRequest
-import com.mashup.damgledamgle.repository.spec.NickNameResponse
-import com.mashup.damgledamgle.repository.spec.PickNickNameRequest
-import com.mashup.damgledamgle.repository.spec.UserProfileResponse
-import com.mashup.damgledamgle.repository.spec.UserResponse
+import com.mashup.damgledamgle.repository.spec.*
 import retrofit2.http.*
 
 /**
@@ -42,4 +38,7 @@ interface DamgleApi {
      */
     @GET("/v1/auth/me")
     suspend fun getUserProfile(): UserProfileResponse
+
+    @DELETE("v1/auth/deleteme")
+    suspend fun deleteMe(): UserDeleteResponse
 }
