@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val serviceBuilder: ServiceBuilder,
-    private val userMapper: UserProfileMapper
-    ): UserRepository {
+    private val userMapper: UserProfileMapper,
+): UserRepository {
 
     private val damgleApi by lazy { serviceBuilder.buildService<DamgleApi>() }
 
@@ -26,6 +26,15 @@ class UserRepositoryImpl @Inject constructor(
         return try {
             val resultData = damgleApi.getUserProfile()
             NetworkResponse.Success(userMapper.mapToEntity(resultData))
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
+    override suspend fun deleteUserProfile(): NetworkResponse<String> {
+        return try {
+            val resultData = damgleApi.deleteMe()
+            NetworkResponse.Success(resultData.message)
         } catch (e: Exception) {
             NetworkResponse.Error(e)
         }
