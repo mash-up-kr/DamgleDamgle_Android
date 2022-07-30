@@ -28,8 +28,7 @@ class MyPageViewModel @Inject constructor(): ViewModel() {
 
     private fun getUserProfileInfo() {
         viewModelScope.launch {
-            // TODO(minji): 앱 내 영역에 사용자 아이디 및 닉네임 저장하기
-            _userProfile.emit(UserProfile("user id", "솜사탕씻은 너구리")) // 임시데이터
+            _userProfile.emit(UserProfile("user id", "솜사탕씻은 너구리", true)) // 임시데이터
         }
     }
 }
