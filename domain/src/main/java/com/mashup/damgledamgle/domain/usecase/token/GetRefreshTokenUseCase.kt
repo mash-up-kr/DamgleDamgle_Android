@@ -4,16 +4,16 @@ import com.mashup.damgledamgle.domain.repository.TokenRepository
 import javax.inject.Inject
 
 /**
- *  SetTokenUseCase.kt
+ *  GetRefreshTokenUseCase.kt
  *
  *  Created by Minji Jeong on 2022/07/30
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
-class SetTokenUseCase @Inject constructor(
+class GetRefreshTokenUseCase @Inject constructor(
     private val tokenRepository: TokenRepository
-){
-    operator fun invoke(accessToken: String, refreshToken: String) {
-        tokenRepository.setToken(accessToken, refreshToken)
+) {
+    operator fun invoke(): String {
+        return tokenRepository.getRefreshToken()
     }
 }

@@ -30,7 +30,7 @@ class SplashViewModel @Inject constructor(
 
     private fun getIsUserRegistered() {
         viewModelScope.launch {
-            _isUserRegistered.value = getIsUserRegisteredUseCase()
+            _isUserRegistered.emit(getIsUserRegisteredUseCase())
         }
     }
 }

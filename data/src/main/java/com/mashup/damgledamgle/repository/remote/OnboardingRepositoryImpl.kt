@@ -40,9 +40,9 @@ class OnboardingRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signUp(nickName: String): NetworkResponse<User> {
+    override suspend fun signUp(nickName: String, notification: Boolean): NetworkResponse<User> {
         return try {
-            val resultData = damgleApi.signUp(NickNameRequest(nickName))
+            val resultData = damgleApi.signUp(NickNameRequest(nickName, notification))
             NetworkResponse.Success(authMapper.mapToEntity(resultData))
         } catch (e: Exception) {
             NetworkResponse.Error(e)

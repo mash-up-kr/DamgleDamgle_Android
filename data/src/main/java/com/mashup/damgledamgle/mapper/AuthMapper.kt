@@ -16,7 +16,7 @@ class AuthMapper @Inject constructor() {
         return User(
             nickName = spec.nickName,
             userNo = spec.userNo,
-            token = spec.accessToken,
+            accessToken = spec.accessToken,
             refreshToken = spec.refreshToken
         )
     }

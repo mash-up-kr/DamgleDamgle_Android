@@ -19,15 +19,22 @@ class TokenRepositoryImpl @Inject constructor(
         context.getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE)
 
     override fun getToken(): String {
-        return prefs.getString(KEY_TOKEN, "") ?: ""
+        return prefs.getString(KEY_ACCESS_TOKEN, "") ?: ""
     }
 
-    override fun setToken(token: String) {
-        prefs.edit().putString(KEY_TOKEN, token).apply()
+    override fun getRefreshToken(): String {
+        return prefs.getString(KEY_REFRESH_TOKEN, "") ?: ""
+    }
+
+    override fun setToken(accessToken: String, refreshToken: String) {
+        prefs.edit().putString(KEY_ACCESS_TOKEN, accessToken).apply()
+        prefs.edit().putString(KEY_REFRESH_TOKEN, accessToken).apply()
     }
 
     companion object {
         private const val PREFERENCE_FILE_NAME = "DamgleDamgle"
-        private const val KEY_TOKEN = "KEY_TOKEN"
+
+        private const val KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN"
+        private const val KEY_REFRESH_TOKEN = "KEY_REFRESH_TOKEN"
     }
 }

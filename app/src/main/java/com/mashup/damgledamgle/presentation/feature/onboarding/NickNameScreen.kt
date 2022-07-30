@@ -32,7 +32,8 @@ import com.mashup.damgledamgle.ui.theme.*
 
 @Composable
 fun NickNameScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    notification: Boolean
 ) {
     val context = LocalContext.current
     val viewModel: OnboardingViewModel = hiltViewModel()
@@ -101,7 +102,7 @@ fun NickNameScreen(
                             .background(Orange500)
                             .fillMaxWidth()
                             .height(64.dp)
-                            .clickable { viewModel.signUp(viewModel.nickName.value.fullName) }
+                            .clickable { viewModel.signUp(viewModel.nickName.value.fullName, notification) }
                             .padding(vertical = 20.dp),
                         style = pretendardTextStyle.bodyMedium18,
                         color = White

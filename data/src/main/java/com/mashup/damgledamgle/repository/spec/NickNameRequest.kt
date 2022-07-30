@@ -10,5 +10,6 @@ import com.squareup.moshi.Json
  */
 
 data class NickNameRequest(
-    @Json(name = "nickname") val nickName: String
+    @Json(name = "nickname") val nickName: String,
+    @Json(name = "notification") val notification: Boolean
 )

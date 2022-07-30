@@ -9,5 +9,6 @@ package com.mashup.damgledamgle.domain.repository
 
 interface TokenRepository {
     fun getToken(): String
-    fun setToken(token: String)
+    fun getRefreshToken(): String
+    fun setToken(accessToken: String, refreshToken: String)
 }

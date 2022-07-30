@@ -10,6 +10,6 @@ package com.mashup.damgledamgle.domain.entity
 data class User(
     val nickName: String,
     val userNo: Int,
-    val token: String,
+    val accessToken: String,
     val refreshToken: String,
 )

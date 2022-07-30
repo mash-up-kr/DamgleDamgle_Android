@@ -17,10 +17,10 @@ class SignUpUseCase @Inject constructor(
     private val onboardingRepository: OnboardingRepository,
     private val setTokenUseCase: SetTokenUseCase
 ) {
-    suspend operator fun invoke(nickName: String): NetworkResponse<User> {
-        val result = onboardingRepository.signUp(nickName)
+    suspend operator fun invoke(nickName: String, notification: Boolean): NetworkResponse<User> {
+        val result = onboardingRepository.signUp(nickName, notification)
         if (result is NetworkResponse.Success) {
-            setTokenUseCase.invoke(result.data.token)
+            setTokenUseCase(result.data.accessToken, result.data.refreshToken)
         }
 
         return result

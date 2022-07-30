@@ -1,6 +1,8 @@
 package com.mashup.damgledamgle.repository.network
 
+import android.util.Log
 import com.mashup.damgledamgle.data.BuildConfig
+import com.mashup.damgledamgle.domain.usecase.token.GetRefreshTokenUseCase
 import com.mashup.damgledamgle.domain.usecase.token.GetTokenUseCase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -22,7 +24,8 @@ import javax.inject.Inject
  */
 
 class ServiceBuilder @Inject constructor(
-    private val getTokenUseCase: GetTokenUseCase
+    private val getTokenUseCase: GetTokenUseCase,
+    private val getRefreshTokenUseCase: GetRefreshTokenUseCase
 ) {
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
@@ -35,7 +38,10 @@ class ServiceBuilder @Inject constructor(
 
     private val authInterceptor = object : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
-            val token = getTokenUseCase.invoke()
+            val token = getTokenUseCase()
+            val refreshToken = getRefreshTokenUseCase()
+
+            Log.d("TAG", "TOKEN: $token, REFRESH_TOKEN: $refreshToken")
 
             val request = chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")

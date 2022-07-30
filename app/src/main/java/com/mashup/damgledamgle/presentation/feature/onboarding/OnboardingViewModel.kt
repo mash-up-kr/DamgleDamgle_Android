@@ -65,22 +65,28 @@ class OnboardingViewModel @Inject constructor(
     }
 
     private fun setNickName(result: NetworkResponse<NickName>) {
-        when (result) {
-            is NetworkResponse.Success -> {
-                nickName.value = nickNameMapper.mapToModel(result.data)
-                _uiState.value = ViewState.Success(null)
-            }
-            is NetworkResponse.Error -> {
-                _uiState.value = ViewState.Error(result.exception.message.toString())
+        viewModelScope.launch {
+            when (result) {
+                is NetworkResponse.Success -> {
+                    nickName.value = nickNameMapper.mapToModel(result.data)
+                    _uiState.emit(ViewState.Success(null))
+                }
+                is NetworkResponse.Error -> {
+                    _uiState.emit(ViewState.Error(result.exception.message.toString()))
+                }
             }
         }
     }
 
-    fun signUp(nickName: String) {
+    fun signUp(nickName: String, notification: Boolean) {
         viewModelScope.launch {
-            when(val result = signUpUseCase.invoke(nickName)) {
-                is NetworkResponse.Success -> _authState.value = ViewState.Success(result.data)
-                is NetworkResponse.Error -> _authState.value = ViewState.Error(result.exception.message.toString())
+            when(val result = signUpUseCase("물에빠진 두번째 병아리", notification)) {
+                is NetworkResponse.Success -> {
+                    _authState.emit(ViewState.Success(result.data))
+                }
+                is NetworkResponse.Error -> {
+                    _authState.emit(ViewState.Error(result.exception.message.toString()))
+                }
             }
         }
     }

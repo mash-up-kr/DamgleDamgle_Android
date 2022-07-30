@@ -53,6 +53,7 @@ fun OnboardingScreen(navController: NavHostController) {
             permission = Manifest.permission.ACCESS_FINE_LOCATION
         )
     } else {
-        NickNameScreen(navController)
+        // 현재 안드로이드는 Notification 퍼미션을 받지 않아서 회원가입 할 때는 무조건 true
+        NickNameScreen(navController, true)
     }
 }

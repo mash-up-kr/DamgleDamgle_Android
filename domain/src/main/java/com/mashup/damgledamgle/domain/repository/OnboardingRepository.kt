@@ -13,5 +13,5 @@ import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 
 interface OnboardingRepository {
     suspend fun getNickName(adjective: String? = null, noun: String? = null): NetworkResponse<NickName>
-    suspend fun signUp(nickName: String): NetworkResponse<User>
+    suspend fun signUp(nickName: String, notification: Boolean): NetworkResponse<User>
 }
