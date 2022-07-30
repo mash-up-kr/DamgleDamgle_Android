@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -41,50 +42,51 @@ fun HomeScreen(navController: NavHostController) {
     val currentLocation = LocationManager.getMyLocation(mContext)
     currentLocation?.let { latLng ->
         cameraPositionState.move(CameraUpdate.scrollTo(latLng)) }
-
-    BottomSheetScaffold(
-        topBar = {
-            MainToolBar(
-                title = currentLocation?.let { convertMyLocationToAddress(it, mContext) }
-            ) { navController.navigate(Screen.Mypage.route) }
-        },
-        sheetBackgroundColor = Color.Gray,
-        sheetShape = RoundedCornerShape(
-            topStart = 24.dp,
-            topEnd = 24.dp
-        ),
-        sheetContent = {
-            BottomSheetContent(bottomSheetScaffoldState)
-        },
-        sheetPeekHeight = 100.dp,
-        scaffoldState = bottomSheetScaffoldState,
-        floatingActionButton = {
-            Spacer(modifier = Modifier.height(240.dp))
-            FloatingActionButton(
-                fabIcon = R.drawable.ic_refresh,
-                description = "refresh_btn",
-                modifier = Modifier.size(48.dp, 48.dp),
-                onClick = {
-                    /**
-                     * 위치랑 서버 새로고침 로띠,
-                     */
-                }
-            )
-            FloatingActionButton(
-                fabIcon = R.drawable.ic_location_point,
-                description = "location_btn",
-                modifier = Modifier
-                    .paddingFromBaseline(56.dp)
-                    .size(48.dp, 48.dp),
-                onClick = {
-                    currentLocation?.let { latLng ->
-                        cameraPositionState.move(CameraUpdate.scrollTo(latLng))
+    Scaffold {
+        BottomSheetScaffold(
+            topBar = {
+                MainToolBar(
+                    title = currentLocation?.let { convertMyLocationToAddress(it, mContext) }
+                ) { navController.navigate(Screen.Mypage.route) }
+            },
+            sheetBackgroundColor = Color.Gray,
+            sheetShape = RoundedCornerShape(
+                topStart = 24.dp,
+                topEnd = 24.dp
+            ),
+            sheetContent = {
+                BottomSheetContent(bottomSheetScaffoldState)
+            },
+            sheetPeekHeight = 100.dp,
+            scaffoldState = bottomSheetScaffoldState,
+            floatingActionButton = {
+                Spacer(modifier = Modifier.height(240.dp))
+                FloatingActionButton(
+                    fabIcon = R.drawable.ic_refresh,
+                    description = "refresh_btn",
+                    modifier = Modifier.size(48.dp, 48.dp),
+                    onClick = {
+                        /**
+                         * 위치랑 서버 새로고침 로띠,
+                         */
                     }
-                }
-            )
+                )
+                FloatingActionButton(
+                    fabIcon = R.drawable.ic_location_point,
+                    description = "location_btn",
+                    modifier = Modifier
+                        .paddingFromBaseline(56.dp)
+                        .size(48.dp, 48.dp),
+                    onClick = {
+                        currentLocation?.let { latLng ->
+                            cameraPositionState.move(CameraUpdate.scrollTo(latLng))
+                        }
+                    }
+                )
+            }
+        ) {
+            MapScreen(cameraPositionState)
         }
-    ) {
-        MapScreen(cameraPositionState)
     }
 }
 

@@ -74,6 +74,9 @@ dependencies {
     // Compose Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // Lottie
+    implementation "com.airbnb.android:lottie-compose:$lottie_version"
+
     // System UI Library
     implementation "com.google.accompanist:accompanist-systemuicontroller:$system_ui_version"
 

@@ -12,5 +12,10 @@ ext {
     lifecycle_version = "2.6.0-alpha01"
     lottie_version = "5.2.0"
     room_version = "2.4.2"
+    retrofit_version = "2.9.0"
+    okhttp_version = "4.3.1"
+    moshi_version = "1.9.3"
+    lottie_version = "5.2.0"
+
 }
 
