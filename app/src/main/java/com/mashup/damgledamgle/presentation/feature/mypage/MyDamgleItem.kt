@@ -27,7 +27,7 @@ import com.mashup.damgledamgle.ui.theme.Orange500
  *  MyDamgleItem.kt
  *
  *  Created by Minji Jeong on 2022/07/12
- *  Copyright © 2022 GwanakMT All rights reserved.
+ *  Copyright © 2022 MashUp All rights reserved.
  */
 
 @Composable
