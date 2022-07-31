@@ -34,9 +34,9 @@ fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(currentFrame) {
         if (currentFrame != null && currentFrame >= 89.90) {
             if (viewModel.isUserRegistered.value == true) {
-                navController.navigate("home_screen")
+                navController.navigate("home_screen") { popUpTo(0) }
             } else {
-                navController.navigate("onboarding_screen")
+                navController.navigate("onboarding_screen") { popUpTo(0) }
             }
         }
     }
