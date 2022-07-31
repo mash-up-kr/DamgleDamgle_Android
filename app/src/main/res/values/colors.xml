@@ -8,6 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="damgle_default_black">#212121</color>
+    <color name="damgle_main_orange">#FE6900</color>
+    <color name="damgle_light_green">#DAF96F</color>
+
     <!-- MAIN -->
     <color name="orange500">#FE6900</color>
     <color name="yellow">#DBFD56</color>
@@ -26,4 +30,5 @@
     <color name="gray700">#818181</color>
     <color name="gray600">#9E9E9E</color>
     <color name="gray400">#E0E0E0</color>
+
 </resources>
