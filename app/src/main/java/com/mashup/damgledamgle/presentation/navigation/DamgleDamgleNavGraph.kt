@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
 import com.mashup.damgledamgle.presentation.feature.leave_story.LeaveStoryScreen
+import com.mashup.damgledamgle.presentation.feature.mypage.MyPageScreen
 import com.mashup.damgledamgle.presentation.feature.onboarding.OnboardingScreen
 import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 import com.mashup.damgledamgle.ui.theme.Black
