@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import com.mashup.damgledamgle.ui.theme.White
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
@@ -38,8 +39,9 @@ fun MainToolBar(title: String?, action: () -> Unit,) {
                 }
                 IconButton(
                     onClick = action,
-                    modifier = Modifier.align(Alignment.CenterEnd)) {
-                    Icon(painterResource(id = R.drawable.ic_mypage),"MyPage")
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                ) {
+                    Icon(painterResource(id = R.drawable.ic_mypage),"MyPage", tint = White)
                 }
             }
         },

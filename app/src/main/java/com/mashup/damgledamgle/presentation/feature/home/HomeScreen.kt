@@ -83,7 +83,7 @@ fun HomeScreen(navController: NavHostController) {
                 )
             }
         ) {
-            MapScreen(cameraPositionState)
+            MapScreen(navController, cameraPositionState)
         }
     }
 }
