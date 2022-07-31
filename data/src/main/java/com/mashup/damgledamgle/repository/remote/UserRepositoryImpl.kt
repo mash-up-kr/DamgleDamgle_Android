@@ -1,8 +1,10 @@
 package com.mashup.damgledamgle.repository.remote
 
+import com.mashup.damgledamgle.domain.entity.Damgle
 import com.mashup.damgledamgle.domain.entity.UserProfile
 import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 import com.mashup.damgledamgle.domain.repository.UserRepository
+import com.mashup.damgledamgle.mapper.DamgleMapper
 import com.mashup.damgledamgle.mapper.UserProfileMapper
 import com.mashup.damgledamgle.repository.network.DamgleApi
 import com.mashup.damgledamgle.repository.network.ServiceBuilder

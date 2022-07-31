@@ -37,15 +37,17 @@ fun MyPageScreen(navController: NavHostController) {
             .fillMaxSize()
             .background(Grey500)
     ) {
-        when (val profile = myPageViewModel.userProfileState.collectAsState().value) {
+        when (myPageViewModel.uiState.collectAsState(initial = ViewState.Loading).value) {
             is ViewState.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                     color = Orange500
                 )
             }
-
             is ViewState.Success -> {
+                val profile = myPageViewModel.userProfileState.collectAsState().value as ViewState.Success
+                val myDamgleList = myPageViewModel.myDamgleListState.collectAsState().value as ViewState.Success
+
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -70,7 +72,7 @@ fun MyPageScreen(navController: NavHostController) {
                     )
 
                     when (currentPage) {
-                        TabPage.MyDamgle -> TabMyDamglePage()
+                        TabPage.MyDamgle -> TabMyDamglePage(navController, myDamgleList.data)
                         TabPage.Setting -> TabSettingPage(navController, profile.data.notification)
                     }
                 }

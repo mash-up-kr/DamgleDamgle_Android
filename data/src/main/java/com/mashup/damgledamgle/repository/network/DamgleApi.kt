@@ -41,4 +41,10 @@ interface DamgleApi {
 
     @DELETE("v1/auth/deleteme")
     suspend fun deleteMe(): UserDeleteResponse
+
+    /**
+     * Story - me : 내 담글 조회
+     */
+    @GET("v1/story/me")
+    suspend fun getMyDamgleList(): DamgleListResponse
 }
