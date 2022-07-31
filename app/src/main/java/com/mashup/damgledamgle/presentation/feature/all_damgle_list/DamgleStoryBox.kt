@@ -9,12 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.*
+import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryBoxModel
+import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
+import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionBox
 import com.mashup.damgledamgle.ui.theme.*
+import com.mashup.damgledamgle.util.TimeUtil.getFormattedTimeDiff
 
 @Composable
 fun DamgleStoryBox(
-    reactionBoxState: ReactionBoxState,
+    damgleStoryBoxState: DamgleStoryBoxModel,
     onClickNowReaction: () -> Unit,
     onClickReaction: (Reaction) -> Unit,
 ) {
@@ -24,8 +27,7 @@ fun DamgleStoryBox(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = "MAPOGU\n" +
-                    "YANGHWARO",
+            text = damgleStoryBoxState.placeName,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Gray1000
@@ -33,14 +35,15 @@ fun DamgleStoryBox(
         Spacer(modifier = Modifier.height(7.dp))
         Row(modifier = Modifier.height(16.dp)) {
             Text(
-                text = "말많은 11번째 코알라",
+                text = damgleStoryBoxState.writer,
                 fontSize = 13.sp
             )
-            Text(
-                text = " · ME",
-                fontWeight = FontWeight.Bold,
-                fontSize = 13.sp
-            )
+            if (damgleStoryBoxState.isMine)
+                Text(
+                    text = " · ME",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 13.sp
+                )
             Spacer(modifier = Modifier.width(8.dp))
             Divider(
                 color = Gray800,
@@ -51,7 +54,7 @@ fun DamgleStoryBox(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "5분전",
+                text = getFormattedTimeDiff(damgleStoryBoxState.dateTime),
                 color = Yellow,
                 fontSize = 13.sp
             )
@@ -59,21 +62,29 @@ fun DamgleStoryBox(
         Spacer(modifier = Modifier.height(16.dp))
         Card(
             modifier = Modifier
-                .height(320.dp)
-                .fillMaxWidth(),
+                .height(348.dp)
+                .width(335.dp),
             shape = RoundedCornerShape(8.dp),
             backgroundColor = Gray400
         ) {
-            Text(
-                text = "안녕하세요! 오늘은 이 카페에서 공감해조팀에서 회의를 하였어요~~ 다들 여기서 팀플해도 좋을듯용~~! 주인이 카공해도 뭐라고 안함~~참고하세요~~~!! 지금 넘 졸린데 오늘 일찍 자고 싶어서 커피를 마시지 않고 버틸 거에요~!!",
-                fontSize = 16.sp,
-                maxLines = 6,
-                modifier = Modifier.padding(end = 24.dp, start = 24.dp, top = 24.dp),
-            )
+            Column {
+                Text(
+                    text = damgleStoryBoxState.content,
+                    fontSize = 16.sp,
+                    maxLines = 6,
+                    modifier = Modifier
+                        .padding(end = 24.dp, start = 24.dp, top = 24.dp)
+                        .weight(1f),
+                )
+                DamgleStoryReactionBox(
+                    modifier = Modifier,
+                    damgleStoryBoxState.reactions
+                )
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
         ReactionBox(
-            reactionBoxState,
+            damgleStoryBoxState.reactionBoxState,
             { onClickNowReaction() },
             { reaction -> onClickReaction(reaction) }
         )

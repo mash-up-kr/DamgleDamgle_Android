@@ -80,7 +80,7 @@ fun AllDamgleListScreen(navController: NavHostController, viewModel: AllDamgleLi
                         }
                         Spacer(modifier = Modifier.height(24.dp))
                     }
-                    viewModel.reactionBoxState.forEach { boxState ->
+                    viewModel.damgleBoxState.forEach { boxState ->
                         item {
                             DamgleStoryBox(
                                 boxState.value,
