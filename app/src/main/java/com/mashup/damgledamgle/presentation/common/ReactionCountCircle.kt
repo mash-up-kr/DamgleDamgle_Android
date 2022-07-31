@@ -19,18 +19,18 @@ import com.mashup.damgledamgle.ui.theme.Yellow
 @Composable
 fun ReactionCountCircleDemo() {
     Row {
-        ReactionCountCircle(0)
-        ReactionCountCircle(1)
-        ReactionCountCircle(99)
-        ReactionCountCircle(10000)
+        ReactionCountCircle(count = 0)
+        ReactionCountCircle(count = 1)
+        ReactionCountCircle(count = 99)
+        ReactionCountCircle(count = 10000)
     }
 }
 
 @Composable
-fun ReactionCountCircle(count: Int, modifier: Modifier = Modifier) {
+fun ReactionCountCircle(modifier: Modifier = Modifier, count: Int) {
     if (count == 0) return
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(24.dp)
             .clip(CircleShape)
             .background(Yellow)
