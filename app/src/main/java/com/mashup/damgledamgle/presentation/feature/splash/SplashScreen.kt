@@ -14,6 +14,7 @@ import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.StatusBar
 import com.mashup.damgledamgle.ui.theme.Grey500
+import com.mashup.damgledamgle.presentation.navigation.Screen
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
@@ -34,9 +35,9 @@ fun SplashScreen(navController: NavHostController) {
     LaunchedEffect(currentFrame) {
         if (currentFrame != null && currentFrame >= 89.90) {
             if (viewModel.isUserRegistered.value == true) {
-                navController.navigate("home_screen") { popUpTo(0) }
+                navController.navigate(Screen.Home.route) { popUpTo(0) }
             } else {
-                navController.navigate("onboarding_screen"){ popUpTo(0) }
+                navController.navigate(Screen.Onboarding.route){ popUpTo(0) }
             }
         }
     }

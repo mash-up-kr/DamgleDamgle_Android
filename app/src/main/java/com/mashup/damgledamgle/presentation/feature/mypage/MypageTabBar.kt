@@ -11,9 +11,11 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.unit.dp
+import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
 import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.Grey500
@@ -31,6 +33,8 @@ fun MyPageTabBar(
     tabPage: TabPage,
     onTabSelected: (tabPage: TabPage) -> Unit
 ) {
+    val context = LocalContext.current
+
     TabRow(
         selectedTabIndex = tabPage.ordinal,
         backgroundColor = Grey500,
@@ -41,13 +45,13 @@ fun MyPageTabBar(
         divider = {},
     ) {
         Tab(
-            title = "내 담글",
+            title = context.getString(R.string.mypage_tab_mydamgle),
             isSelected = tabPage.ordinal == TabPage.MyDamgle.ordinal,
             onClick = { onTabSelected(TabPage.MyDamgle) }
         )
 
         Tab(
-            title = "설정",
+            title = context.getString(R.string.mypage_tab_setting),
             isSelected = tabPage.ordinal == TabPage.Setting.ordinal,
             onClick = { onTabSelected(TabPage.Setting) }
         )
