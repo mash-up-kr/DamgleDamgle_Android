@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.MainActivity
 import com.mashup.damgledamgle.R
@@ -36,12 +37,18 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val mContext = LocalContext.current
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+    val viewmodel : HomeViewModel = hiltViewModel()
 
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val cameraPositionState = rememberCameraPositionState()
     val currentLocation = LocationManager.getMyLocation(mContext)
     currentLocation?.let { latLng ->
         cameraPositionState.move(CameraUpdate.scrollTo(latLng)) }
+
+    viewmodel.getNaverGeocode(
+        "${currentLocation?.longitude},${currentLocation?.latitude}"
+    )
+
     Scaffold {
         BottomSheetScaffold(
             topBar = {

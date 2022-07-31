@@ -70,7 +70,19 @@ class ServiceBuilder @Inject constructor(
             .build()
     }
 
+    val naverRetrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://naveropenapi.apigw.ntruss.com/")
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .client(client)
+            .build()
+    }
+
     inline fun <reified T> buildService(): T {
         return retrofit.create(T::class.java)
+    }
+
+    inline fun <reified T> naverBuildService(): T {
+        return naverRetrofit.create(T::class.java)
     }
 }

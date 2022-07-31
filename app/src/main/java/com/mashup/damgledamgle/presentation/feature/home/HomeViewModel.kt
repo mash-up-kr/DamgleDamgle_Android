@@ -2,15 +2,30 @@ package com.mashup.damgledamgle.presentation.feature.home
 
 import android.icu.util.Calendar
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.data.BuildConfig
+import com.mashup.damgledamgle.domain.entity.GeoResult
+import com.mashup.damgledamgle.domain.entity.NickName
+import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.usecase.home.GetNaverGeocodeUseCase
+import com.mashup.damgledamgle.domain.usecase.onboarding.GetRandomNickNameUseCase
+import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.map.MarkerInfo
 import com.mashup.damgledamgle.presentation.feature.home.timer.TimeUtil
+import com.mashup.damgledamgle.presentation.feature.onboarding.model.mapper.NickNameMapper
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getNaverGeocodeUseCase: GetNaverGeocodeUseCase)
+    : ViewModel() {
 
     private var countDownTimer: CountDownTimer? = null
     var totalDiffTime = 0L
@@ -71,6 +86,24 @@ class HomeViewModel : ViewModel() {
 
     private fun pauseTimer() {
         countDownTimer?.cancel()
+    }
+
+    private val _geocode = MutableLiveData("")
+    val geocode: LiveData<String> = _geocode
+
+    fun getNaverGeocode(coords : String) {
+        viewModelScope.launch {
+            val result = getNaverGeocodeUseCase.invoke(coords)
+            when(result) {
+                is NetworkResponse.Success -> {
+                    Log.d("naverResult", result.data.toString())
+                    _geocode.value = "${result.data.region.area3} ${result.data.land.name}"
+                }
+                is NetworkResponse.Error -> {
+                    Log.d("naverResult", result.toString())
+                }
+            }
+        }
     }
 
 

@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeMarkerCustomBitmap
@@ -22,11 +23,9 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
 
-val homeViewModel = HomeViewModel()
 @Composable
 fun MapScreen(cameraPositionState: CameraPositionState) {
     val mContext = LocalContext.current
-
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
@@ -47,7 +46,6 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
         cameraPositionState = cameraPositionState,
         mapProperties = mapProperties,
         mapUiSettings = mapUiSettings,
-        homeViewModel.getMakerList(),
         mContext
     )
 }
@@ -59,9 +57,9 @@ fun MapContent(
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
-    list: ArrayList<MarkerInfo>,
     mContext: Context
 ) {
+    val homeViewModel : HomeViewModel = hiltViewModel()
 
     Box(Modifier.fillMaxSize()) {
         NaverMap(
@@ -76,7 +74,7 @@ fun MapContent(
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
             }
 
-            list.forEach { markerInfo ->
+            homeViewModel.getMakerList().forEach { markerInfo ->
                 val icons = markerInfo.resId
                 val latitude = markerInfo.latitude
                 val longitude = markerInfo.longitude
@@ -95,13 +93,13 @@ fun MapContent(
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
         ) {
-            CheckDamgleTime()
+            CheckDamgleTime(homeViewModel = homeViewModel)
         }
     }
 }
 
 @Composable
-fun CheckDamgleTime() {
+fun CheckDamgleTime(homeViewModel: HomeViewModel) {
     val result = homeViewModel.getCalendarLastDay()
     if(result.contains("D"))
         DamgleTimeCheckBox(result, false)

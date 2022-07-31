@@ -10,7 +10,7 @@ android {
 
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    def naver_client_id =properties.getProperty("naver_client_id")
+    def naver_client_id = properties.getProperty("naver_client_id")
 
     defaultConfig {
         applicationId "com.mashup.damgledamgle"
