@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,17 +15,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeMarkerCustomBitmap
 import com.mashup.damgledamgle.presentation.feature.home.timer.DamgleTimeCheckBox
+import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
 
 val homeViewModel = HomeViewModel()
 @Composable
-fun MapScreen(cameraPositionState: CameraPositionState) {
+fun MapScreen(
+    navController: NavHostController,
+    cameraPositionState: CameraPositionState
+) {
     val mContext = LocalContext.current
 
     val mapProperties by remember {
@@ -44,6 +51,7 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
     }
 
     MapContent(
+        navController = navController,
         cameraPositionState = cameraPositionState,
         mapProperties = mapProperties,
         mapUiSettings = mapUiSettings,
@@ -56,6 +64,7 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapContent(
+    navController: NavHostController,
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
@@ -86,6 +95,10 @@ fun MapContent(
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
                     icon = OverlayImage.fromBitmap(makeMarkerCustomBitmap(mContext, icons, isMine, isRead, markerInfo.size)),
+                    onClick = {
+                        navController.navigate(Screen.AllDamgleList.route)
+                        true
+                    }
                 )
             }
 
