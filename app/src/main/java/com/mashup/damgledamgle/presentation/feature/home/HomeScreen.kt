@@ -47,7 +47,7 @@ fun HomeScreen(navController: NavHostController) {
             topBar = {
                 MainToolBar(
                     title = currentLocation?.let { convertMyLocationToAddress(it, mContext) }
-                ) { navController.navigate(Screen.Mypage.route) }
+                ) { navController.navigate(Screen.MyPage.route) }
             },
             sheetBackgroundColor = Color.Gray,
             sheetShape = RoundedCornerShape(
