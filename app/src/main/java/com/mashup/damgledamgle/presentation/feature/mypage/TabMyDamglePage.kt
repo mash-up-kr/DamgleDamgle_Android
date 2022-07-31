@@ -10,7 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
 
 /**
  *  TabMyDamglePage.kt
@@ -20,7 +22,10 @@ import com.mashup.damgledamgle.R
  */
 
 @Composable
-fun TabMyDamglePage() {
+fun TabMyDamglePage(
+    navController: NavHostController?,
+    myDamgleList: List<DamgleModel>
+) {
     Box(
         contentAlignment = Alignment.TopCenter,
     ) {
@@ -33,7 +38,8 @@ fun TabMyDamglePage() {
         // TODO(minji): LazyColumn으로 교체 및 데이터 모델 전달하도록 수정
         val scrollState = rememberScrollState()
         Column(
-            modifier = Modifier.padding(top = 20.dp)
+            modifier = Modifier
+                .padding(top = 20.dp)
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
@@ -47,5 +53,5 @@ fun TabMyDamglePage() {
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewTabDamglePage() {
-    TabMyDamglePage()
+    TabMyDamglePage(null, emptyList())
 }
