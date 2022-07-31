@@ -13,16 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.Gray600
 import com.mashup.damgledamgle.ui.theme.Orange500
+import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 /**
  *  TabSettingPage.kt
@@ -55,14 +55,12 @@ fun TabSettingPage(
             }
 
             Text(
-                text = "서비스 그만 사용하기",
+                text = context.getString(R.string.mypage_delete_user),
                 modifier = Modifier
                     .padding(vertical = 32.dp)
                     .clickable { viewModel.deleteUser() },
-                style = TextStyle(
-                    fontSize = 13.sp,
-                    color = Gray600,
-                ),
+                style = pretendardTextStyle.bodyMedium13,
+                color = Gray600
             )
         }
 
@@ -77,7 +75,7 @@ fun TabSettingPage(
             when (val result = viewModel.deleteUserState.value) {
                 is ViewState.Success -> {
                     Toast.makeText(context, "${result.data}", Toast.LENGTH_SHORT).show()
-                    navController?.navigate("onboarding_screen")
+                    navController?.navigate(Screen.Onboarding.route)
                 }
                 is ViewState.Error -> {
                     Toast.makeText(context, result.error, Toast.LENGTH_SHORT).show()
