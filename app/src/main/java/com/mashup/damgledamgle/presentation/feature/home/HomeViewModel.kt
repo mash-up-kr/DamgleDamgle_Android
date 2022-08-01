@@ -20,6 +20,7 @@ import com.mashup.damgledamgle.presentation.feature.home.timer.TimeUtil
 import com.mashup.damgledamgle.presentation.feature.onboarding.model.mapper.NickNameMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +32,10 @@ class HomeViewModel @Inject constructor(
     var totalDiffTime = 0L
     private val _time = MutableLiveData("")
     val time: LiveData<String> = _time
+
+    private val _oneHourCheck = MutableLiveData(false)
+    val oneHourCheck : LiveData<Boolean> = _oneHourCheck
+
 
     fun getMakerList(): ArrayList<MarkerInfo> {
         val list: ArrayList<MarkerInfo> = arrayListOf()
@@ -74,6 +79,7 @@ class HomeViewModel @Inject constructor(
     fun startTimer() {
         countDownTimer = object : CountDownTimer(totalDiffTime, 1000) {
             override fun onTick(millisRemaining: Long) {
+                _oneHourCheck.value = TimeUnit.MILLISECONDS.toHours(millisRemaining) < 1
                 val hms = TimeUtil.formatTime(millisRemaining)
                 _time.value = hms
             }

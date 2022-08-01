@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.ui.theme.White
+import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 @Composable
 fun MainToolBar(title: String?, action: () -> Unit,) {
@@ -33,7 +34,7 @@ fun MainToolBar(title: String?, action: () -> Unit,) {
                         Text(
                             text = it,
                             color = Color.White,
-                            fontSize = 16.sp,
+                            style = pretendardTextStyle.bodySemibold16,
                             textAlign = TextAlign.Center,
                         )
                     }

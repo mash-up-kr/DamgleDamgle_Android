@@ -18,12 +18,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 @Composable
-fun DamgleTimeCheckBox(restTime : String, oneDay : Boolean) {
+fun DamgleTimeCheckBox(restTime : String, oneHourCheck : Boolean) {
     Card(
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = if(oneDay)
+        backgroundColor = if(oneHourCheck)
             colorResource(id = R.color.damgle_main_orange) else {
             colorResource(id = R.color.damgle_default_black)
         }
@@ -43,13 +44,13 @@ fun DamgleTimeCheckBox(restTime : String, oneDay : Boolean) {
             Text(
                 text = stringResource(id = R.string.home_map_paint_text),
                 Modifier.padding(end = 8.dp),
-                fontSize = 12.sp,
+                style = pretendardTextStyle.bodyMedium13,
                 color = Color.White,
 
             )
             Text(
                 text = restTime,
-                fontSize = 12.sp,
+                style = pretendardTextStyle.bodyBold13,
                 color = colorResource(id = R.color.damgle_light_green)
             )
         }

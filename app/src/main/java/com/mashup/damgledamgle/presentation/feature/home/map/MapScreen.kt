@@ -106,6 +106,7 @@ fun CheckDamgleTime(homeViewModel: HomeViewModel) {
     else {
         homeViewModel.startTimer()
         val time by homeViewModel.time.observeAsState()
-        time?.let { DamgleTimeCheckBox(it, true) }
+        val oneHourCheck by homeViewModel.oneHourCheck.observeAsState()
+        time?.let { oneHourCheck?.let { it1 -> DamgleTimeCheckBox(it, it1) } }
     }
 }
