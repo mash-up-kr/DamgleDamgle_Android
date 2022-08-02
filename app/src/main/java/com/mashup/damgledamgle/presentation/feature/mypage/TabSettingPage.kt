@@ -58,7 +58,10 @@ fun TabSettingPage(
                 text = context.getString(R.string.mypage_delete_user),
                 modifier = Modifier
                     .padding(vertical = 32.dp)
-                    .clickable { viewModel.deleteUser() },
+                    .clickable {
+                        // TODO: 서비스를 그만 사용하실건가요? 다이얼로그
+                        viewModel.deleteUser()
+                    },
                 style = pretendardTextStyle.bodyMedium13,
                 color = Gray600
             )
