@@ -39,8 +39,17 @@ interface DamgleApi {
     @GET("/v1/auth/me")
     suspend fun getUserProfile(): UserProfileResponse
 
+    /**
+     * Auth - Delete Me : 계정 삭제
+     */
     @DELETE("v1/auth/deleteme")
     suspend fun deleteMe(): UserDeleteResponse
+
+    /**
+     * Auth - Notify : 푸시 알림 설정
+     */
+    @PATCH("v1/auth/notify")
+    suspend fun switchNotification(): NotifyResponse
 
     /**
      * Story - me : 내 담글 조회

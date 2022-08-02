@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -14,6 +16,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.DisabledInteractionSource
 import com.mashup.damgledamgle.ui.theme.*
@@ -27,8 +30,9 @@ import com.mashup.damgledamgle.ui.theme.*
 
 @Composable
 fun PushSettingItem(
-    notification: Boolean
+    notification: Boolean,
 ) {
+    val viewModel: MyPageViewModel = hiltViewModel()
     val pushAllowState = remember { mutableStateOf(notification) }
 
     Box(
@@ -70,7 +74,10 @@ fun PushSettingItem(
             Switch(
                 checked = pushAllowState.value,
                 interactionSource = remember { DisabledInteractionSource() },
-                onCheckedChange = { pushAllowState.value = it },
+                onCheckedChange = {
+                    pushAllowState.value = it
+                    viewModel.patchNotificationAllowState()
+                },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Orange500,
                     checkedTrackColor = Gray400,

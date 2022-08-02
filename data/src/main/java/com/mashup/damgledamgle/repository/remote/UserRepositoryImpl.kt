@@ -39,4 +39,13 @@ class UserRepositoryImpl @Inject constructor(
             NetworkResponse.Error(e)
         }
     }
+
+    override suspend fun switchNotification(): NetworkResponse<Boolean> {
+        return try {
+            val resultData = damgleApi.switchNotification()
+            NetworkResponse.Success(resultData.notification)
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
 }
