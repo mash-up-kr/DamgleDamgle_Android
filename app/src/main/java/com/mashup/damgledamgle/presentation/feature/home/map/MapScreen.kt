@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeMarkerCustomBitmap
 import com.mashup.damgledamgle.presentation.feature.home.timer.DamgleTimeCheckBox
 import com.naver.maps.geometry.LatLng
@@ -59,7 +58,7 @@ fun MapContent(
     mapUiSettings: MapUiSettings,
     mContext: Context
 ) {
-    val homeViewModel : HomeViewModel = hiltViewModel()
+    val mapViewModel : MapViewModel = hiltViewModel()
 
     Box(Modifier.fillMaxSize()) {
         NaverMap(
@@ -74,7 +73,7 @@ fun MapContent(
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
             }
 
-            homeViewModel.getMakerList().forEach { markerInfo ->
+            mapViewModel.getMakerList().forEach { markerInfo ->
                 val icons = markerInfo.resId
                 val latitude = markerInfo.latitude
                 val longitude = markerInfo.longitude
@@ -93,20 +92,20 @@ fun MapContent(
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
         ) {
-            CheckDamgleTime(homeViewModel = homeViewModel)
+            CheckDamgleTime(mapViewModel = mapViewModel)
         }
     }
 }
 
 @Composable
-fun CheckDamgleTime(homeViewModel: HomeViewModel) {
-    val result = homeViewModel.getCalendarLastDay()
+fun CheckDamgleTime(mapViewModel: MapViewModel) {
+    val result = mapViewModel.getCalendarLastDay()
     if(result.contains("D"))
         DamgleTimeCheckBox(result, false)
     else {
-        homeViewModel.startTimer()
-        val time by homeViewModel.time.observeAsState()
-        val oneHourCheck by homeViewModel.oneHourCheck.observeAsState()
+        mapViewModel.startTimer()
+        val time by mapViewModel.time.observeAsState()
+        val oneHourCheck by mapViewModel.oneHourCheck.observeAsState()
         time?.let { oneHourCheck?.let { it1 -> DamgleTimeCheckBox(it, it1) } }
     }
 }
