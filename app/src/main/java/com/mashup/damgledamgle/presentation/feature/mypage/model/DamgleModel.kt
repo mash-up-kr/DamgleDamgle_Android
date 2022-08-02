@@ -7,6 +7,7 @@ package com.mashup.damgledamgle.presentation.feature.mypage.model
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
+// TODO: mypage 패키지 말고 다른 곳으로 옮기기
 data class DamgleModel(
     val id: String,
     val userNo: String,
