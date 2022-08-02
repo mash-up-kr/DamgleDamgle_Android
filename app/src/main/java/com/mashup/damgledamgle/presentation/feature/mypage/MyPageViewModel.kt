@@ -6,6 +6,7 @@ import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 import com.mashup.damgledamgle.domain.usecase.user.DeleteUserProfileUseCase
 import com.mashup.damgledamgle.domain.usecase.user.GetMyDamgleListUserCase
 import com.mashup.damgledamgle.domain.usecase.user.GetUserProfileUserCase
+import com.mashup.damgledamgle.domain.usecase.user.PatchNotificationAllowStateUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
 import com.mashup.damgledamgle.presentation.feature.mypage.model.UserProfileModel
@@ -31,6 +32,7 @@ class MyPageViewModel @Inject constructor(
     private val getUserProfileUserCase: GetUserProfileUserCase,
     private val getMyDamgleListUseCase: GetMyDamgleListUserCase,
     private val deleteUserProfileUseCase: DeleteUserProfileUseCase,
+    private val patchNotificationAllowStateUseCase: PatchNotificationAllowStateUseCase,
     private val userProfileMapper: UserProfileMapper,
     private val damgleMapper: DamgleMapper,
 ): ViewModel() {
@@ -95,6 +97,12 @@ class MyPageViewModel @Inject constructor(
                     _deleteUserState.emit(ViewState.Error("회원 탈퇴 실패.."))
                 }
             }
+        }
+    }
+
+    fun patchNotificationAllowState() {
+        viewModelScope.launch {
+            patchNotificationAllowStateUseCase()
         }
     }
 }
