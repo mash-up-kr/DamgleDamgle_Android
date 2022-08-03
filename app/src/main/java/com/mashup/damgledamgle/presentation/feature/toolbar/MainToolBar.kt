@@ -21,23 +21,18 @@ import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 @Composable
 fun MainToolBar(title: String?, action: () -> Unit,) {
 
-    var location by remember {
-        mutableStateOf(title)
-    }
     TopAppBar(
         backgroundColor = colorResource(id = R.color.damgle_default_black),
         title = {
             Box(modifier = Modifier.fillMaxWidth(),
                 Alignment.Center) {
                 if (title != null) {
-                    location?.let {
-                        Text(
-                            text = it,
-                            color = Color.White,
-                            style = pretendardTextStyle.bodySemibold16,
-                            textAlign = TextAlign.Center,
-                        )
-                    }
+                    Text(
+                        text = title,
+                        color = Color.White,
+                        style = pretendardTextStyle.bodySemibold16,
+                        textAlign = TextAlign.Center,
+                    )
                 }
                 IconButton(
                     onClick = action,

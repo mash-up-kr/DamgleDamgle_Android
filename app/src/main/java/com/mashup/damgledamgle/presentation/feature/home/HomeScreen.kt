@@ -32,26 +32,21 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val mContext = LocalContext.current
     val homeViewModel : HomeViewModel = hiltViewModel()
+    val context = LocalContext.current
+
+    val cameraPositionState = rememberCameraPositionState()
+    val currentLocation = LocationManager.getMyLocation(context)
+    currentLocation?.let { CameraUpdate.scrollTo(it) }
+        ?.let { cameraPositionState.move(it) }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
-    val cameraPositionState = rememberCameraPositionState()
-
-    val currentLocation = LocationManager.locationListener(mContext)
-    currentLocation?.let { latLng ->
-        cameraPositionState.move(CameraUpdate.scrollTo(latLng)) }
-
-    homeViewModel.getNaverGeocode(
-        "${currentLocation?.longitude},${currentLocation?.latitude}"
-    )
-
-
+    val locationTitle = homeViewModel.geocode.observeAsState()
     Scaffold {
         BottomSheetScaffold(
             topBar = {
                 MainToolBar(
-                    title = currentLocation?.let { homeViewModel.convertMyLocationToAddress(it, mContext) }
+                    title = locationTitle.value
                 ) { navController.navigate(Screen.MyPage.route) }
             },
             sheetBackgroundColor = Color.Gray,
