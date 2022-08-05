@@ -13,12 +13,16 @@ import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Rea
 @Composable
 fun DamgleStoryBoxReactionsDemo() {
     Column {
-        DamgleStoryReactionBox(reactions = mapOf())
-        DamgleStoryReactionBox(reactions = mapOf(Reaction.BEST to DamgleStoryReactionState(1, 2)))
+//        DamgleStoryReactionBox(reactions = mapOf())
+//        DamgleStoryReactionBox(reactions = mapOf(Reaction.BEST to DamgleStoryReactionState(1, 2)))
+        Spacer(modifier = Modifier.height(200.dp))
         DamgleStoryReactionBox(
             reactions = mapOf(
-                Reaction.BEST to DamgleStoryReactionState(1, 2),
-                Reaction.ANGRY to DamgleStoryReactionState(2, 3)
+                Reaction.BEST to DamgleStoryReactionState(111, 1),
+                Reaction.ANGRY to DamgleStoryReactionState(211, 2),
+                Reaction.LIKE to DamgleStoryReactionState(211, 3),
+                Reaction.AMAZING to DamgleStoryReactionState(211, 4),
+                Reaction.SAD to DamgleStoryReactionState(211, 5)
             )
         )
     }
@@ -28,7 +32,7 @@ fun DamgleStoryBoxReactionsDemo() {
 fun DamgleStoryReactionBox(modifier: Modifier = Modifier, reactions: Map<Reaction, DamgleStoryReactionState>) {
     Box(
         modifier = modifier
-            .height(128.dp)
+            .height(144.dp)
             .width(335.dp),
         contentAlignment = Alignment.Center
     ) {

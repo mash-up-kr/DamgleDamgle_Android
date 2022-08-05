@@ -24,11 +24,11 @@ private val singleReactionCountPosition = mapOf(
 
 val singleReactionSize =
     mapOf(
-        Reaction.AMAZING to 92,
-        Reaction.LIKE to 104,
-        Reaction.ANGRY to 92,
-        Reaction.SAD to 92,
-        Reaction.BEST to 118,
+        Reaction.AMAZING to 92f,
+        Reaction.LIKE to 104f,
+        Reaction.ANGRY to 92f,
+        Reaction.SAD to 92f,
+        Reaction.BEST to 118f,
     )
 
 @Preview
@@ -57,7 +57,7 @@ fun SingleReaction(reaction: Reaction, count: Int) {
                 modifier = Modifier.align(Alignment.Center),
                 reaction = reaction,
                 count = count,
-                reactionSize = singleReactionSize[reaction] ?: 100,
+                reactionSize = singleReactionSize[reaction] ?: 100.0f,
                 countX = singleReactionCountPosition[reaction]?.first ?: 0,
                 countY = singleReactionCountPosition[reaction]?.second ?: 0
             )

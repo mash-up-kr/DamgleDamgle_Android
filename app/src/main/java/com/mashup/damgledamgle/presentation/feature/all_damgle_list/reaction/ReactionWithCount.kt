@@ -17,7 +17,9 @@ import com.mashup.damgledamgle.presentation.common.ReactionCountCircle
 fun ReactionWithCountDemo() {
     Column {
         ReactionWithCount(Modifier, Reaction.BEST, 100, 1, 1)
-        ReactionWithCount(Modifier, Reaction.ANGRY, 11, 100, 100)
+        ReactionWithCount(Modifier, Reaction.BEST, 100, 86, 19)
+        ReactionWithCount(Modifier, Reaction.ANGRY, 11, -18, 29, 48.0f)
+        ReactionWithCount(Modifier, Reaction.ANGRY, 11, -18, 29, 100.0f)
         ReactionWithCount(Modifier, Reaction.LIKE, 22, 100, 0)
         ReactionWithCount(Modifier, Reaction.AMAZING, 0, 0, 100)
         ReactionWithCount(Modifier, Reaction.SAD, 22, 50, 50)
@@ -31,7 +33,7 @@ fun ReactionWithCount(
     count: Int,
     countX: Int,
     countY: Int,
-    reactionSize: Int = 100,
+    reactionSize: Float = 100f,
     reactionRotate: Float = 0f
 ) {
     if (count > 0)
@@ -46,8 +48,8 @@ fun ReactionWithCount(
             )
             ReactionCountCircle(
                 modifier = Modifier.offset(
-                    x = (countX * (reactionSize / 100)).dp,
-                    y = (countY * (reactionSize / 100)).dp,
+                    x = ((countX + 12) * (reactionSize / 100.0) - 12).dp,
+                    y = ((countY + 12) * (reactionSize / 100.0) - 12).dp,
                 ),
                 count
             )
