@@ -77,6 +77,24 @@ class AllDamgleListViewModel @Inject constructor() : ViewModel() {
                 ),
                 null,
                 ReactionBoxState(Reaction.AMAZING, false),
+            ),
+            "5" to DamgleStoryBoxModel(
+                "5",
+                1 to 1,
+                "MAPOGU",
+                "날카로운 11번째 원숭이",
+                true,
+                1659106750339L,
+                "안녕하세요! 오늘은 이 카페에서 공감해조팀에서 회의를 하였어요~~ 다들 여기서 팀플해도 좋을듯용~~! 주인이 카공해도 뭐라고 안함~~참고하세요~~~!! 지금 넘 졸린데 오늘 일찍 자고 싶어서 커피를 마시지 않고 버틸 거에요~!!",
+                mapOf(
+                    Reaction.SAD to DamgleStoryReactionState(22, 1),
+                    Reaction.BEST to DamgleStoryReactionState(22, 2),
+                    Reaction.AMAZING to DamgleStoryReactionState(22, 3),
+                    Reaction.LIKE to DamgleStoryReactionState(22, 4),
+                    Reaction.ANGRY to DamgleStoryReactionState(1222, 5),
+                ),
+                null,
+                ReactionBoxState(Reaction.AMAZING, false),
             )
         ),
     )

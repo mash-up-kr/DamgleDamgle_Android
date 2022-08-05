@@ -1,5 +1,6 @@
 package com.mashup.damgledamgle.ui.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val Purple200 = Color(0xFFBB86FC)
@@ -29,3 +30,15 @@ val White = Color(0xFFFFFFFF)
 
 // Error
 val SystemRed = Color(0xFFFF3B30)
+
+// Gradient
+val OrangeSub1 = Color(0xFFE59B69)
+val OrangeSub2 = Color(0xFFE99359)
+val backgroundGradient = Brush.verticalGradient(
+    0.15f to Grey500,
+    0.3f to OrangeSub1,
+    0.38f to Orange400,
+    0.7f to Orange400,
+    0.76f to OrangeSub2,
+    0.85f to Grey500,
+)

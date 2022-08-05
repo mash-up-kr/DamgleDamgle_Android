@@ -20,7 +20,7 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
 
     NavHost(
             navController = navController,
-            startDestination = Screen.Splash.route
+            startDestination = Screen.AllDamgleList.route
     ) {
         composable(route = Screen.Splash.route) {
             systemUiController.setSystemBarsColor(color = Grey500)

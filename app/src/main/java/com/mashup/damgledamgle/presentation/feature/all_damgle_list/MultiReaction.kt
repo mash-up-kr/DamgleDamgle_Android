@@ -30,7 +30,7 @@ private val reactionPositionByOrder = mapOf(
     5 to ReactionOrderState(248, -36, 82, 8, -14f, 48),
 )
 
-private val specialCase = mapOf(
+private val specialReactionPositionCase = mapOf(
     (Reaction.LIKE to 1) to (-9 to 17),
     (Reaction.LIKE to 2) to (-9 to 17),
     (Reaction.LIKE to 3) to (-9 to 17),
@@ -65,8 +65,8 @@ fun MultiReaction(modifier: Modifier, reactions: Map<Reaction, DamgleStoryReacti
                     count = reactions[reaction]?.count ?: 0,
                     reactionRotate = reactionPositionByOrder[reactions[reaction]?.order]?.rotate ?: 0f,
                     reactionSize = reactionPositionByOrder[reactions[reaction]?.order]?.size ?: 100,
-                    countX = specialCase[reaction to order]?.first ?: reactionPositionByOrder[order]?.countX ?: 0,
-                    countY = specialCase[reaction to order]?.second ?: reactionPositionByOrder[order]?.countY ?: 0
+                    countX = specialReactionPositionCase[reaction to order]?.first ?: reactionPositionByOrder[order]?.countX ?: 0,
+                    countY = specialReactionPositionCase[reaction to order]?.second ?: reactionPositionByOrder[order]?.countY ?: 0
                 )
         }
     }

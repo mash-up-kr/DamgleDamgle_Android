@@ -39,7 +39,7 @@ fun SoloReactionDemo() {
         SingleReaction(Reaction.SAD, 33)
         SingleReaction(Reaction.LIKE, 99)
         SingleReaction(Reaction.ANGRY, 100)
-        SingleReaction(Reaction.BEST, 0)
+        SingleReaction(Reaction.BEST, 1)
     }
 }
 
