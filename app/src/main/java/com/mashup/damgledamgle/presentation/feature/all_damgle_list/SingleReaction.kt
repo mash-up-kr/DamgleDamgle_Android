@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionWithCount
 
@@ -44,20 +45,23 @@ fun SoloReactionDemo() {
 
 @Composable
 fun SingleReaction(reaction: Reaction, count: Int) {
-    Box {
-        Image(
-            painter = painterResource(id = reaction.soloBackgroundDrawableRes),
-            contentDescription = null,
-            modifier = Modifier
-                .wrapContentSize()
-        )
-        ReactionWithCount(
-            modifier = Modifier.align(Alignment.Center),
-            reaction = reaction,
-            count = count,
-            reactionSize = singleReactionSize[reaction] ?: 100,
-            countX = singleReactionCountPosition[reaction]?.first ?: 0,
-            countY = singleReactionCountPosition[reaction]?.second ?: 0
-        )
+    Column {
+        Box {
+            Image(
+                painter = painterResource(id = reaction.soloBackgroundDrawableRes),
+                contentDescription = null,
+                modifier = Modifier
+                    .wrapContentSize()
+            )
+            ReactionWithCount(
+                modifier = Modifier.align(Alignment.Center),
+                reaction = reaction,
+                count = count,
+                reactionSize = singleReactionSize[reaction] ?: 100,
+                countX = singleReactionCountPosition[reaction]?.first ?: 0,
+                countY = singleReactionCountPosition[reaction]?.second ?: 0
+            )
+        }
+        Spacer(modifier = Modifier.height(26.dp))
     }
 }
