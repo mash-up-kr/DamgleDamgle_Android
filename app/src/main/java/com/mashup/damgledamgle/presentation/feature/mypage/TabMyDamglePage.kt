@@ -102,6 +102,26 @@ fun TabMyDamglePage(
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewTabDamglePage() {
+fun PreviewTabEmptyDamglePage() {
     TabMyDamglePage(null, emptyList())
+}
+
+@Preview(showSystemUi = true)
+@Composable
+fun PreviewTabListDamglePage() {
+    TabMyDamglePage(
+        null, listOf(
+            DamgleModel(
+                id = "",
+                userNo = "",
+                nickName = "",
+                x = "",
+                y = "",
+                content = "",
+                reactions = listOf(),
+                createAt = 0,
+                updateAt = 0
+            )
+        )
+    )
 }
