@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.repository.room
+package com.mashup.damgledamgle.repository.home
 
 import com.mashup.damgledamgle.domain.entity.ReadMarkerEntity
 import com.mashup.damgledamgle.domain.repository.ReadMarkerRepository

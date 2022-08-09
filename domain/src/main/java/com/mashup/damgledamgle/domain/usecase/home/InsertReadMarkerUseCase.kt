@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class InsertReadMarkerIdUseCase @Inject constructor(
     private val readMarkerRepository: ReadMarkerRepository
-) {
+    ) {
     suspend fun invoke(readMarkerEntity: ReadMarkerEntity) {
         readMarkerRepository.addReadMarkerId(readMarkerEntity)
     }
