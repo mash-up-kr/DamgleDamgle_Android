@@ -48,8 +48,8 @@ fun ReactionWithCount(
             )
             ReactionCountCircle(
                 modifier = Modifier.offset(
-                    x = ((countX + 12) * (reactionSize / 100.0) - 12).dp,
-                    y = ((countY + 12) * (reactionSize / 100.0) - 12).dp,
+                    x = countX.dp,
+                    y = countY.dp,
                 ),
                 count
             )

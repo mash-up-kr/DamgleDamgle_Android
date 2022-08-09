@@ -23,24 +23,24 @@ data class ReactionOrderState(
 
 // countX가 아님
 private val reactionPositionByOrder = mapOf(
-    1 to ReactionOrderState(12, -5, 86, 19, -14f, 100f),
-    2 to ReactionOrderState(138, -10, 100, 75, 9f, 80f),
+    1 to ReactionOrderState(12, -5, 75, 8, -14f, 100f),
+    2 to ReactionOrderState(138, -10, 74, 54, 9f, 80f),
     3 to ReactionOrderState(209, -89, -3, 17, 0f, 100f),
-    4 to ReactionOrderState(103, -115, -32, 20, -11f, 60f),
-    5 to ReactionOrderState(248, -36, 82, 8, 16f, 48f),
+    4 to ReactionOrderState(103, -115, -24, 8, -11f, 60f),
+    5 to ReactionOrderState(248, -36, 36, -2, 16f, 48f),
 )
 
 private val specialReactionPositionCase = mapOf(
-    (Reaction.LIKE to 1) to (-9 to 17),
-    (Reaction.LIKE to 2) to (-9 to 17),
-    (Reaction.LIKE to 3) to (-9 to 17),
-    (Reaction.LIKE to 4) to (-9 to 17),
-    (Reaction.LIKE to 5) to (-9 to 17),
-    (Reaction.BEST to 1) to (82 to 11),
-    (Reaction.BEST to 3) to (82 to 11),
+    (Reaction.LIKE to 1) to (-10 to 24),
+    (Reaction.LIKE to 2) to (-7 to 4),
+    (Reaction.LIKE to 3) to (-7 to 16),
+    (Reaction.LIKE to 4) to (-16 to 8),
+    (Reaction.LIKE to 5) to (-13 to 4),
+    (Reaction.BEST to 1) to (78 to 3),
+    (Reaction.BEST to 5) to (82 to 11),
     (Reaction.ANGRY to 3) to (-18 to 29),
-    (Reaction.ANGRY to 4) to (-18 to 29),
-    (Reaction.ANGRY to 5) to (-18 to 29),
+    (Reaction.ANGRY to 4) to (-23 to 20),
+    (Reaction.ANGRY to 5) to (-21 to -1),
 )
 
 @Composable
