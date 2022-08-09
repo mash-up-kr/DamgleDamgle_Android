@@ -72,9 +72,9 @@ fun DamgleStoryBox(
                     text = damgleStoryBoxState.content,
                     fontSize = 16.sp,
                     maxLines = 6,
-                    lineHeight = (16 * 1.6).sp,
+                    lineHeight = (16 * 1.55).sp,
                     modifier = Modifier
-                        .padding(end = 24.dp, start = 24.dp, top = 24.dp)
+                        .padding(end = 20.dp, start = 20.dp, top = 20.dp)
                         .weight(1f),
                 )
                 DamgleStoryReactionBox(
