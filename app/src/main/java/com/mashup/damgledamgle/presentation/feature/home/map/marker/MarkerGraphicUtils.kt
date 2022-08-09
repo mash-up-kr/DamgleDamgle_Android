@@ -1,38 +1,64 @@
 package com.mashup.damgledamgle.presentation.feature.home.map.marker
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.view.LayoutInflater
+import android.content.res.Resources
+import android.graphics.*
+import android.util.DisplayMetrics
+import android.util.Log
+import android.util.TypedValue
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.feature.home.map.MarkerInfo
 
 
-@SuppressLint("InflateParams")
-fun makeCustomMarkerView(markerInfo: MarkerInfo, context: Context) = (
-        (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
-            .inflate(R.layout.item_marker,null) as ConstraintLayout).apply {
+fun makeMarkerCustomBitmap(context: Context, iconRes : Int, isMine : Boolean, isRead : Boolean, count : Int): Bitmap {
+    val conf = Bitmap.Config.ARGB_8888
+    val scale = context.resources.displayMetrics.density
+    val bmp = Bitmap.createBitmap(250, 250, conf)
+    val canvas = Canvas(bmp)
 
-    val balloonRes =
-        if(markerInfo.isMine) R.drawable.ic_text_balloon_me
-        else R.drawable.ic_text_balloon
+    val balloonRes = if(isMine) R.drawable.ic_text_balloon_me
+    else R.drawable.ic_text_balloon
 
-    (this.getViewById(R.id.marker_icon) as ImageView).setImageResource(markerInfo.resId)
-    (this.getViewById(R.id.balloon_background) as ImageView).setImageResource(balloonRes)
+    val drawPaint = Paint()
+    drawPaint.color = Color.BLACK
 
-    if(!markerInfo.isRead && markerInfo.size <= 1) {
-        (this.getViewById(R.id.count_text) as TextView).visibility = View.GONE
-        (this.getViewById(R.id.count_icon) as ImageView).visibility = View.GONE
-        (this.getViewById(R.id.notify_icon) as ImageView).visibility = View.VISIBLE
+    canvas.drawBitmap(
+        BitmapFactory.decodeResource(
+            context.resources,
+            balloonRes
+        ), 0F, 20F, drawPaint
+    )
+
+    canvas.drawBitmap(
+        BitmapFactory.decodeResource(
+            context.resources,
+            iconRes
+        ), 50F, 48F, drawPaint
+    )
+
+    if(!isRead && count <= 1) {
+        val notifyCircle = Paint()
+        notifyCircle.color = context.getColor(R.color.damgle_light_green)
+        canvas.drawCircle(170f,56f,16f,notifyCircle)
     }
-    else if(markerInfo.size > 1) {
-        (this.getViewById(R.id.notify_icon) as ImageView).visibility = View.GONE
-        (this.getViewById(R.id.count_icon) as ImageView).visibility = View.VISIBLE
-        (this.getViewById(R.id.count_text) as TextView).visibility = View.VISIBLE
-        (this.getViewById(R.id.count_text) as TextView).text =
-            if(markerInfo.size > 99) "99+" else markerInfo.size.toString()
+
+    else if(count > 1) {
+        val totalResult = if(count > 100) "99+" else "$count"
+
+        val countCircle = Paint()
+        countCircle.color = context.getColor(R.color.damgle_light_green)
+
+        canvas.drawCircle(192f,40f,40f,countCircle)
+        countCircle.color = context.getColor(R.color.damgle_default_black)
+        countCircle.strokeWidth = 3f
+        countCircle.style = Paint.Style.STROKE
+        canvas.drawCircle(192f,42f,40f,countCircle)
+
+        drawPaint.textSize = 34F
+        drawPaint.textAlign = Paint.Align.CENTER
+        canvas.drawText(totalResult,192f,56f, drawPaint)
+
     }
+
+    return bmp
 }
