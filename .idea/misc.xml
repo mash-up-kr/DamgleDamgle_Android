@@ -34,6 +34,7 @@
         <entry key="app/src/main/res/drawable/ic_other_balloon.xml" value="0.2105" />
         <entry key="app/src/main/res/drawable/ic_refresh.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_sad_small.xml" value="0.124" />
+        <entry key="app/src/main/res/layout/item_marker.xml" value="0.335" />
       </map>
     </option>
   </component>

@@ -2,17 +2,13 @@ package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.icu.util.Calendar
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
-import com.mashup.damgledamgle.domain.usecase.home.GetNaverGeocodeUseCase
+import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerInfo
 import com.mashup.damgledamgle.presentation.feature.home.timer.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 

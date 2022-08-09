@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.home.map
+package com.mashup.damgledamgle.presentation.feature.home.map.marker
 
 data class MarkerInfo(
     val resId: Int,

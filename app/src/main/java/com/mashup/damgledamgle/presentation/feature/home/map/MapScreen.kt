@@ -16,7 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeMarkerCustomBitmap
+import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.presentation.feature.home.timer.DamgleTimeCheckBox
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
@@ -74,18 +74,14 @@ fun MapContent(
             }
 
             mapViewModel.getMakerList().forEach { markerInfo ->
-                val icons = markerInfo.resId
                 val latitude = markerInfo.latitude
                 val longitude = markerInfo.longitude
-                val isRead = markerInfo.isRead
-                val isMine = markerInfo.isMine
 
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = OverlayImage.fromBitmap(makeMarkerCustomBitmap(mContext, icons, isMine, isRead, markerInfo.size)),
+                    icon = OverlayImage.fromView(makeCustomMarkerView(markerInfo, mContext)),
                 )
             }
-
         }
         Column(
             Modifier
