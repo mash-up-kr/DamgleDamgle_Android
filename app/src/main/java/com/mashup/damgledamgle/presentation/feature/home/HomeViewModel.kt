@@ -19,8 +19,8 @@ class HomeViewModel : ViewModel() {
 
     fun getMakerList(): ArrayList<MarkerInfo> {
         val list: ArrayList<MarkerInfo> = arrayListOf()
-        list.add(MarkerInfo(R.drawable.ic_heart_small,true, true,37.5455113, 127.0657011,0))
-        list.add(MarkerInfo(R.drawable.ic_angry_small,false, false,37.5448118, 127.0649041,0))
+        list.add(MarkerInfo(R.drawable.ic_heart_small,true, true,37.5455113, 127.0657011,1))
+        list.add(MarkerInfo(R.drawable.ic_angry_small,false, false,37.5448118, 127.0649041,5))
         list.add(MarkerInfo(R.drawable.ic_amazing_small,false, false,37.54529, 127.06630,56))
         list.add(MarkerInfo(R.drawable.ic_heart_small,false, false,37.56398, 126.97693,0))
         list.add(MarkerInfo(R.drawable.ic_amazing_small,false, false,37.56406, 126.97778,56))

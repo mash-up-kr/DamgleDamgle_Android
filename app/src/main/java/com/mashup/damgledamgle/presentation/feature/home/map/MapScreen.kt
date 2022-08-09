@@ -16,21 +16,24 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
-import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeMarkerCustomBitmap
+import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.presentation.feature.home.timer.DamgleTimeCheckBox
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
 
 val homeViewModel = HomeViewModel()
+
 @Composable
-fun MapScreen(cameraPositionState: CameraPositionState) {
+fun MapScreen(
+    cameraPositionState: CameraPositionState
+) {
     val mContext = LocalContext.current
 
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
-               // minZoom = 14.8,
+                minZoom = 15.5,
             )
         )
     }
@@ -68,24 +71,21 @@ fun MapContent(
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
             uiSettings = mapUiSettings
-        ){
-
+        ) {
             LocationManager.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
                 Marker(
                     state = it,
-                    icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
+                    icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker)
+                )
             }
 
             list.forEach { markerInfo ->
-                val icons = markerInfo.resId
                 val latitude = markerInfo.latitude
                 val longitude = markerInfo.longitude
-                val isRead = markerInfo.isRead
-                val isMine = markerInfo.isMine
 
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = OverlayImage.fromBitmap(makeMarkerCustomBitmap(mContext, icons, isMine, isRead, markerInfo.size)),
+                    icon = OverlayImage.fromView(makeCustomMarkerView(markerInfo, mContext)),
                 )
             }
 
@@ -103,7 +103,7 @@ fun MapContent(
 @Composable
 fun CheckDamgleTime() {
     val result = homeViewModel.getCalendarLastDay()
-    if(result.contains("D"))
+    if (result.contains("D"))
         DamgleTimeCheckBox(result, false)
     else {
         homeViewModel.startTimer()

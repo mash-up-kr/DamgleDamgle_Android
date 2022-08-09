@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 
 @Composable
-fun DamgleTimeCheckBox(restTime : String, oneDay : Boolean) {
+fun DamgleTimeCheckBox(restTime : String, oneHourCheck : Boolean) {
     Card(
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = if(oneDay)
+        backgroundColor = if(oneHourCheck)
             colorResource(id = R.color.damgle_main_orange) else {
             colorResource(id = R.color.damgle_default_black)
         }
