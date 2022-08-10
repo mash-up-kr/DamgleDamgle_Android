@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
+import com.mashup.damgledamgle.enumerate.Reaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionWithCount
 
 

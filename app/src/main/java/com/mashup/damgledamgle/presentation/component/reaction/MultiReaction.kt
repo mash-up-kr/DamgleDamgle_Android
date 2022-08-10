@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.all_damgle_list
+package com.mashup.damgledamgle.presentation.component.reaction
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -9,7 +9,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryReactionState
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
+import com.mashup.damgledamgle.enumerate.Reaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionWithCount
 
 // 이모지의 위치인 x, y는 왼쪽 아래를 기준으로 합니다.

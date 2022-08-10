@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.enumerate.Reaction
+import com.mashup.damgledamgle.presentation.feature.all_damgle_list.ReactionBoxState
 import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.Gray400
 

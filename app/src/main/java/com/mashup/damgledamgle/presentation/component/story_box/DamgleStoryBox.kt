@@ -1,20 +1,17 @@
 package com.mashup.damgledamgle.presentation.feature.all_damgle_list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.enumerate.Reaction
+import com.mashup.damgledamgle.presentation.component.story_box.DamgleStoryBoxInner
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryBoxModel
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionBox
 import com.mashup.damgledamgle.ui.theme.*
 import com.mashup.damgledamgle.util.TimeUtil.getFormattedTimeDiff
@@ -64,34 +61,7 @@ fun DamgleStoryBox(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Box(
-            modifier = Modifier
-                .height(340.dp)
-                .width(328.dp)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.bg_damgle),
-                contentDescription = null,
-                modifier = Modifier
-                    .height(340.dp)
-                    .width(328.dp),
-            )
-            Column {
-                Text(
-                    text = damgleStoryBoxState.content,
-                    fontSize = 16.sp,
-                    maxLines = 6,
-                    lineHeight = (16 * 1.55).sp,
-                    modifier = Modifier
-                        .padding(end = 20.dp, start = 20.dp, top = 20.dp)
-                        .weight(1f),
-                )
-                DamgleStoryReactionBox(
-                    modifier = Modifier,
-                    damgleStoryBoxState.reactions
-                )
-            }
-        }
+        DamgleStoryBoxInner(damgleStoryBoxState)
         Spacer(modifier = Modifier.height(16.dp))
         ReactionBox(
             damgleStoryBoxState.reactionBoxState,

@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.all_damgle_list.model
 
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionBoxState
+import com.mashup.damgledamgle.enumerate.Reaction
+import com.mashup.damgledamgle.presentation.feature.all_damgle_list.ReactionBoxState
 
 data class DamgleStoryBoxModel(
     val id: String,

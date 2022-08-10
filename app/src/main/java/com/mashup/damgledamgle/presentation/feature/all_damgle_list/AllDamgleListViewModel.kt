@@ -3,10 +3,10 @@ package com.mashup.damgledamgle.presentation.feature.all_damgle_list
 import android.annotation.SuppressLint
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import com.mashup.damgledamgle.enumerate.DamgleStorySort
+import com.mashup.damgledamgle.enumerate.Reaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryBoxModel
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryReactionState
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionBoxState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

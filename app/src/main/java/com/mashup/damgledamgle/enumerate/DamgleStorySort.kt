@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.all_damgle_list
+package com.mashup.damgledamgle.enumerate
 
 enum class DamgleStorySort(val key: String) {
     LATEST("최신순"), POPULAR("인기순")

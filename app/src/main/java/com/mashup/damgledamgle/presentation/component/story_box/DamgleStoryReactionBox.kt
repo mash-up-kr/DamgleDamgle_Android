@@ -6,8 +6,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.damgledamgle.enumerate.Reaction
+import com.mashup.damgledamgle.presentation.component.reaction.MultiReaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryReactionState
-import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
 
 @Preview
 @Composable
@@ -43,3 +44,8 @@ fun DamgleStoryReactionBox(modifier: Modifier = Modifier, reactions: Map<Reactio
         }
     }
 }
+
+data class ReactionBoxState(
+    val selectedReaction: Reaction?,
+    val isExtended: Boolean
+)
