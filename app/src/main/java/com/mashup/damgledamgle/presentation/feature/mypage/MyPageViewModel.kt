@@ -2,7 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
 import com.mashup.damgledamgle.domain.usecase.user.DeleteUserProfileUseCase
 import com.mashup.damgledamgle.domain.usecase.user.GetMyDamgleListUserCase
 import com.mashup.damgledamgle.domain.usecase.user.GetUserProfileUserCase
@@ -61,42 +61,40 @@ class MyPageViewModel @Inject constructor(
 
     private fun getUserProfileInfo() {
         viewModelScope.launch {
-            when (val result = getUserProfileUserCase()) {
-                is NetworkResponse.Success -> userProfileState.emit(
-                    ViewState.Success(
-                        userProfileMapper.mapToModel(result.data)
-                    )
-                )
-                is NetworkResponse.Error -> userProfileState.emit(ViewState.Error(result.exception.message.toString()))
-            }
+            launchWithNetworkResult(
+                networkResponse = getUserProfileUserCase(),
+                suspendOnSuccess = {
+                    userProfileState.emit(ViewState.Success(userProfileMapper.mapToModel(it)))
+                },
+                suspendOnError = {
+                    userProfileState.emit(ViewState.Error(it.message.toString()))
+                }
+            )
         }
     }
 
     private fun getMyDamgleList() {
         viewModelScope.launch {
-            when (val result = getMyDamgleListUseCase()) {
-                is NetworkResponse.Success -> myDamgleListState.emit(
-                    ViewState.Success(
-                        damgleMapper.mapToModel(result.data)
-                    )
-                )
-                is NetworkResponse.Error -> myDamgleListState.emit(ViewState.Error(result.exception.message.toString()))
-            }
+            launchWithNetworkResult(
+                networkResponse = getMyDamgleListUseCase(),
+                suspendOnSuccess = {
+                    myDamgleListState.emit(ViewState.Success(damgleMapper.mapToModel(it)))
+                },
+                suspendOnError = {
+                    myDamgleListState.emit(ViewState.Error(it.message.toString()))
+                }
+            )
         }
     }
 
     fun deleteUser() {
         viewModelScope.launch {
             _deleteUserState.emit(ViewState.Loading)
-
-            when (deleteUserProfileUseCase()) {
-                is NetworkResponse.Success -> {
-                    _deleteUserState.emit(ViewState.Success("회원 탈퇴 성공!"))
-                }
-                is NetworkResponse.Error -> {
-                    _deleteUserState.emit(ViewState.Error("회원 탈퇴 실패.."))
-                }
-            }
+            launchWithNetworkResult(
+                networkResponse = deleteUserProfileUseCase(),
+                suspendOnSuccess = { _deleteUserState.emit(ViewState.Success("회원 탈퇴 성공!")) },
+                suspendOnError = { _deleteUserState.emit(ViewState.Error("회원 탈퇴 실패..")) }
+            )
         }
     }
 
