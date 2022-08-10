@@ -1,14 +1,18 @@
 package com.mashup.damgledamgle.presentation.feature.all_damgle_list
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryBoxModel
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionBox
@@ -60,13 +64,18 @@ fun DamgleStoryBox(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Card(
+        Box(
             modifier = Modifier
-                .height(348.dp)
-                .width(335.dp),
-            shape = RoundedCornerShape(8.dp),
-            backgroundColor = Gray400
+                .height(340.dp)
+                .width(328.dp)
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.bg_damgle),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(340.dp)
+                    .width(328.dp),
+            )
             Column {
                 Text(
                     text = damgleStoryBoxState.content,

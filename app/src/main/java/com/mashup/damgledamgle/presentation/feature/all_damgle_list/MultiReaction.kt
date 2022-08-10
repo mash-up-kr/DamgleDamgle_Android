@@ -1,11 +1,13 @@
 package com.mashup.damgledamgle.presentation.feature.all_damgle_list
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryReactionState
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Reaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionWithCount
@@ -23,11 +25,11 @@ data class ReactionOrderState(
 
 // countX가 아님
 private val reactionPositionByOrder = mapOf(
-    1 to ReactionOrderState(12, -5, 75, 8, -14f, 100f),
-    2 to ReactionOrderState(138, -10, 74, 54, 9f, 80f),
+    1 to ReactionOrderState(22, -16, 75, 8, -14f, 100f),
+    2 to ReactionOrderState(143, -16, 74, 54, 9f, 80f),
     3 to ReactionOrderState(209, -89, -3, 17, 0f, 100f),
-    4 to ReactionOrderState(103, -115, -24, 8, -11f, 60f),
-    5 to ReactionOrderState(248, -36, 36, -2, 16f, 48f),
+    4 to ReactionOrderState(109, -120, -24, 8, -11f, 60f),
+    5 to ReactionOrderState(254, -42, 36, -2, 16f, 48f),
 )
 
 private val specialReactionPositionCase = mapOf(
@@ -49,6 +51,15 @@ fun MultiReaction(modifier: Modifier, reactions: Map<Reaction, DamgleStoryReacti
         modifier = modifier,
         contentAlignment = Alignment.BottomStart
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.bg_multi_reaction),
+            contentDescription = null,
+            modifier = Modifier
+                .height(160.dp)
+                .width(285.dp)
+                .align(Alignment.BottomCenter)
+                .offset(y = (-20).dp),
+        )
         Reaction.values().forEach { reaction ->
             val order = reactions[reaction]?.order ?: 0
             if (reactions[reaction] != null)

@@ -32,8 +32,8 @@ fun DamgleStoryBoxReactionsDemo() {
 fun DamgleStoryReactionBox(modifier: Modifier = Modifier, reactions: Map<Reaction, DamgleStoryReactionState>) {
     Box(
         modifier = modifier
-            .height(144.dp)
-            .width(335.dp),
+            .height(160.dp)
+            .width(320.dp),
         contentAlignment = Alignment.Center
     ) {
         when (reactions.filter { it.value.count > 0 }.count()) {
