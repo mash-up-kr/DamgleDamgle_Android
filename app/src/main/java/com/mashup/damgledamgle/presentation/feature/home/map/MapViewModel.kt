@@ -2,18 +2,25 @@ package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.icu.util.Calendar
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerInfo
 import com.mashup.damgledamgle.presentation.feature.home.timer.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
-class MapViewModel @Inject constructor()
+class MapViewModel @Inject constructor(
+    private val getStoryFeedUseCase: GetStoryFeedUseCase
+)
     : ViewModel() {
 
     private var countDownTimer: CountDownTimer? = null
@@ -33,6 +40,26 @@ class MapViewModel @Inject constructor()
         list.add(MarkerInfo(R.drawable.ic_heart_small,false, false,37.56398, 126.97693,0))
         list.add(MarkerInfo(R.drawable.ic_amazing_small,false, false,37.56406, 126.97778,56))
         return list
+    }
+
+    /**
+     * 서버에서 값 받아오기 완료
+     * x,y 계산해서 데이터 mapping 해주기
+     */
+    fun getStoryFeedList(
+        top : Double,
+        bottom : Double,
+        left : Double,
+        right : Double
+    ) {
+        viewModelScope.launch {
+            when (val result = getStoryFeedUseCase.invoke()) {
+                is NetworkResponse.Success -> {
+                    Log.d("storyFeedResult", result.data.toString())
+                }
+                is NetworkResponse.Error -> {}
+            }
+        }
     }
 
     fun getCalendarLastDay(): String {

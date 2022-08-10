@@ -37,7 +37,15 @@ interface DamgleApi {
     @POST("/v1/auth/signup")
     suspend fun signUp(@Body request: NickNameRequest): UserResponse
 
+
+    /**
+     * Story Feed
+     */
     @GET("/v1/story/feed")
     suspend fun getStoryFeed(
-        @Body storyFeedRequest: StoryFeedRequest) : StoryFeedResponse
+        @Query("top") top : Double,
+        @Query("bottom") bottom : Double,
+        @Query("left") left : Double,
+        @Query("right") right : Double
+    ) : StoryFeedResponse
 }
