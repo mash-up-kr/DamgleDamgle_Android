@@ -1,5 +1,6 @@
 package com.mashup.damgledamgle.presentation.feature.onboarding
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -102,7 +103,7 @@ fun NickNameScreen(
                             .background(Orange500)
                             .fillMaxWidth()
                             .height(64.dp)
-                            .clickable { viewModel.signUp(viewModel.nickName.value.fullName, notification) }
+                            .clickable { viewModel.signUp(viewModel.nickName.value, notification) }
                             .padding(vertical = 20.dp),
                         style = pretendardTextStyle.bodyMedium18,
                         color = White
@@ -119,8 +120,9 @@ fun NickNameScreen(
         }
 
         LaunchedEffect(key1 = viewModel.authState.collectAsState().value) {
-            if (viewModel.authState.value is ViewState.Success) {
-                navController.navigate("home_screen")
+            when(val authState = viewModel.authState.value) {
+                is ViewState.Success -> navController.navigate("home_screen")
+                is ViewState.Error -> Toast.makeText(context, authState.error, Toast.LENGTH_SHORT).show()
             }
         }
     }

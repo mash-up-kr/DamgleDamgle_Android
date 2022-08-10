@@ -9,6 +9,8 @@ import com.mashup.damgledamgle.mapper.NickNameMapper
 import com.mashup.damgledamgle.repository.network.DamgleApi
 import com.mashup.damgledamgle.repository.network.ServiceBuilder
 import com.mashup.damgledamgle.repository.spec.NickNameRequest
+import com.mashup.damgledamgle.repository.spec.PickNickNameRequest
+import retrofit2.HttpException
 import javax.inject.Inject
 
 /**
@@ -40,12 +42,25 @@ class OnboardingRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun pickNickName(adjective: String, noun: String): NetworkResponse<NickName> {
+        return try {
+            val resultData = damgleApi.pickNickName(PickNickNameRequest(adjective, noun))
+            NetworkResponse.Success(nickNameMapper.mapToEntity(resultData))
+        } catch (e: Exception) {
+            NetworkResponse.Error(e)
+        }
+    }
+
     override suspend fun signUp(nickName: String, notification: Boolean): NetworkResponse<User> {
         return try {
             val resultData = damgleApi.signUp(NickNameRequest(nickName, notification))
             NetworkResponse.Success(authMapper.mapToEntity(resultData))
         } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            if ((e as HttpException).code() == 400) {
+                NetworkResponse.Error(Exception("닉네임이 중복되었습니다: $nickName"))
+            } else {
+                NetworkResponse.Error(e)
+            }
         }
     }
 }
