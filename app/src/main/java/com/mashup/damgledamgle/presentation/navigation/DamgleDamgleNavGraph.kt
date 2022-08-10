@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.AllDamgleListScreen
 import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
-import com.mashup.damgledamgle.presentation.feature.mypage.MypageScreen
+import com.mashup.damgledamgle.presentation.feature.mypage.MyPageScreen
 import com.mashup.damgledamgle.presentation.feature.onboarding.OnboardingScreen
 import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 import com.mashup.damgledamgle.ui.theme.Black
@@ -33,8 +33,8 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
             systemUiController.setSystemBarsColor(color = Black)
             HomeScreen(navController = navController)
         }
-        composable(route = Screen.Mypage.route) {
-            MypageScreen(navController = navController)
+        composable(route = Screen.MyPage.route) {
+            MyPageScreen(navController = navController)
         }
         composable(route = Screen.AllDamgleList.route) {
             systemUiController.setSystemBarsColor(color = Grey500)

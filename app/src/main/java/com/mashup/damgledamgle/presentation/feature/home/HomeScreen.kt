@@ -32,8 +32,8 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             MainToolBar(title = "Position")
             // TODO(minji): 임시 버튼. 추후 삭제 필요.
-            Button(onClick = { navController.navigate(Screen.Mypage.route) }) {
-                Text(text = "Mypage")
+            Button(onClick = { navController.navigate(Screen.MyPage.route) }) {
+                Text(text = "MyPage")
             }
             MapScreen()
 
