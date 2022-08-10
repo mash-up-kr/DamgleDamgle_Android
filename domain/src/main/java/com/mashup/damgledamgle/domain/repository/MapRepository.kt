@@ -5,5 +5,5 @@ import com.mashup.damgledamgle.domain.entity.GeoResult
 import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 
 interface MapRepository {
-    suspend fun getReverseGeocoding(coords : String) :NetworkResponse<GeoResult>
+    suspend fun getReverseGeocoding(coors : String) : NetworkResponse<GeoResult>
 }

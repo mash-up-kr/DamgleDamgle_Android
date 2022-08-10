@@ -67,9 +67,6 @@ fun HomeScreen(navController: NavHostController) {
                     modifier = Modifier.size(48.dp, 48.dp),
                     onClick = {
                         homeViewModel.showLoading.value = true
-                        /**
-                         * 위치랑 서버 새로고침 로띠,
-                         */
                     }
                 )
                 FloatingActionButton(

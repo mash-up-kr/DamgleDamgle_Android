@@ -11,6 +11,6 @@ interface ReadMarkerDao {
 
     @Transaction
     @Query("SELECT * FROM readCheckTable WHERE id = :id")
-    fun getReadMarkerId(id: Int) : Boolean
+    fun getReadMarkerId(id: Int) : Boolean?
 
 }

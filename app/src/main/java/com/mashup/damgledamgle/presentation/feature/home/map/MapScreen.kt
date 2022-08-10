@@ -28,7 +28,8 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
-               // minZoom = 14.8,
+                //마커 테스트를 위해 잠시 주석 처리
+               // minZoom = 14.5,
             )
         )
     }

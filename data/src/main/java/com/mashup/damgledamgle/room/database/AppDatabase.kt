@@ -22,8 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         private var dbInstance: AppDatabase? = null
-
-        @Synchronized
+        
         fun getInstance(context: Context): AppDatabase? {
             synchronized(AppDatabase::class.java) {
                 if (dbInstance == null) {
@@ -37,7 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
                     }
                 }
             }
-            return dbInstance
+            return dbInstance!!
         }
     }
 

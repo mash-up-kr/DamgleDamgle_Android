@@ -17,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getNaverGeocodeUseCase: GetNaverGeocodeUseCase,
-    application: Application) : AndroidViewModel(application) {
+    application: Application
+) : AndroidViewModel(application) {
 
     val context
         get() = getApplication<Application>()
@@ -25,7 +26,7 @@ class HomeViewModel @Inject constructor(
 
     private val _geocode = MutableLiveData("")
     val geocode: LiveData<String> = _geocode
-    val currentLocation = LocationManager.getMyLocation(context)
+    private val currentLocation = LocationManager.getMyLocation(context)
 
     init {
         getNaverGeocode("${currentLocation?.longitude},${currentLocation?.latitude}")
@@ -45,7 +46,9 @@ class HomeViewModel @Inject constructor(
                     }
                 }
                 is NetworkResponse.Error -> {
-                    Log.d("naverResult", result.toString())
+                    if (currentLocation != null) {
+                        _geocode.value = convertMyLocationToAddress(currentLocation,context)
+                    }
                 }
             }
         }

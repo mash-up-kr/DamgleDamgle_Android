@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetReadMarkerIdUseCase @Inject constructor(
     private val readMarkerRepository: ReadMarkerRepository
     ) {
-    suspend fun invoke(id : Int) : Boolean = readMarkerRepository.getReadMarkerId(id)
+    suspend fun invoke(id : Int) : Boolean? = readMarkerRepository.getReadMarkerId(id)
 }

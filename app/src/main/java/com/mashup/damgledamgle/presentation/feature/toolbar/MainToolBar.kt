@@ -6,20 +6,19 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.ui.theme.White
 import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 @Composable
-fun MainToolBar(title: String?, action: () -> Unit,) {
+fun MainToolBar(title: String?, iconClickAction: () -> Unit,) {
 
     TopAppBar(
         backgroundColor = colorResource(id = R.color.damgle_default_black),
@@ -35,7 +34,7 @@ fun MainToolBar(title: String?, action: () -> Unit,) {
                     )
                 }
                 IconButton(
-                    onClick = action,
+                    onClick = iconClickAction,
                     modifier = Modifier.align(Alignment.CenterEnd)) {
                     Icon(
                         painterResource(id = R.drawable.ic_mypage),
