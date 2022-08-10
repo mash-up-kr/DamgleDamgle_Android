@@ -51,7 +51,9 @@ fun TabSettingPage(
                     contentDescription = "Orange Gradient Background",
                 )
 
-                PushSettingItem(notification)
+                PushSettingItem(notification) {
+                    viewModel.patchNotificationAllowState()
+                }
             }
 
             Text(
