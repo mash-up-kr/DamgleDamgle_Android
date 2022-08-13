@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.repository.remote
 
 import com.mashup.damgledamgle.domain.entity.UserProfile
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.UserRepository
 import com.mashup.damgledamgle.mapper.UserProfileMapper
 import com.mashup.damgledamgle.repository.network.DamgleApi
@@ -22,30 +22,30 @@ class UserRepositoryImpl @Inject constructor(
 
     private val damgleApi by lazy { serviceBuilder.buildService<DamgleApi>() }
 
-    override suspend fun getUserProfile(): NetworkResponse<UserProfile> {
+    override suspend fun getUserProfile(): Result<UserProfile> {
         return try {
             val resultData = damgleApi.getUserProfile()
-            NetworkResponse.Success(userMapper.mapToEntity(resultData))
+            Result.Success(userMapper.mapToEntity(resultData))
         } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            Result.Error(e)
         }
     }
 
-    override suspend fun deleteUserProfile(): NetworkResponse<String> {
+    override suspend fun deleteUserProfile(): Result<String> {
         return try {
             val resultData = damgleApi.deleteMe()
-            NetworkResponse.Success(resultData.message)
+            Result.Success(resultData.message)
         } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            Result.Error(e)
         }
     }
 
-    override suspend fun switchNotification(): NetworkResponse<Boolean> {
+    override suspend fun switchNotification(): Result<Boolean> {
         return try {
             val resultData = damgleApi.switchNotification()
-            NetworkResponse.Success(resultData.notification)
+            Result.Success(resultData.notification)
         } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            Result.Error(e)
         }
     }
 }

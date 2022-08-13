@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.domain.usecase.user
 
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.DamgleRepository
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class GetMyDamgleListUserCase @Inject constructor(
     private val damgleRepository: DamgleRepository,
 ) {
-    suspend operator fun invoke(): NetworkResponse<List<Damgle>> {
+    suspend operator fun invoke(): Result<List<Damgle>> {
         return damgleRepository.getMyDamgleList()
     }
 }

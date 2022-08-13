@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.domain.repository
 
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 
 /**
  *  DamgleRepository.kt
@@ -11,5 +11,5 @@ import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
  */
 
 interface DamgleRepository {
-    suspend fun getMyDamgleList(): NetworkResponse<List<Damgle>>
+    suspend fun getMyDamgleList(): Result<List<Damgle>>
 }
