@@ -1,6 +1,6 @@
 package com.mashup.damgledamgle.domain.usecase.user
 
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.UserRepository
 import com.mashup.damgledamgle.domain.usecase.token.SetTokenUseCase
 import javax.inject.Inject
@@ -16,7 +16,7 @@ class DeleteUserProfileUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val setTokenUseCase: SetTokenUseCase
 ) {
-    suspend operator fun invoke(): NetworkResponse<String> {
+    suspend operator fun invoke(): Result<String> {
         val result = userRepository.deleteUserProfile()
         setTokenUseCase("", "")
 

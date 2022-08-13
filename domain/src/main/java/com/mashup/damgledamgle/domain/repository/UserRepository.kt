@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.domain.repository
 
 import com.mashup.damgledamgle.domain.entity.UserProfile
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 
 /**
  *  UserRepository.kt
@@ -11,7 +11,7 @@ import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
  */
 
 interface UserRepository {
-    suspend fun getUserProfile(): NetworkResponse<UserProfile>
-    suspend fun deleteUserProfile(): NetworkResponse<String>
-    suspend fun switchNotification(): NetworkResponse<Boolean>
+    suspend fun getUserProfile(): Result<UserProfile>
+    suspend fun deleteUserProfile(): Result<String>
+    suspend fun switchNotification(): Result<Boolean>
 }

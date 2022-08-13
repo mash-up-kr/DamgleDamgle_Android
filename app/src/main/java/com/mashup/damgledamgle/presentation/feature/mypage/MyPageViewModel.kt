@@ -62,7 +62,7 @@ class MyPageViewModel @Inject constructor(
     private fun getUserProfileInfo() {
         viewModelScope.launch {
             launchWithNetworkResult(
-                networkResponse = getUserProfileUserCase(),
+                result = getUserProfileUserCase(),
                 suspendOnSuccess = {
                     userProfileState.emit(ViewState.Success(userProfileMapper.mapToModel(it)))
                 },
@@ -76,7 +76,7 @@ class MyPageViewModel @Inject constructor(
     private fun getMyDamgleList() {
         viewModelScope.launch {
             launchWithNetworkResult(
-                networkResponse = getMyDamgleListUseCase(),
+                result = getMyDamgleListUseCase(),
                 suspendOnSuccess = {
                     myDamgleListState.emit(ViewState.Success(damgleMapper.mapToModel(it)))
                 },
@@ -91,7 +91,7 @@ class MyPageViewModel @Inject constructor(
         viewModelScope.launch {
             _deleteUserState.emit(ViewState.Loading)
             launchWithNetworkResult(
-                networkResponse = deleteUserProfileUseCase(),
+                result = deleteUserProfileUseCase(),
                 suspendOnSuccess = { _deleteUserState.emit(ViewState.Success("회원 탈퇴 성공!")) },
                 suspendOnError = { _deleteUserState.emit(ViewState.Error("회원 탈퇴 실패..")) }
             )

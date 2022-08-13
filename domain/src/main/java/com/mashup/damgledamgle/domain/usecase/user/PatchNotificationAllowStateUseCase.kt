@@ -1,6 +1,6 @@
 package com.mashup.damgledamgle.domain.usecase.user
 
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class PatchNotificationAllowStateUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(): NetworkResponse<Boolean> {
+    suspend operator fun invoke(): Result<Boolean> {
         return userRepository.switchNotification()
     }
 }

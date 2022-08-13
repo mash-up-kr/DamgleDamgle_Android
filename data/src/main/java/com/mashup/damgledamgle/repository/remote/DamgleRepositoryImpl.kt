@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.repository.remote
 
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.DamgleRepository
 import com.mashup.damgledamgle.mapper.DamgleMapper
 import com.mashup.damgledamgle.repository.network.DamgleApi
@@ -22,12 +22,12 @@ class DamgleRepositoryImpl @Inject constructor(
 
     private val damgleApi by lazy { serviceBuilder.buildService<DamgleApi>() }
 
-    override suspend fun getMyDamgleList(): NetworkResponse<List<Damgle>> {
+    override suspend fun getMyDamgleList(): Result<List<Damgle>> {
         return try {
             val resultData = damgleApi.getMyDamgleList()
-            NetworkResponse.Success(resultData.stories.map { damgleMapper.mapToEntity(it) })
+            Result.Success(resultData.stories.map { damgleMapper.mapToEntity(it) })
         } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            Result.Error(e)
         }
     }
 }
