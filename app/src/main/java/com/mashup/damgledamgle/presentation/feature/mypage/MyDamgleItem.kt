@@ -14,14 +14,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.domain.entity.EnglishAddress
+import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
 import com.mashup.damgledamgle.ui.theme.Orange500
+import com.mashup.damgledamgle.ui.theme.akzidenzGroteskTextStyle
+import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 /**
  *  MyDamgleItem.kt
@@ -31,10 +35,13 @@ import com.mashup.damgledamgle.ui.theme.Orange500
  */
 
 @Composable
-fun MyDamgleItem() {
+fun MyDamgleItem(
+    damgle: DamgleModel
+) {
     Box(
-        modifier = Modifier.padding(horizontal = 20.dp)
-            .clickable {  }
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
+            .clickable { }
     ) {
         Image(
             painter = painterResource(id = R.drawable.background_mydamgle_gray_gradient),
@@ -51,19 +58,33 @@ fun MyDamgleItem() {
         ) {
             Row {
                 MyDamgleEmoji(R.drawable.ic_heart_big, 11, Modifier.weight(1f, false))
-                Text(
-                    text = "GANGNAMGU\nYEOKSAMDONG",
-                    style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                Column(
                     modifier = Modifier
+                        .align(CenterVertically)
+                        .weight(2f, false)
                         .padding(bottom = 4.dp, start = 12.dp)
-                        .height(42.dp)
-                        .weight(1f, false)
-                        .align(CenterVertically),
-                )
+                ) {
+                    Text(
+                        text = damgle.engAddress.sggName,
+                        style = akzidenzGroteskTextStyle.title2Bold18,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.height(21.dp),
+                    )
+                    Text(
+                        text = damgle.engAddress.roadName,
+                        style = akzidenzGroteskTextStyle.title2Bold18,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.height(21.dp),
+                    )
+                }
             }
+
             Text(
                 text = "5분 전",
-                style = TextStyle(fontSize = 13.sp, color = Orange500),
+                style = pretendardTextStyle.bodyMedium13,
+                color = Orange500,
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .weight(1f, false),
@@ -112,7 +133,20 @@ fun MyDamgleEmoji(emojiDrawableId: Int, count: Int, modifier: Modifier) {
 @Preview
 @Composable
 fun PreviewMyDamgleItem() {
-    MyDamgleItem()
+    MyDamgleItem(
+        DamgleModel(
+            id = "",
+            userNo = "",
+            nickName = "",
+            x = "",
+            y = "",
+            engAddress = EnglishAddress("GANGNAMGU HANADULSET", "YEOKSAMDONG"),
+            content = "",
+            reactions = listOf(),
+            createAt = 0,
+            updateAt = 0
+        )
+    )
 }
 
 @Preview

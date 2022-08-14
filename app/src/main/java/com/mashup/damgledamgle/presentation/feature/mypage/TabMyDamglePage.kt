@@ -1,7 +1,12 @@
 package com.mashup.damgledamgle.presentation.feature.mypage
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.domain.entity.EnglishAddress
 import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.Gray400
@@ -84,16 +90,13 @@ fun TabMyDamglePage(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // TODO(minji): LazyColumn으로 교체 및 데이터 모델 전달하도록 수정
-            val scrollState = rememberScrollState()
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .padding(top = 20.dp)
                     .fillMaxSize()
-                    .verticalScroll(scrollState)
             ) {
-                repeat(10) {
-                    MyDamgleItem()
+                items(myDamgleList) {
+                    MyDamgleItem(it)
                 }
             }
         }
@@ -117,6 +120,7 @@ fun PreviewTabListDamglePage() {
                 nickName = "",
                 x = "",
                 y = "",
+                engAddress = EnglishAddress("GANGNAMGU", "YEOKSAMDONG"),
                 content = "",
                 reactions = listOf(),
                 createAt = 0,

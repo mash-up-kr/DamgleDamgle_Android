@@ -1,5 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.mypage.model
 
+import com.mashup.damgledamgle.domain.entity.EnglishAddress
+
 /**
  *  DamgleModel.kt
  *
@@ -14,6 +16,7 @@ data class DamgleModel(
     val nickName: String,
     val x: String,
     val y: String,
+    val engAddress: EnglishAddress,
     val content: String,
     val reactions: List<ReactionModel>,
     val createAt: Int,
