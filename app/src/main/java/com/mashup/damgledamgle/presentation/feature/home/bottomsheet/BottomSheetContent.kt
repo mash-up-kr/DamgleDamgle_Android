@@ -8,40 +8,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
-import com.mashup.damgledamgle.ui.theme.*
+import com.mashup.damgledamgle.ui.theme.Gray600
+import com.mashup.damgledamgle.ui.theme.backgroundGradient
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheetContent(bottomSheetScaffoldState: BottomSheetScaffoldState) {
     Box(
-            modifier = Modifier
-                    .background(
-                            brush = Brush.verticalGradient(
-                                    0.15f to Grey500,
-                                    0.3f to Orange400,
-                                    0.38f to Orange600,
-                                    0.7f to Orange600,
-                                    0.76f to Orange400,
-                                    0.85f to Grey500,
-                            )
-                    )
-                    .fillMaxWidth()
-                    .fillMaxHeight()
+        modifier = Modifier
+            .background(brush = backgroundGradient)
+            .fillMaxWidth()
+            .fillMaxHeight()
     ) {
         Column(
-                modifier = Modifier
-                        .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Divider(
-                    modifier = Modifier
-                            .padding(top = 16.dp)
-                            .width(64.dp)
-                            .clip(RoundedCornerShape(2.dp)),
-                    color = Gray600,
-                    thickness = 5.dp,
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .width(64.dp)
+                    .clip(RoundedCornerShape(2.dp)),
+                color = Gray600,
+                thickness = 5.dp,
             )
 
             val bottomSheetSlide = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
