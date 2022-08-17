@@ -13,12 +13,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import android.app.Activity
+import android.widget.Toast
+import androidx.compose.material.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
 import com.mashup.damgledamgle.presentation.feature.home.map.LocationManager
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
@@ -40,8 +44,19 @@ fun HomeScreen(navController: NavHostController) {
     currentLocation?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
 
-    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val locationTitle = homeViewModel.geocode.observeAsState()
+    var backPressWaitTime by remember { mutableStateOf(0L) }
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+
+    BackPressInterceptor(context) {
+        if (System.currentTimeMillis() - backPressWaitTime >= 1500) { // 1.5초 안에 뒤로가기 두 번 눌러야 앱 종료.
+            backPressWaitTime = System.currentTimeMillis()
+            Toast.makeText(context, context.getString(R.string.common_toast_backpress), Toast.LENGTH_SHORT).show()
+        } else {
+            (context as? Activity)?.finish()
+        }
+    }
+
     Scaffold {
         BottomSheetScaffold(
             topBar = {
@@ -89,6 +104,10 @@ fun HomeScreen(navController: NavHostController) {
         val showLoading = homeViewModel.showLoading.observeAsState()
         if(showLoading.value == true) {
             LoadingLottie()
+            Button(onClick = { navController.navigate(Screen.AllDamgleList.route) }) {
+                Text(text = "AllDamgleList")
+            }
+            MapScreen(cameraPositionState)
         }
     }
 }

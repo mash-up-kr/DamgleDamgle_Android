@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.*
 
 /**
@@ -121,7 +122,7 @@ fun NickNameScreen(
 
         LaunchedEffect(key1 = viewModel.authState.collectAsState().value) {
             when(val authState = viewModel.authState.value) {
-                is ViewState.Success -> navController.navigate("home_screen")
+                is ViewState.Success -> navController.navigate(Screen.Home.route)
                 is ViewState.Error -> Toast.makeText(context, authState.error, Toast.LENGTH_SHORT).show()
             }
         }

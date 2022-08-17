@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.domain.usecase.onboarding
 
 import com.mashup.damgledamgle.domain.entity.User
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.OnboardingRepository
 import com.mashup.damgledamgle.domain.usecase.token.SetTokenUseCase
 import javax.inject.Inject
@@ -17,9 +17,9 @@ class SignUpUseCase @Inject constructor(
     private val onboardingRepository: OnboardingRepository,
     private val setTokenUseCase: SetTokenUseCase
 ) {
-    suspend operator fun invoke(nickName: String, notification: Boolean): NetworkResponse<User> {
+    suspend operator fun invoke(nickName: String, notification: Boolean): Result<User> {
         val result = onboardingRepository.signUp(nickName, notification)
-        if (result is NetworkResponse.Success) {
+        if (result is Result.Success) {
             setTokenUseCase(result.data.accessToken, result.data.refreshToken)
         }
 

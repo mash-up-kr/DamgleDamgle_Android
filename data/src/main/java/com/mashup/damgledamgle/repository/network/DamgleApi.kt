@@ -37,7 +37,35 @@ interface DamgleApi {
     @POST("/v1/auth/signup")
     suspend fun signUp(@Body request: NickNameRequest): UserResponse
 
+    /**
+     * Map - Story Feed 가져오기
+     */
     @GET("/v1/story/feed")
     suspend fun getStoryFeed(
         @Body storyFeedRequest: StoryFeedRequest) : StoryFeedResponse
+
+    /**
+     * Auth - Me : 내 정보
+     */
+    @GET("/v1/auth/me")
+    suspend fun getUserProfile(): UserProfileResponse
+
+    /**
+     * Auth - Delete Me : 계정 삭제
+     */
+    @DELETE("v1/auth/deleteme")
+    suspend fun deleteMe(): UserDeleteResponse
+
+    /**
+     * Auth - Notify : 푸시 알림 설정
+     */
+    @PATCH("v1/auth/notify")
+    suspend fun switchNotification(): NotifyResponse
+
+    /**
+     * Story - me : 내 담글 조회
+     */
+    @GET("v1/story/me")
+    suspend fun getMyDamgleList(): DamgleListResponse
+
 }
