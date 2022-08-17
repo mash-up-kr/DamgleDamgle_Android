@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.domain.entity.StoryEntity
 import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
 import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerInfo
@@ -20,8 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     private val getStoryFeedUseCase: GetStoryFeedUseCase
-)
-    : ViewModel() {
+) : ViewModel() {
 
     private var countDownTimer: CountDownTimer? = null
     var totalDiffTime = 0L
@@ -30,6 +30,8 @@ class MapViewModel @Inject constructor(
 
     private val _oneHourCheck = MutableLiveData(false)
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
+
+
 
 
     fun getMakerList(): ArrayList<MarkerInfo> {
@@ -55,11 +57,32 @@ class MapViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = getStoryFeedUseCase.invoke()) {
                 is NetworkResponse.Success -> {
+                    divideMarkerPosition(
+                        top,
+                        bottom,
+                        left,
+                        right,
+                        result.data
+                    )
                     Log.d("storyFeedResult", result.data.toString())
                 }
                 is NetworkResponse.Error -> {}
             }
         }
+    }
+
+
+    private suspend fun divideMarkerPosition(
+        top: Double,
+        bottom: Double,
+        left: Double,
+        right: Double,
+        data: List<StoryEntity>) {
+        val diffLat = (bottom - top) / 4
+        val diffLong = (right - left) / 3
+
+
+
     }
 
     fun getCalendarLastDay(): String {

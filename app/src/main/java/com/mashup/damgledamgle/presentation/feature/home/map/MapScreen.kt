@@ -60,7 +60,7 @@ fun MapContent(
     mContext: Context
 ) {
     val mapViewModel : MapViewModel = hiltViewModel()
-    mapViewModel.getStoryFeedList()
+    mapViewModel.getStoryFeedList(37.51, 37.49, 127.035,127.036)
 
     Box(Modifier.fillMaxSize()) {
         NaverMap(
