@@ -45,6 +45,7 @@ fun HomeScreen(navController: NavHostController) {
         ?.let { cameraPositionState.move(it) }
 
     val locationTitle = homeViewModel.geocode.observeAsState()
+
     var backPressWaitTime by remember { mutableStateOf(0L) }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
 
@@ -107,7 +108,6 @@ fun HomeScreen(navController: NavHostController) {
             Button(onClick = { navController.navigate(Screen.AllDamgleList.route) }) {
                 Text(text = "AllDamgleList")
             }
-            MapScreen(cameraPositionState)
         }
     }
 }
