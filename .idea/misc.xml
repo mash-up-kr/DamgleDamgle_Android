@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DesignSurface">
@@ -14,3 +15,5 @@
     <option name="id" value="Android" />
   </component>
 </project>
+=======
+>>>>>>> f3194a13a4fb3401d9b8676ac67bae68961c1408
