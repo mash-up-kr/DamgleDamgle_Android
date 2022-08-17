@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.domain.usecase.onboarding
 
 import com.mashup.damgledamgle.domain.entity.NickName
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.OnboardingRepository
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class PickNickNameUseCase @Inject constructor(
     private val onboardingRepository: OnboardingRepository
 ) {
-    suspend operator fun invoke(adjective: String, noun: String): NetworkResponse<NickName> {
+    suspend operator fun invoke(adjective: String, noun: String): Result<NickName> {
         return onboardingRepository.pickNickName(adjective, noun)
     }
 }

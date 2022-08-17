@@ -28,4 +28,15 @@
     <string name="nickname.subtext">마음껏 바꾸면서 나만의 이름을 정해보세요.</string>
     <string name="nickname.placeholder.count">%d번째</string>
     <string name="nickname.button.start">시작하기</string>
+    
+    // MyPage
+    <string name="mypage.tab.mydamgle">내 담글</string>
+    <string name="mypage.tab.setting">설정</string>
+    <string name="mypage.delete.popup.title">정말 내 정보를 삭제하고\n서비스를 그만 사용하실건가요?</string>
+    <string name="mypage.delete.popup.message">모든 계정 정보를 삭제하시면\n다시 되살릴 수 없어요!</string>
+    <string name="mypage.delete.yes">삭제</string>
+    <string name="mypage.delete.no">삭제 취소</string>
+    <string name="mypage.mydamgle.empty">아직 내가 쓴 글이 없어요.</string>
+    <string name="mypage.mydamgle.empty.button">담글 남기러 가기</string>
+    <string name="mypage.delete.user">서비스 그만 사용하기</string>
 </resources>

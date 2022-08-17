@@ -3,11 +3,8 @@ package com.mashup.damgledamgle.presentation.feature.mypage
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,8 +14,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
 import com.mashup.damgledamgle.ui.theme.Grey500
+import com.mashup.damgledamgle.ui.theme.Orange500
+import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 /**
  *  MyPageScreen.kt
@@ -31,35 +31,52 @@ import com.mashup.damgledamgle.ui.theme.Grey500
 fun MyPageScreen(navController: NavHostController) {
     var currentPage by remember { mutableStateOf(TabPage.MyDamgle) }
     val myPageViewModel: MyPageViewModel = hiltViewModel()
-    val userProfile by myPageViewModel.userProfile.collectAsState()
 
-    Scaffold {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Grey500),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_close),
-                contentDescription = "my profile image",
-                modifier = Modifier
-                    .padding(20.dp)
-                    .size(24.dp)
-                    .align(Alignment.End)
-                    .clickable { navController.popBackStack() },
-            )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Grey500)
+    ) {
+        when (myPageViewModel.uiState.collectAsState(initial = ViewState.Loading).value) {
+            is ViewState.Loading -> {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Orange500
+                )
+            }
 
-            MyProfile(userProfile?.nickName)
+            is ViewState.Success -> {
+                val profile = myPageViewModel.userProfileState.collectAsState().value as ViewState.Success
+                val myDamgleList = myPageViewModel.myDamgleListState.collectAsState().value as ViewState.Success
 
-            MyPageTabBar(
-                tabPage = currentPage,
-                onTabSelected = { currentPage = it }
-            )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Grey500),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_close),
+                        contentDescription = "my profile image",
+                        modifier = Modifier
+                            .padding(20.dp)
+                            .size(24.dp)
+                            .align(Alignment.End)
+                            .clickable { navController.popBackStack() },
+                    )
 
-            when (currentPage) {
-                TabPage.MyDamgle -> TabMyDamglePage()
-                TabPage.Setting -> TabSettingPage()
+                    MyProfile(profile.data.nickName)
+
+                    MyPageTabBar(
+                        tabPage = currentPage,
+                        onTabSelected = { currentPage = it }
+                    )
+
+                    when (currentPage) {
+                        TabPage.MyDamgle -> TabMyDamglePage(navController, myDamgleList.data)
+                        TabPage.Setting -> TabSettingPage(navController, profile.data.notification)
+                    }
+                }
             }
         }
     }
@@ -77,6 +94,7 @@ fun MyProfile(userName: String?) {
 
     Text(
         text = userName ?: "",
-        modifier = Modifier.padding(top = 8.dp)
+        modifier = Modifier.padding(top = 8.dp),
+        style = pretendardTextStyle.bodyMedium13
     )
 }
