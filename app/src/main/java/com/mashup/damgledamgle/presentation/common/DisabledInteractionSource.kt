@@ -15,13 +15,12 @@ import kotlinx.coroutines.flow.emptyFlow
  *  ex) interactionSource = remember { DisabledInteractionSource() }
  *
  */
+class DisabledInteractionSource : MutableInteractionSource {
 
-//class DisabledInteractionSource : MutableInteractionSource {
-//
-//    override val interactions: Flow<Interaction> = emptyFlow()
-//
-//    override suspend fun emit(interaction: Interaction) {}
-//
-//    override fun tryEmit(interaction: Interaction) = true
-//
-//}
+    override val interactions: Flow<Interaction> = emptyFlow()
+
+    override suspend fun emit(interaction: Interaction) {}
+
+    override fun tryEmit(interaction: Interaction) = true
+
+}

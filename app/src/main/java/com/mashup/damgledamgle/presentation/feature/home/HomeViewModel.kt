@@ -6,7 +6,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.util.Log
 import androidx.lifecycle.*
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.usecase.home.GetNaverGeocodeUseCase
 import com.mashup.damgledamgle.presentation.feature.home.map.LocationManager
 import com.naver.maps.geometry.LatLng
@@ -35,7 +35,7 @@ class HomeViewModel @Inject constructor(
     private fun getNaverGeocode(coords : String) {
         viewModelScope.launch {
             when(val result = getNaverGeocodeUseCase.invoke(coords)) {
-                is NetworkResponse.Success -> {
+                is Result.Success -> {
                     if(result.data.land.name.isBlank()) {
                         if (currentLocation != null) {
                             _geocode.value = convertMyLocationToAddress(currentLocation,context)
@@ -45,7 +45,7 @@ class HomeViewModel @Inject constructor(
                         _geocode.value = "${result.data.region.area3.name} ${result.data.land.name}"
                     }
                 }
-                is NetworkResponse.Error -> {
+                is Result.Error -> {
                     if (currentLocation != null) {
                         _geocode.value = convertMyLocationToAddress(currentLocation,context)
                     }
