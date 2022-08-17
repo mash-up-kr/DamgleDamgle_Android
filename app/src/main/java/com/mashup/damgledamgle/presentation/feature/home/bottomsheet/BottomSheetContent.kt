@@ -31,16 +31,7 @@ fun BottomSheetContent(
 
     Box(
         modifier = Modifier
-            .background(
-                brush = Brush.verticalGradient(
-                    0.15f to Grey500,
-                    0.3f to Orange400,
-                    0.38f to Orange600,
-                    0.7f to Orange600,
-                    0.76f to Orange400,
-                    0.85f to Grey500,
-                )
-            )
+            .background(brush = backgroundGradient)
             .fillMaxWidth()
             .fillMaxHeight()
     ) {

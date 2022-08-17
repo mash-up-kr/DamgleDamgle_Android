@@ -50,6 +50,9 @@ fun HomeScreen(navController: NavHostController) {
             Button(onClick = { navController.navigate(Screen.MyPage.route) }) {
                 Text(text = "MyPage")
             }
+            Button(onClick = { navController.navigate(Screen.AllDamgleList.route) }) {
+                Text(text = "AllDamgleList")
+            }
             MapScreen()
 
         }
