@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -17,10 +18,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.enumerate.DamgleStorySort
+import com.mashup.damgledamgle.enumerate.toKorean
 import com.mashup.damgledamgle.ui.theme.*
+import com.mashup.damgledamgle.util.ToastUtil
 
 @Composable
 fun AllDamgleListScreen(navController: NavHostController, viewModel: AllDamgleListViewModel = hiltViewModel()) {
+    val context = LocalContext.current
+
     Scaffold {
         Box(
             modifier = Modifier
@@ -78,7 +83,10 @@ fun AllDamgleListScreen(navController: NavHostController, viewModel: AllDamgleLi
                             DamgleStoryBox(
                                 boxState.value,
                                 { viewModel.reactMain(boxState.key) },
-                                { reaction -> viewModel.react(boxState.key, reaction) }
+                                { reaction ->
+                                    viewModel.react(boxState.key, reaction)
+                                    ToastUtil.show(context, "${reaction.toKorean()} 이모지로 수정되었어요!")
+                                }
                             )
                         }
                     }

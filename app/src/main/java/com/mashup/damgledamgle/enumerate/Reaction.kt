@@ -46,3 +46,13 @@ enum class Reaction(
         R.drawable.img_best
     )
 }
+
+fun Reaction.toKorean(): String {
+    return when (this) {
+        Reaction.SAD -> "슬픔"
+        Reaction.BEST -> "최고"
+        Reaction.AMAZING -> "놀라움"
+        Reaction.ANGRY -> "화남"
+        Reaction.LIKE -> "좋아요"
+    }
+}
