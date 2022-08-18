@@ -1,69 +1,38 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
-import android.app.Application
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import android.util.Log
-import androidx.lifecycle.*
-import com.mashup.damgledamgle.domain.entity.base.Result
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
 import com.mashup.damgledamgle.domain.usecase.home.GetNaverGeocodeUseCase
-import com.mashup.damgledamgle.presentation.feature.home.map.LocationManager
+import com.mashup.damgledamgle.presentation.common.ViewState
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getNaverGeocodeUseCase: GetNaverGeocodeUseCase,
-    application: Application
-) : AndroidViewModel(application) {
+    private val getNaverGeocodeUseCase: GetNaverGeocodeUseCase
+) : ViewModel() {
 
-    val context
-        get() = getApplication<Application>()
     var showLoading = MutableLiveData(false)
+    val locationGeocodeState = MutableStateFlow<ViewState<String>?>(ViewState.Loading)
+    var currentLocation : LatLng? = null
 
-    private val _geocode = MutableLiveData("")
-    val geocode: LiveData<String> = _geocode
-    private val currentLocation = LocationManager.getMyLocation(context)
-
-    init {
-        getNaverGeocode("${currentLocation?.longitude},${currentLocation?.latitude}")
-    }
-
-    private fun getNaverGeocode(coords : String) {
+    fun getNaverGeocode(coords : String) {
         viewModelScope.launch {
-            when(val result = getNaverGeocodeUseCase.invoke(coords)) {
-                is Result.Success -> {
-                    if(result.data.land.name.isBlank()) {
-                        if (currentLocation != null) {
-                            _geocode.value = convertMyLocationToAddress(currentLocation,context)
-                        }
-                    }else {
-                        Log.d("naverResult","${result.data.region.area3.name} ${result.data.land.name}")
-                        _geocode.value = "${result.data.region.area3.name} ${result.data.land.name}"
-                    }
+            launchWithNetworkResult(
+                result = getNaverGeocodeUseCase.invoke(coords),
+                suspendOnSuccess = {
+                    val geocode = "${it.region.area3.name} ${it.land.name}"
+                    locationGeocodeState.emit(ViewState.Success(geocode))
+                },
+                suspendOnError = {
+                    locationGeocodeState.emit(ViewState.Error(it.message.toString()))
                 }
-                is Result.Error -> {
-                    if (currentLocation != null) {
-                        _geocode.value = convertMyLocationToAddress(currentLocation,context)
-                    }
-                }
-            }
+            )
         }
     }
-
-    private fun convertMyLocationToAddress(latLng: LatLng, context: Context) : String {
-        val geocoder = Geocoder(context)
-        val address : List<Address> = geocoder.getFromLocation(latLng.latitude, latLng.longitude,5)
-        val position = address[0].getAddressLine(0).split(" ")
-        val gu = position[2]
-        val dong = position[3]
-
-        return "$gu $dong"
-    }
-
-
-
 }

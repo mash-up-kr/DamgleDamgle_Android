@@ -1,21 +1,17 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import android.app.Activity
-import android.widget.Toast
-import androidx.compose.material.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,12 +19,13 @@ import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
+import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
-import com.mashup.damgledamgle.presentation.feature.home.map.LocationManager
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.LottieBackGround
+import com.mashup.damgledamgle.util.LocationUtil
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 import com.naver.maps.map.compose.rememberCameraPositionState
@@ -39,12 +36,34 @@ fun HomeScreen(navController: NavHostController) {
     val homeViewModel : HomeViewModel = hiltViewModel()
     val context = LocalContext.current
 
+    var locationTitle : String? = null
     val cameraPositionState = rememberCameraPositionState()
-    val currentLocation = LocationManager.getMyLocation(context)
+    val currentLocation = LocationUtil.getMyLocation(context)
+    homeViewModel.currentLocation = currentLocation
+    homeViewModel.getNaverGeocode(
+        "${currentLocation?.longitude},${currentLocation?.latitude}"
+    )
+
+    when(homeViewModel.locationGeocodeState.collectAsState(initial = ViewState.Loading).value) {
+        is ViewState.Loading -> {
+            homeViewModel.showLoading.value = true
+        }
+        is ViewState.Success -> {
+            homeViewModel.showLoading.value = false
+            val location = homeViewModel.locationGeocodeState.collectAsState().value as ViewState.Success
+            locationTitle = location.data.ifBlank {
+                currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }
+            }
+        }
+        else -> {
+            homeViewModel.showLoading.value = false
+            locationTitle =
+                currentLocation?.let { LocationUtil.convertMyLocationToAddress(it,context) }
+        }
+    }
+
     currentLocation?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
-
-    val locationTitle = homeViewModel.geocode.observeAsState()
 
     var backPressWaitTime by remember { mutableStateOf(0L) }
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
@@ -62,7 +81,7 @@ fun HomeScreen(navController: NavHostController) {
         BottomSheetScaffold(
             topBar = {
                 MainToolBar(
-                    title = locationTitle.value
+                    title = locationTitle
                 ) { navController.navigate(Screen.MyPage.route) }
             },
             sheetBackgroundColor = Color.Gray,
@@ -101,7 +120,6 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             MapScreen(cameraPositionState)
         }
-        //TODO - 서버 연동 후 showLoading false로 바꾸기
         val showLoading = homeViewModel.showLoading.observeAsState()
         if(showLoading.value == true) {
             LoadingLottie()

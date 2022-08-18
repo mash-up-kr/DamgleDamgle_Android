@@ -1,5 +1,8 @@
 package com.mashup.damgledamgle.util
 
+import android.icu.util.Calendar
+import java.util.concurrent.TimeUnit
+
 object TimeUtil {
 
     private fun getCurrentTime(): Long {
@@ -16,9 +19,43 @@ object TimeUtil {
         }
     }
 
+    fun formatTimerTime(millisRemaining: Long) : String = String.format(
+        TIME_FORMAT,
+        TimeUnit.MILLISECONDS.toHours(millisRemaining),
+        TimeUnit.MILLISECONDS.toMinutes(millisRemaining) - TimeUnit.HOURS.toMinutes(
+            TimeUnit.MILLISECONDS.toHours(millisRemaining)
+        ),
+        TimeUnit.MILLISECONDS.toSeconds(millisRemaining) - TimeUnit.MINUTES.toSeconds(
+            TimeUnit.MILLISECONDS.toMinutes(millisRemaining)
+        )
+    )
+
+    fun getCalDiffTime(calendar: Calendar) : Long {
+        val nowTime = calendar.time
+
+        val eventDate = Calendar.getInstance()
+        eventDate[Calendar.YEAR] = calendar.get(Calendar.YEAR)
+        eventDate[Calendar.MONTH] = calendar.get(Calendar.MONTH)+1
+        eventDate[Calendar.DAY_OF_MONTH] = 1
+        eventDate[Calendar.HOUR_OF_DAY] = 0
+        eventDate[Calendar.MINUTE] = 0
+        eventDate[Calendar.SECOND] = 0
+
+        return eventDate.timeInMillis - nowTime.time
+    }
+
+    fun formatRestTime(totalDiffTime : Long) : String {
+        val hours = totalDiffTime / 60 * 60 * 1000
+        val minutes = totalDiffTime / (1000 * 60) % 60
+        val seconds = (totalDiffTime / 1000) % 60
+
+        return "$hours:$minutes:$seconds"
+    }
+
     private const val SECOND_MILLISECOND = 1000
     private const val MINUTE_MILLISECOND = SECOND_MILLISECOND * 60
     private const val HOUR_MILLISECOND = MINUTE_MILLISECOND * 60
     private const val DAY_MILLISECOND = HOUR_MILLISECOND * 24
     private const val WEEK_MILLISECOND = DAY_MILLISECOND * 7
+    private const val TIME_FORMAT = "%02d:%02d:%02d"
 }

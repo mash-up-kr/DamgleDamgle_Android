@@ -1,15 +1,13 @@
-package com.mashup.damgledamgle.presentation.feature.home.map
+package com.mashup.damgledamgle.util
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
+import android.location.*
 import android.util.Log
 import androidx.activity.ComponentActivity
 import com.naver.maps.geometry.LatLng
 
-object LocationManager {
+object LocationUtil {
 
     @SuppressLint("MissingPermission")
     fun getMyLocation(context : Context) : LatLng? {
@@ -31,15 +29,22 @@ object LocationManager {
             override fun onProviderEnabled(provider: String) {}
         }
 
-        if(currentLocation == null) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000,
-                50.0f,
-                gpsListener)
-        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+            1000,
+            50.0f,
+            gpsListener)
 
         return latLng
     }
 
+    fun convertMyLocationToAddress(latLng: LatLng, context: Context) : String {
+        val geocoder = Geocoder(context)
+        val address: List<Address> = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5)
+        val position = address[0].getAddressLine(0).split(" ")
+        val gu = position[2]
+        val dong = position[3]
+
+        return "$gu $dong"
+    }
 }
 

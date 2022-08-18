@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerInfo
-import com.mashup.damgledamgle.presentation.feature.home.timer.TimeUtil
+import com.mashup.damgledamgle.util.TimeUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -24,7 +24,6 @@ class MapViewModel @Inject constructor()
     private val _oneHourCheck = MutableLiveData(false)
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
 
-
     fun getMakerList(): ArrayList<MarkerInfo> {
         val list: ArrayList<MarkerInfo> = arrayListOf()
         list.add(MarkerInfo(R.drawable.ic_heart_small,true, true,37.5455113, 127.0657011,0))
@@ -36,39 +35,23 @@ class MapViewModel @Inject constructor()
     }
 
     fun getCalendarLastDay(): String {
+        var restTime = ""
         val calendar = Calendar.getInstance()
         val lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         val today = calendar.get(Calendar.DATE).toString().toInt()
         val diff = lastDay - today
 
-        return if (diff < 1) getCalDiffTime(calendar) else "D-$diff"
-    }
+        totalDiffTime = TimeUtil.getCalDiffTime(calendar)
+        if(totalDiffTime != 0L) restTime = TimeUtil.formatRestTime(totalDiffTime)
 
-    private fun getCalDiffTime(calendar: Calendar): String {
-        val nowTime = calendar.time
-
-        val eventDate = Calendar.getInstance()
-        eventDate[Calendar.YEAR] = calendar.get(Calendar.YEAR)
-        eventDate[Calendar.MONTH] = calendar.get(Calendar.MONTH)+1
-        eventDate[Calendar.DAY_OF_MONTH] = 1
-        eventDate[Calendar.HOUR_OF_DAY] = 0
-        eventDate[Calendar.MINUTE] = 0
-        eventDate[Calendar.SECOND] = 0
-
-        totalDiffTime = eventDate.timeInMillis - nowTime.time
-
-        val hours = totalDiffTime / (60 * 60 * 1000)
-        val minutes = totalDiffTime / (1000 * 60) % 60
-        val seconds = (totalDiffTime / 1000) % 60
-
-        return "$hours:$minutes:$seconds"
+        return if (diff < 1) restTime else "D-$diff"
     }
 
     fun startTimer() {
         countDownTimer = object : CountDownTimer(totalDiffTime, 1000) {
             override fun onTick(millisRemaining: Long) {
                 _oneHourCheck.value = TimeUnit.MILLISECONDS.toHours(millisRemaining) < 1
-                val hms = TimeUtil.formatTime(millisRemaining)
+                val hms = TimeUtil.formatTimerTime(millisRemaining)
                 _time.value = hms
             }
             override fun onFinish() {
