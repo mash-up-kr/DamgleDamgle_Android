@@ -1,7 +1,5 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,11 +23,14 @@ class HomeViewModel @Inject constructor(
     val showLoading: LiveData<Boolean> = _showLoading
     private var _locationTitle = MutableLiveData("")
     val locationTitle: LiveData<String> = _locationTitle
-    val loading =  MutableLiveData(false)
-    val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
+    private val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
     var currentLocation : LatLng? = null
 
     init {
+        viewStateObserver()
+    }
+
+    private fun viewStateObserver() {
         viewModelScope.launch {
             locationGeocodeState.collect { state ->
                 when(state) {
@@ -44,6 +45,16 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun homeRefreshBtnEvent(updateLocation: LatLng?) {
+        viewModelScope.launch {
+            locationGeocodeState.value = ViewState.Loading
+            delay(2000)
+            getNaverGeocode(
+                "${updateLocation?.longitude},${updateLocation?.latitude}")
+        }
+    }
+
     fun getNaverGeocode(coords : String) {
         viewModelScope.launch {
             launchWithNetworkResult(

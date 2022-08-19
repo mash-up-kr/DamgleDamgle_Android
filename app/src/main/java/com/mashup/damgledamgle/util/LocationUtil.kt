@@ -13,7 +13,6 @@ import com.naver.maps.geometry.LatLng
 object LocationUtil {
 
     fun getMyLocation(context : Context) : LatLng? {
-
         val locationManager = context.getSystemService(ComponentActivity.LOCATION_SERVICE) as LocationManager
         var latLng : LatLng? = null
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -47,7 +46,6 @@ object LocationUtil {
                 1000,
                 50.0f,
                 gpsListener)
-
         }
         return latLng
     }

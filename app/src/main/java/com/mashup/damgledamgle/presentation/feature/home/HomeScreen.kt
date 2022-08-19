@@ -17,7 +17,6 @@ import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
-import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
@@ -44,9 +43,12 @@ fun HomeScreen(navController: NavHostController) {
     homeViewModel.getNaverGeocode(
         "${currentLocation?.longitude},${currentLocation?.latitude}"
     )
-    locationTitle = homeViewModel.locationTitle.observeAsState().value?.ifBlank {
-        currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }!!
-    }.toString()
+    val current = homeViewModel.locationTitle.observeAsState()
+    if(current.value != null) {
+        locationTitle = current.value!!.ifBlank {
+            currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context)}.toString()
+        }
+    }
 
     currentLocation?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
@@ -76,11 +78,8 @@ fun HomeScreen(navController: NavHostController) {
                     description = "refresh_btn",
                     modifier = Modifier.size(48.dp, 48.dp),
                     onClick = {
-                        homeViewModel.locationGeocodeState.value = ViewState.Loading
                         val updateLocation = LocationUtil.getMyLocation(context)
-                        homeViewModel.getNaverGeocode(
-                            "${updateLocation?.longitude},${updateLocation?.latitude}"
-                        )
+                        homeViewModel.homeRefreshBtnEvent(updateLocation)
                     }
                 )
                 FloatingActionButton(
