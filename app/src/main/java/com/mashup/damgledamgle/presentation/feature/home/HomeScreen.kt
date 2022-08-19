@@ -33,35 +33,24 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 fun HomeScreen(navController: NavHostController) {
     val homeViewModel : HomeViewModel = hiltViewModel()
     val context = LocalContext.current
+    BackPressInterceptor(context)
 
-    var locationTitle : String? = null
+    var locationTitle by remember {
+        mutableStateOf("")
+    }
     val cameraPositionState = rememberCameraPositionState()
     val currentLocation = LocationUtil.getMyLocation(context)
     homeViewModel.currentLocation = currentLocation
     homeViewModel.getNaverGeocode(
         "${currentLocation?.longitude},${currentLocation?.latitude}"
     )
-
-    when(homeViewModel.locationGeocodeState.collectAsState(initial = ViewState.Loading).value) {
-        is ViewState.Loading -> {
-            homeViewModel.showLoading.value = true
-        }
-        is ViewState.Success -> {
-            homeViewModel.showLoading.value = false
-            val location = homeViewModel.locationGeocodeState.collectAsState().value as ViewState.Success
-            locationTitle = location.data
-        }
-        else -> {
-            homeViewModel.showLoading.value = false
-            locationTitle =
-                currentLocation?.let { LocationUtil.convertMyLocationToAddress(it,context) }
-        }
-    }
+    locationTitle = homeViewModel.locationTitle.observeAsState().value?.ifBlank {
+        currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }!!
+    }.toString()
 
     currentLocation?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
 
-    BackPressInterceptor(context)
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     Scaffold {
         BottomSheetScaffold(
@@ -87,7 +76,11 @@ fun HomeScreen(navController: NavHostController) {
                     description = "refresh_btn",
                     modifier = Modifier.size(48.dp, 48.dp),
                     onClick = {
-                        homeViewModel.showLoading.value = true
+                        homeViewModel.locationGeocodeState.value = ViewState.Loading
+                        val updateLocation = LocationUtil.getMyLocation(context)
+                        homeViewModel.getNaverGeocode(
+                            "${updateLocation?.longitude},${updateLocation?.latitude}"
+                        )
                     }
                 )
                 FloatingActionButton(
@@ -126,7 +119,7 @@ fun LoadingLottie() {
     LaunchedEffect(composition) {
         lottieAnimatable.animate(
             composition = composition,
-            clipSpec = LottieClipSpec.Frame(0, 2000),
+            clipSpec = LottieClipSpec.Frame(0,2000),
             initialProgress = 0f
         )
     }
