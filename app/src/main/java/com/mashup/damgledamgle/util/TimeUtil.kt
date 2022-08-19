@@ -30,7 +30,21 @@ object TimeUtil {
         )
     )
 
-    fun getCalDiffTime(calendar: Calendar) : Long {
+    fun getCalendarLastDay() : String {
+        var restTime = ""
+        val calendar = Calendar.getInstance()
+        val lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val today = calendar.get(Calendar.DATE).toString().toInt()
+        val diff = lastDay - today
+
+        val totalDiffTime = getCalDiffTime()
+        if(totalDiffTime != 0L) restTime = formatRestTime(totalDiffTime)
+
+        return if (diff < 1) restTime else "D-$diff"
+    }
+
+     fun getCalDiffTime() : Long {
+        val calendar = Calendar.getInstance()
         val nowTime = calendar.time
 
         val eventDate = Calendar.getInstance()
@@ -44,10 +58,10 @@ object TimeUtil {
         return eventDate.timeInMillis - nowTime.time
     }
 
-    fun formatRestTime(totalDiffTime : Long) : String {
-        val hours = totalDiffTime / 60 * 60 * 1000
-        val minutes = totalDiffTime / (1000 * 60) % 60
-        val seconds = (totalDiffTime / 1000) % 60
+    private fun formatRestTime(totalDiffTime : Long) : String {
+        val hours = totalDiffTime / HOUR_MILLISECOND
+        val minutes = totalDiffTime / (MINUTE_MILLISECOND) % 60
+        val seconds = (totalDiffTime / SECOND_MILLISECOND) % 60
 
         return "$hours:$minutes:$seconds"
     }
