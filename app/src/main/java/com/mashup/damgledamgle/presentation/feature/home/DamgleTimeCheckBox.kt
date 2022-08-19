@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.home.timer
+package com.mashup.damgledamgle.presentation.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 

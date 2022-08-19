@@ -2,7 +2,7 @@ package com.mashup.damgledamgle.repository.remote
 
 import com.mashup.damgledamgle.domain.entity.NickName
 import com.mashup.damgledamgle.domain.entity.User
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.OnboardingRepository
 import com.mashup.damgledamgle.mapper.AuthMapper
 import com.mashup.damgledamgle.mapper.NickNameMapper
@@ -28,7 +28,7 @@ class OnboardingRepositoryImpl @Inject constructor(
 
     private val damgleApi by lazy { serviceBuilder.buildService<DamgleApi>() }
 
-    override suspend fun getNickName(adjective: String?, noun: String?): NetworkResponse<NickName> {
+    override suspend fun getNickName(adjective: String?, noun: String?): Result<NickName> {
         return try {
             val resultData = when {
                 adjective != null -> damgleApi.getNickName(adjective = adjective)
@@ -36,30 +36,30 @@ class OnboardingRepositoryImpl @Inject constructor(
                 else -> damgleApi.getNickName()
             }
 
-            NetworkResponse.Success(nickNameMapper.mapToEntity(resultData))
+            Result.Success(nickNameMapper.mapToEntity(resultData))
         } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            Result.Error(e)
         }
     }
 
-    override suspend fun pickNickName(adjective: String, noun: String): NetworkResponse<NickName> {
+    override suspend fun pickNickName(adjective: String, noun: String): Result<NickName> {
         return try {
             val resultData = damgleApi.pickNickName(PickNickNameRequest(adjective, noun))
-            NetworkResponse.Success(nickNameMapper.mapToEntity(resultData))
+            Result.Success(nickNameMapper.mapToEntity(resultData))
         } catch (e: Exception) {
-            NetworkResponse.Error(e)
+            Result.Error(e)
         }
     }
 
-    override suspend fun signUp(nickName: String, notification: Boolean): NetworkResponse<User> {
+    override suspend fun signUp(nickName: String, notification: Boolean): Result<User> {
         return try {
             val resultData = damgleApi.signUp(NickNameRequest(nickName, notification))
-            NetworkResponse.Success(authMapper.mapToEntity(resultData))
+            Result.Success(authMapper.mapToEntity(resultData))
         } catch (e: Exception) {
             if ((e as HttpException).code() == 400) {
-                NetworkResponse.Error(Exception("닉네임이 중복되었습니다: $nickName"))
+                Result.Error(Exception("닉네임이 중복되었습니다: $nickName"))
             } else {
-                NetworkResponse.Error(e)
+                Result.Error(e)
             }
         }
     }

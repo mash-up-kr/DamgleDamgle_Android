@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -15,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.DisabledInteractionSource
 import com.mashup.damgledamgle.ui.theme.*
 
 /**
@@ -25,8 +28,11 @@ import com.mashup.damgledamgle.ui.theme.*
  */
 
 @Composable
-fun PushSettingItem() {
-    val pushAllowState = remember { mutableStateOf(false) }
+fun PushSettingItem(
+    notification: Boolean,
+    patchNotificationState: ()->Unit
+) {
+    val pushAllowState = remember { mutableStateOf(notification) }
 
     Box(
         modifier = Modifier
@@ -66,8 +72,11 @@ fun PushSettingItem() {
             // 푸시 알림 동의 스위치
             Switch(
                 checked = pushAllowState.value,
-                //interactionSource = remember { DisabledInteractionSource() },
-                onCheckedChange = { pushAllowState.value = it },
+                interactionSource = remember { DisabledInteractionSource() },
+                onCheckedChange = {
+                    pushAllowState.value = it
+                    patchNotificationState()
+                },
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = Orange500,
                     checkedTrackColor = Gray400,

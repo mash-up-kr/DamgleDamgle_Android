@@ -6,7 +6,10 @@ import com.mashup.damgledamgle.domain.repository.OnboardingRepository
 import com.mashup.damgledamgle.domain.repository.TokenRepository
 import com.mashup.damgledamgle.repository.datastore.repository.DataStoreRepositoryImpl
 import com.mashup.damgledamgle.repository.remote.MapRepositoryImpl
+import com.mashup.damgledamgle.domain.repository.*
+import com.mashup.damgledamgle.repository.remote.DamgleRepositoryImpl
 import com.mashup.damgledamgle.repository.remote.OnboardingRepositoryImpl
+import com.mashup.damgledamgle.repository.remote.UserRepositoryImpl
 import com.mashup.damgledamgle.repository.token.TokenRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -40,5 +43,12 @@ abstract class RepositoryModule {
     @Binds
     abstract fun bindMapRepository(impl: MapRepositoryImpl): MapRepository
 
+    @Singleton
+    @Binds
+    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindDamgleRepository(impl: DamgleRepositoryImpl): DamgleRepository
 
 }

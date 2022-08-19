@@ -17,7 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
-import com.mashup.damgledamgle.presentation.feature.home.timer.DamgleTimeCheckBox
+import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
+import com.mashup.damgledamgle.util.LocationUtil
+import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
@@ -69,7 +71,7 @@ fun MapContent(
             uiSettings = mapUiSettings
         ){
 
-            LocationManager.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
+            LocationUtil.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
                 Marker(
                     state = it,
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
@@ -97,10 +99,10 @@ fun MapContent(
 
 @Composable
 fun CheckDamgleTime(mapViewModel: MapViewModel) {
-    val result = mapViewModel.getCalendarLastDay()
-    if(result.contains("D"))
+    val result = TimeUtil.getCalendarLastDay()
+    if(result.contains("D")) {
         DamgleTimeCheckBox(result, false)
-    else {
+    } else {
         mapViewModel.startTimer()
         val time by mapViewModel.time.observeAsState()
         val oneHourCheck by mapViewModel.oneHourCheck.observeAsState()

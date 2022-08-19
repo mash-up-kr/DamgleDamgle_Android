@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.mashup.damgledamgle.presentation.feature.all_damgle_list.AllDamgleListScreen
 import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
 import com.mashup.damgledamgle.presentation.feature.mypage.MyPageScreen
 import com.mashup.damgledamgle.presentation.feature.onboarding.OnboardingScreen
@@ -34,6 +35,10 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
         }
         composable(route = Screen.MyPage.route) {
             MyPageScreen(navController = navController)
+        }
+        composable(route = Screen.AllDamgleList.route) {
+            systemUiController.setSystemBarsColor(color = Grey500)
+            AllDamgleListScreen(navController = navController)
         }
     }
 }

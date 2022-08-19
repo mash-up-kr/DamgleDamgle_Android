@@ -3,10 +3,7 @@ package com.mashup.damgledamgle.presentation.feature.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomSheetScaffold
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberBottomSheetScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -19,12 +16,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
-import com.mashup.damgledamgle.presentation.feature.home.map.LocationManager
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.LottieBackGround
+import com.mashup.damgledamgle.util.LocationUtil
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 import com.naver.maps.map.compose.rememberCameraPositionState
@@ -34,19 +32,32 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 fun HomeScreen(navController: NavHostController) {
     val homeViewModel : HomeViewModel = hiltViewModel()
     val context = LocalContext.current
+    BackPressInterceptor(context)
 
+    var locationTitle by remember {
+        mutableStateOf("")
+    }
     val cameraPositionState = rememberCameraPositionState()
-    val currentLocation = LocationManager.getMyLocation(context)
+    val currentLocation = LocationUtil.getMyLocation(context)
+    homeViewModel.getNaverGeocode(
+        "${currentLocation?.longitude},${currentLocation?.latitude}"
+    )
+    val current = homeViewModel.locationTitle.observeAsState()
+    if(current.value != null) {
+        locationTitle = current.value!!.ifEmpty {
+            currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context)}.toString()
+        }
+    }
+
     currentLocation?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
-    val locationTitle = homeViewModel.geocode.observeAsState()
     Scaffold {
         BottomSheetScaffold(
             topBar = {
                 MainToolBar(
-                    title = locationTitle.value
+                    title = locationTitle
                 ) { navController.navigate(Screen.MyPage.route) }
             },
             sheetBackgroundColor = Color.Gray,
@@ -66,7 +77,8 @@ fun HomeScreen(navController: NavHostController) {
                     description = "refresh_btn",
                     modifier = Modifier.size(48.dp, 48.dp),
                     onClick = {
-                        homeViewModel.showLoading.value = true
+                        val updateLocation = LocationUtil.getMyLocation(context)
+                        homeViewModel.homeRefreshBtnEvent(updateLocation)
                     }
                 )
                 FloatingActionButton(
@@ -85,10 +97,12 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             MapScreen(cameraPositionState)
         }
-        //TODO - 서버 연동 후 showLoading false로 바꾸기
         val showLoading = homeViewModel.showLoading.observeAsState()
         if(showLoading.value == true) {
             LoadingLottie()
+            Button(onClick = { navController.navigate(Screen.AllDamgleList.route) }) {
+                Text(text = "AllDamgleList")
+            }
         }
     }
 }
@@ -103,7 +117,7 @@ fun LoadingLottie() {
     LaunchedEffect(composition) {
         lottieAnimatable.animate(
             composition = composition,
-            clipSpec = LottieClipSpec.Frame(0, 2000),
+            clipSpec = LottieClipSpec.Frame(0,2000),
             initialProgress = 0f
         )
     }
