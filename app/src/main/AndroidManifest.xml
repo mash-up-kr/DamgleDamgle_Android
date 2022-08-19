@@ -5,6 +5,8 @@
 
     <!-- 인터넷 접속을 위한 퍼미션 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!-- Always include this permission -->
     <!-- 네트워크를 이용하여 단말기 위치 식별 -->
@@ -39,7 +41,7 @@
         </activity>
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="a72bwyc505" />
+            android:value="${NAVER_CLIENT_ID}" />
     </application>
 
 </manifest>

@@ -7,6 +7,8 @@ plugins {
 
 android {
     compileSdk 32
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
     defaultConfig {
         minSdk 26
@@ -14,7 +16,11 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField("String", "NAVER_CLIENT_ID", properties.getProperty("naver_id"))
+        buildConfigField("String", "NAVER_CLIENT_KEY", properties.getProperty("naver_client_secret"))
     }
+
 
     buildTypes {
         release {
@@ -57,4 +63,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation "androidx.room:room-runtime:$room_version"
 }

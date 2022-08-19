@@ -1,6 +1,10 @@
 package com.mashup.damgledamgle.repository.network
 
 import com.mashup.damgledamgle.repository.spec.*
+import com.mashup.damgledamgle.repository.spec.NickNameRequest
+import com.mashup.damgledamgle.repository.spec.NickNameResponse
+import com.mashup.damgledamgle.repository.spec.PickNickNameRequest
+import com.mashup.damgledamgle.repository.spec.UserResponse
 import retrofit2.http.*
 
 /**
@@ -34,6 +38,17 @@ interface DamgleApi {
     suspend fun signUp(@Body request: NickNameRequest): UserResponse
 
     /**
+     * Map - Story Feed 가져오기
+     */
+    @GET("/v1/story/feed")
+    suspend fun getStoryFeed(
+        @Query("top") top : Double,
+        @Query("bottom") bottom : Double,
+        @Query("left") left : Double,
+        @Query("right") right : Double
+    ) : StoryFeedResponse
+
+    /**
      * Auth - Me : 내 정보
      */
     @GET("/v1/auth/me")
@@ -56,4 +71,5 @@ interface DamgleApi {
      */
     @GET("v1/story/me")
     suspend fun getMyDamgleList(): DamgleListResponse
+
 }

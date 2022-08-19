@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.repository.datastore
+package com.mashup.damgledamgle.repository.datastore.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
