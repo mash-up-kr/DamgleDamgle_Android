@@ -49,9 +49,7 @@ fun HomeScreen(navController: NavHostController) {
         is ViewState.Success -> {
             homeViewModel.showLoading.value = false
             val location = homeViewModel.locationGeocodeState.collectAsState().value as ViewState.Success
-            locationTitle = location.data.ifBlank {
-                currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }
-            }
+            locationTitle = location.data
         }
         else -> {
             homeViewModel.showLoading.value = false
