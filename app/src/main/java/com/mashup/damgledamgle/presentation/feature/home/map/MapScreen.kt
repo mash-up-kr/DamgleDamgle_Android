@@ -19,6 +19,7 @@ import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
 import com.mashup.damgledamgle.util.LocationUtil
+import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
@@ -97,7 +98,7 @@ fun MapContent(
 
 @Composable
 fun CheckDamgleTime(mapViewModel: MapViewModel) {
-    val result = mapViewModel.getCalendarLastDay()
+    val result = TimeUtil.getCalendarLastDay()
     if(result.contains("D")) {
         DamgleTimeCheckBox(result, false)
     } else {

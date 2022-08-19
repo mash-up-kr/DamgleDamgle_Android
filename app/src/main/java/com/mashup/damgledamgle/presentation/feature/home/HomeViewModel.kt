@@ -17,8 +17,8 @@ class HomeViewModel @Inject constructor(
     private val getNaverGeocodeUseCase: GetNaverGeocodeUseCase
 ) : ViewModel() {
 
-    var showLoading = MutableLiveData(false)
-    val locationGeocodeState = MutableStateFlow<ViewState<String>?>(ViewState.Loading)
+    val showLoading = MutableLiveData(false)
+    val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
     var currentLocation : LatLng? = null
 
     fun getNaverGeocode(coords : String) {

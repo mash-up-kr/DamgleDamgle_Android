@@ -1,6 +1,5 @@
 package com.mashup.damgledamgle.presentation.feature.home.map
 
-import android.icu.util.Calendar
 import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,12 +16,12 @@ class MapViewModel @Inject constructor()
     : ViewModel() {
 
     private var countDownTimer: CountDownTimer? = null
-    var totalDiffTime = 0L
     private val _time = MutableLiveData("")
     val time: LiveData<String> = _time
 
     private val _oneHourCheck = MutableLiveData(false)
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
+
 
     fun getMakerList(): ArrayList<MarkerInfo> {
         val list: ArrayList<MarkerInfo> = arrayListOf()
@@ -34,21 +33,8 @@ class MapViewModel @Inject constructor()
         return list
     }
 
-    fun getCalendarLastDay(): String {
-        var restTime = ""
-        val calendar = Calendar.getInstance()
-        val lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-        val today = calendar.get(Calendar.DATE).toString().toInt()
-        val diff = lastDay - today
-
-        totalDiffTime = TimeUtil.getCalDiffTime(calendar)
-        if(totalDiffTime != 0L) restTime = TimeUtil.formatRestTime(totalDiffTime)
-
-        return if (diff < 1) restTime else "D-$diff"
-    }
-
     fun startTimer() {
-        countDownTimer = object : CountDownTimer(totalDiffTime, 1000) {
+        countDownTimer = object : CountDownTimer(TimeUtil.getCalDiffTime(), 1000) {
             override fun onTick(millisRemaining: Long) {
                 _oneHourCheck.value = TimeUnit.MILLISECONDS.toHours(millisRemaining) < 1
                 val hms = TimeUtil.formatTimerTime(millisRemaining)

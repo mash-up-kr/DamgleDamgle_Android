@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.core.app.ActivityCompat
-import com.mashup.damgledamgle.MainActivity
 import com.naver.maps.geometry.LatLng
 
 object LocationUtil {
