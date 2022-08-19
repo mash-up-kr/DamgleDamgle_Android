@@ -9,11 +9,16 @@ data class StoryFeedResponse(
 
 data class Stories(
     @Json(name = "id") val id : String,
-    @Json(name = "reactions") val reactions : List<Reaction>,
-    @Json(name = "x") val x : Float,
-    @Json(name = "y") val y : Float
+    @Json(name = "userNo") val userNo : Int,
+    @Json(name = "nickname") val nickname : String,
+    @Json(name = "x") val x : Double,
+    @Json(name = "y") val y : Double,
+    @Json(name = "content") val content : String,
+    @Json(name = "reactions") val reactions : List<Reactions>,
+    @Json(name = "createdAt") val createdAt : Long,
+    @Json(name = "updatedAt") val updatedAt : Long
 )
 
-data class Reaction(
+data class Reactions(
     @Json(name = "type") val type : String
 )

@@ -42,7 +42,11 @@ interface DamgleApi {
      */
     @GET("/v1/story/feed")
     suspend fun getStoryFeed(
-        @Body storyFeedRequest: StoryFeedRequest) : StoryFeedResponse
+        @Query("top") top : Double,
+        @Query("bottom") bottom : Double,
+        @Query("left") left : Double,
+        @Query("right") right : Double
+    ) : StoryFeedResponse
 
     /**
      * Auth - Me : 내 정보

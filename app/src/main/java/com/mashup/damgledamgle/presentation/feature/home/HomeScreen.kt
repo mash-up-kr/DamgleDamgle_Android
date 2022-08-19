@@ -39,13 +39,12 @@ fun HomeScreen(navController: NavHostController) {
     }
     val cameraPositionState = rememberCameraPositionState()
     val currentLocation = LocationUtil.getMyLocation(context)
-    homeViewModel.currentLocation = currentLocation
     homeViewModel.getNaverGeocode(
         "${currentLocation?.longitude},${currentLocation?.latitude}"
     )
     val current = homeViewModel.locationTitle.observeAsState()
     if(current.value != null) {
-        locationTitle = current.value!!.ifBlank {
+        locationTitle = current.value!!.ifEmpty {
             currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context)}.toString()
         }
     }

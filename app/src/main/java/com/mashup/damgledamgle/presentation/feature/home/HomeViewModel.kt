@@ -24,7 +24,6 @@ class HomeViewModel @Inject constructor(
     private var _locationTitle = MutableLiveData("")
     val locationTitle: LiveData<String> = _locationTitle
     private val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
-    var currentLocation : LatLng? = null
 
     init {
         viewStateObserver()
@@ -52,6 +51,7 @@ class HomeViewModel @Inject constructor(
             delay(2000)
             getNaverGeocode(
                 "${updateLocation?.longitude},${updateLocation?.latitude}")
+
         }
     }
 
