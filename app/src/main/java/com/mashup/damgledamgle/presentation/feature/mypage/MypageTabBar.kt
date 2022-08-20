@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
+import com.mashup.damgledamgle.presentation.feature.mypage.model.MyPageTab
 import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.White
 import kotlinx.coroutines.launch
@@ -29,11 +30,11 @@ import kotlinx.coroutines.launch
 @ExperimentalPagerApi
 @Composable
 fun MyPageTabBar(
-    tabItems: List<String>,
+    tabItems: List<MyPageTab>,
     pagerState: PagerState
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val startPadding: Dp by animateDpAsState(if (pagerState.currentPage == 0) 0.dp else 90.dp)
+    val startPadding: Dp by animateDpAsState(if (pagerState.currentPage == MyPageTab.MyDamgle.ordinal) 0.dp else 90.dp)
 
     Box(
         modifier = Modifier.padding(top = 56.dp)
@@ -62,9 +63,9 @@ fun MyPageTabBar(
             },
             divider = {},
         ) {
-            tabItems.forEachIndexed { index, name ->
+            tabItems.forEachIndexed { index, tab ->
                 Tab(
-                    title = name,
+                    title = tab.title,
                     isSelected = pagerState.currentPage == index,
                     onClick = {
                         coroutineScope.launch {

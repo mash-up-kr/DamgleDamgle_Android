@@ -53,7 +53,7 @@ fun TabMyDamglePage(
                 Text(
                     text = context.getString(R.string.mypage_mydamgle_empty),
                     style = pretendardTextStyle.bodyMedium16,
-                    color = Gray800,
+                    color = Gray700,
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }

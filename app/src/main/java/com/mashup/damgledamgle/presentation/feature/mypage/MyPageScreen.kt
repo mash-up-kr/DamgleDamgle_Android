@@ -16,6 +16,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.pager.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.feature.mypage.model.MyPageTab
 import com.mashup.damgledamgle.ui.theme.*
 
 /**
@@ -28,11 +29,10 @@ import com.mashup.damgledamgle.ui.theme.*
 @ExperimentalPagerApi
 @Composable
 fun MyPageScreen(navController: NavHostController) {
-    val context = LocalContext.current
     val pagerState = rememberPagerState()
     val myPageViewModel: MyPageViewModel = hiltViewModel()
 
-    val tabItems = listOf(context.getString(R.string.mypage_tab_mydamgle), context.getString(R.string.mypage_tab_setting))
+    val tabItems = listOf(MyPageTab.MyDamgle, MyPageTab.Setting)
 
     Box(
         modifier = Modifier
@@ -79,7 +79,7 @@ fun MyPageScreen(navController: NavHostController) {
                         state = pagerState,
                         modifier = Modifier.fillMaxSize()
                     ) { page ->
-                        if (page == 0) {
+                        if (page == MyPageTab.MyDamgle.ordinal) {
                             TabMyDamglePage(navController, myDamgleList.data)
                         } else {
                             TabSettingPage(navController, profile.data.notification)
