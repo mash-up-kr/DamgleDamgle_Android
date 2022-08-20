@@ -34,7 +34,7 @@ fun MyPageTabBar(
     pagerState: PagerState
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val startPadding: Dp by animateDpAsState(if (pagerState.currentPage == MyPageTab.MyDamgle.ordinal) 0.dp else 90.dp)
+    val startPadding: Dp by animateDpAsState(if (pagerState.currentPage == MyPageTab.MyDamgle.index) 0.dp else 90.dp)
 
     Box(
         modifier = Modifier.padding(top = 56.dp)

@@ -7,6 +7,9 @@ package com.mashup.damgledamgle.presentation.feature.mypage.model
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
-enum class MyPageTab(val title: String) {
-    MyDamgle("내 담글"), Setting("설정")
+enum class MyPageTab(
+    val index: Int,
+    val title: String
+) {
+    MyDamgle(0, "내 담글"), Setting(1, "설정")
 }

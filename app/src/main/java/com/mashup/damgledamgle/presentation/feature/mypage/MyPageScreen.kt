@@ -78,7 +78,7 @@ fun MyPageScreen(navController: NavHostController) {
                         state = pagerState,
                         modifier = Modifier.fillMaxSize()
                     ) { page ->
-                        if (page == MyPageTab.MyDamgle.ordinal) {
+                        if (page == MyPageTab.MyDamgle.index) {
                             TabMyDamglePage(navController, myDamgleList.data)
                         } else {
                             TabSettingPage(navController, profile.data.notification)
