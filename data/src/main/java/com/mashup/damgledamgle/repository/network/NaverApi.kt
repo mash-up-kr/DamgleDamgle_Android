@@ -1,9 +1,7 @@
 package com.mashup.damgledamgle.repository.network
 
 import com.mashup.damgledamgle.repository.spec.NaverGeocodeResponse
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface NaverApi {
 

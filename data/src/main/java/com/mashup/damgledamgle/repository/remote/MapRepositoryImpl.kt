@@ -2,8 +2,8 @@ package com.mashup.damgledamgle.repository.remote
 
 import com.mashup.damgledamgle.data.BuildConfig
 import com.mashup.damgledamgle.domain.entity.GeoResult
-import com.mashup.damgledamgle.domain.repository.MapRepository
 import com.mashup.damgledamgle.domain.entity.base.Result
+import com.mashup.damgledamgle.domain.repository.MapRepository
 import com.mashup.damgledamgle.mapper.geocodeMapper
 import com.mashup.damgledamgle.repository.network.NaverApi
 import com.mashup.damgledamgle.repository.network.ServiceBuilder

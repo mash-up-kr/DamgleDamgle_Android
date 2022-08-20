@@ -6,16 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.domain.entity.NickName
 import com.mashup.damgledamgle.domain.entity.User
 import com.mashup.damgledamgle.domain.entity.base.Result
-import com.mashup.damgledamgle.domain.usecase.onboarding.GetRandomNickNameUseCase
-import com.mashup.damgledamgle.domain.usecase.onboarding.PickNickNameUseCase
-import com.mashup.damgledamgle.domain.usecase.onboarding.SignUpUseCase
+import com.mashup.damgledamgle.domain.usecase.onboarding.*
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.onboarding.model.NickNameModel
 import com.mashup.damgledamgle.presentation.feature.onboarding.model.mapper.NickNameMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

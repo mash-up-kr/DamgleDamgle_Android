@@ -1,6 +1,5 @@
 package com.mashup.damgledamgle.repository.network
 
-import com.mashup.damgledamgle.repository.spec.response.StoryFeedResponse
 import com.mashup.damgledamgle.repository.spec.request.WriteDamgleRequest
 import com.mashup.damgledamgle.repository.spec.response.*
 import retrofit2.http.*

@@ -1,8 +1,6 @@
 package com.mashup.damgledamgle.presentation.feature.mypage
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
@@ -16,9 +14,7 @@ import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
-import com.mashup.damgledamgle.ui.theme.Grey500
-import com.mashup.damgledamgle.ui.theme.Orange500
-import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
+import com.mashup.damgledamgle.ui.theme.*
 
 /**
  *  MyPageScreen.kt
