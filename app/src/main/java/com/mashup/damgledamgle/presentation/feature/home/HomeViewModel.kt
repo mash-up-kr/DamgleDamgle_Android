@@ -1,9 +1,6 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
 import com.mashup.damgledamgle.domain.usecase.home.GetNaverGeocodeUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState

@@ -1,4 +1,3 @@
 package com.mashup.damgledamgle.domain
 
-class Example {
-}
+class Example

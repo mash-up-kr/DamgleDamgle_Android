@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.mapper
 
 import com.mashup.damgledamgle.domain.entity.UserProfile
-import com.mashup.damgledamgle.repository.spec.UserProfileResponse
+import com.mashup.damgledamgle.repository.spec.response.UserProfileResponse
 import javax.inject.Inject
 
 /**

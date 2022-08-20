@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.enumerate.DamgleStorySort
 import com.mashup.damgledamgle.enumerate.toKorean
+import com.mashup.damgledamgle.presentation.feature.leave_story.GNB
 import com.mashup.damgledamgle.ui.theme.*
 import com.mashup.damgledamgle.util.ToastUtil
 
@@ -38,25 +39,25 @@ fun AllDamgleListScreen(navController: NavHostController, viewModel: AllDamgleLi
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Box(
-                    modifier = Modifier
-                        .height(66.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Text(
-                        modifier = Modifier.align(Alignment.Center),
-                        text = "담벼락 전체보기"
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .width(24.dp)
-                            .align(Alignment.CenterEnd)
-                            .offset(x = (-16).dp)
-                            .clickable { navController.popBackStack() }
-                    )
-                }
+                GNB(
+                    centerContent = {
+                        Text(
+                            modifier = Modifier.align(Alignment.Center),
+                            text = "담벼락 전체보기"
+                        )
+                    },
+                    rightContent = {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_close),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .width(24.dp)
+                                .align(Alignment.CenterEnd)
+                                .offset(x = (-16).dp)
+                                .clickable { navController.popBackStack() }
+                        )
+                    }
+                )
                 LazyColumn {
                     item {
                         Spacer(modifier = Modifier.height(16.dp))
