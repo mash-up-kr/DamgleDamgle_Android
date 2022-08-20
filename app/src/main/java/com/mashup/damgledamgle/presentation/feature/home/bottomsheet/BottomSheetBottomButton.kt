@@ -14,35 +14,19 @@ import com.mashup.damgledamgle.ui.theme.*
 @Composable
 fun BottomSheetBottomButton(text: String, onClickBottomSheetButton: () -> Unit) {
     // TODO 글자수에 따라 Clickable, 디자인 변경
-    if (text.isEmpty()) {
-        Button(
-            onClick = {},
-            modifier = Modifier
-                .height(64.dp)
-                .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Gray600)
-        ) {
-            Text(
-                text = stringResource(id = R.string.home_bottomsheet_leave_a_story),
-                fontSize = 18.sp,
-                color = Gray400
-            )
-        }
-    } else {
-        Button(
-            onClick = {
-                onClickBottomSheetButton()
-            },
-            modifier = Modifier
-                .height(64.dp)
-                .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Black)
-        ) {
-            Text(
-                text = stringResource(id = R.string.home_bottomsheet_leave_a_story),
-                fontSize = 18.sp,
-                color = Gray400
-            )
-        }
+    Button(
+        onClick = {
+            if (text.isNotEmpty()) onClickBottomSheetButton()
+        },
+        colors = ButtonDefaults.buttonColors(backgroundColor = if (text.isNotEmpty()) Black else Gray600),
+        modifier = Modifier
+            .height(64.dp)
+            .fillMaxWidth(),
+    ) {
+        Text(
+            text = stringResource(id = R.string.home_bottomsheet_leave_a_story),
+            style = pretendardTextStyle.bodyMedium18,
+            color = if (text.isNotEmpty()) White else Gray400
+        )
     }
 }
