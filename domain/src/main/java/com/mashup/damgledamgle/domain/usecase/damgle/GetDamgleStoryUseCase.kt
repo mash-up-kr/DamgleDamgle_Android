@@ -8,13 +8,12 @@ import javax.inject.Inject
 class GetDamgleStoryUseCase @Inject constructor(
     private val mapRepository: MapRepository
 ) {
-    suspend fun invoke(
-        top : Double,
-        bottom : Double,
-        left : Double,
-        right : Double
-    ) : Result<List<Damgle>>
-            = mapRepository.getStoryFeedList(
+    suspend operator fun invoke(
+        top: Double,
+        bottom: Double,
+        left: Double,
+        right: Double
+    ): Result<List<Damgle>> = mapRepository.getStoryFeedList(
         top = top,
         bottom = bottom,
         left = left,

@@ -47,6 +47,27 @@ enum class Reaction(
     )
 }
 
+fun String.toReaction(): Reaction? {
+    return when (this) {
+        "angry" -> Reaction.ANGRY
+        "sad" -> Reaction.SAD
+        "amazing" -> Reaction.AMAZING
+        "best" -> Reaction.BEST
+        "like" -> Reaction.LIKE
+        else -> null
+    }
+}
+
+fun Reaction.toEnglish(): String {
+    return when (this) {
+        Reaction.ANGRY -> "angry"
+        Reaction.SAD -> "sad"
+        Reaction.AMAZING -> "amazing"
+        Reaction.BEST -> "best"
+        Reaction.LIKE -> "like"
+    }
+}
+
 fun Reaction.toKorean(): String {
     return when (this) {
         Reaction.SAD -> "슬픔"

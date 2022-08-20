@@ -15,20 +15,26 @@ import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.Rea
 // 리액션 사이즈 100 * 100 을 기준으로 합니다.
 // 리액션 왼쪽 위에서 카운트 왼쪽 끝까지의 x,y 입니다.
 private val singleReactionCountPosition = mapOf(
-    Reaction.BEST to (77 to 2),
-    Reaction.LIKE to (-9 to 12),
-    Reaction.AMAZING to (79 to -7),
-    Reaction.ANGRY to (-9 to 10),
-    Reaction.SAD to (79 to -7),
+    Reaction.BEST to SingleReactionBundle(80, 6, -11f),
+    Reaction.LIKE to SingleReactionBundle(-6, 24, 0f),
+    Reaction.AMAZING to SingleReactionBundle(86, 0, 0f),
+    Reaction.ANGRY to SingleReactionBundle(-20, 25, 0f),
+    Reaction.SAD to SingleReactionBundle(86, 0, 0f),
+)
+
+data class SingleReactionBundle(
+    val x: Int,
+    val y: Int,
+    val rotate: Float
 )
 
 val singleReactionSize =
     mapOf(
         Reaction.AMAZING to 92f,
-        Reaction.LIKE to 104f,
+        Reaction.LIKE to 118f,
         Reaction.ANGRY to 92f,
         Reaction.SAD to 92f,
-        Reaction.BEST to 118f,
+        Reaction.BEST to 104f,
     )
 
 @Preview
@@ -58,8 +64,9 @@ fun SingleReaction(reaction: Reaction, count: Int) {
                 reaction = reaction,
                 count = count,
                 reactionSize = singleReactionSize[reaction] ?: 100.0f,
-                countX = singleReactionCountPosition[reaction]?.first ?: 0,
-                countY = singleReactionCountPosition[reaction]?.second ?: 0
+                countX = singleReactionCountPosition[reaction]?.x ?: 0,
+                countY = singleReactionCountPosition[reaction]?.y ?: 0,
+                reactionRotate = singleReactionCountPosition[reaction]?.rotate ?: 0f,
             )
         }
         Spacer(modifier = Modifier.height(26.dp))
