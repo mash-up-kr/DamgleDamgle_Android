@@ -4,8 +4,7 @@ import com.mashup.damgledamgle.domain.entity.UserProfile
 import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.UserRepository
 import com.mashup.damgledamgle.mapper.UserProfileMapper
-import com.mashup.damgledamgle.repository.network.DamgleApi
-import com.mashup.damgledamgle.repository.network.ServiceBuilder
+import com.mashup.damgledamgle.network.DamgleApi
 import javax.inject.Inject
 
 /**
@@ -16,11 +15,9 @@ import javax.inject.Inject
  */
 
 class UserRepositoryImpl @Inject constructor(
-    private val serviceBuilder: ServiceBuilder,
+    private val damgleApi: DamgleApi,
     private val userMapper: UserProfileMapper,
-): UserRepository {
-
-    private val damgleApi by lazy { serviceBuilder.buildService<DamgleApi>() }
+) : UserRepository {
 
     override suspend fun getUserProfile(): Result<UserProfile> {
         return try {

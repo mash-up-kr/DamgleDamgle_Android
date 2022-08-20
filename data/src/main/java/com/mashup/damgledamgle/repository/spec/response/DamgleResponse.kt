@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.repository.spec
+package com.mashup.damgledamgle.repository.spec.response
 
 import com.squareup.moshi.Json
 
@@ -12,17 +12,17 @@ import com.squareup.moshi.Json
 data class DamgleResponse(
     @Json(name = "id") val id: String,
     @Json(name = "userNo") val userNo: String,
-    @Json(name = "nickName") val nickName: String,
+    @Json(name = "nickname") val nickName: String,
     @Json(name = "x") val x: String,
     @Json(name = "y") val y: String,
     @Json(name = "content") val content: String,
     @Json(name = "reactions") val reactions: List<ReactionResponse>,
-    @Json(name = "createAt") val createAt: Int,
-    @Json(name = "updateAt") val updateAt: Int,
+    @Json(name = "createdAt") val createAt: Long,
+    @Json(name = "updatedAt") val updateAt: Long,
 ) {
     data class ReactionResponse(
         @Json(name = "userNo") val userNo: Int,
-        @Json(name = "nickName") val nickName: String,
+        @Json(name = "nickname") val nickName: String,
         @Json(name = "type") val type: String,
     )
 }

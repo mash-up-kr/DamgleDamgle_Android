@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.repository.spec
+package com.mashup.damgledamgle.repository.spec.response
 
 import com.squareup.moshi.Json
 

@@ -3,20 +3,14 @@ package com.mashup.damgledamgle.presentation.feature.mypage
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
-import com.mashup.damgledamgle.domain.usecase.user.DeleteUserProfileUseCase
-import com.mashup.damgledamgle.domain.usecase.user.GetMyDamgleListUserCase
-import com.mashup.damgledamgle.domain.usecase.user.GetUserProfileUserCase
-import com.mashup.damgledamgle.domain.usecase.user.PatchNotificationAllowStateUseCase
+import com.mashup.damgledamgle.domain.usecase.user.*
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
 import com.mashup.damgledamgle.presentation.feature.mypage.model.UserProfileModel
 import com.mashup.damgledamgle.presentation.feature.mypage.model.mapper.DamgleMapper
 import com.mashup.damgledamgle.presentation.feature.mypage.model.mapper.UserProfileMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

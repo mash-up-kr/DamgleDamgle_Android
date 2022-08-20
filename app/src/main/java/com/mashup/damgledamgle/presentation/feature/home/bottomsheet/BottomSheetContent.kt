@@ -7,20 +7,46 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.*
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.mashup.damgledamgle.ui.theme.Gray600
-import com.mashup.damgledamgle.ui.theme.backgroundGradient
+import androidx.navigation.NavHostController
+import com.mashup.damgledamgle.ui.theme.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun BottomSheetContent(bottomSheetScaffoldState: BottomSheetScaffoldState) {
+fun BottomSheetContent(
+    navController: NavHostController,
+    bottomSheetScaffoldState: BottomSheetScaffoldState
+) {
+
+    val bottomSheetSlide = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
+    val collapseAlpha =
+        (bottomSheetSlide - BOTTOM_SHEET_SLIDE_THRESHOLD) / (1 + ADDITIONAL_FLOAT - BOTTOM_SHEET_SLIDE_THRESHOLD)
+    val expandAlpha = 1 - (bottomSheetSlide / BOTTOM_SHEET_SLIDE_THRESHOLD + ADDITIONAL_FLOAT)
+
     Box(
         modifier = Modifier
             .background(brush = backgroundGradient)
             .fillMaxWidth()
             .fillMaxHeight()
     ) {
+        Box(
+            modifier = Modifier
+                .offset(x = (-138).dp, y = 52.dp)
+                .rotate(20f)
+                .alpha(expandAlpha)
+                .scale(1.6f, 1f)
+                .background(
+                    brush = Brush.radialGradient(
+                        0.8f to Yellow.copy(alpha = 0.2f),
+                        1f to Color.Transparent
+                    )
+                )
+                .width(320.dp)
+                .height(200.dp),
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -35,12 +61,10 @@ fun BottomSheetContent(bottomSheetScaffoldState: BottomSheetScaffoldState) {
                 thickness = 5.dp,
             )
 
-            val bottomSheetSlide = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
-
             if (bottomSheetSlide >= BOTTOM_SHEET_SLIDE_THRESHOLD) {
-                BottomSheetCollapsedContent(alpha = (bottomSheetSlide - BOTTOM_SHEET_SLIDE_THRESHOLD) / (1 + ADDITIONAL_FLOAT - BOTTOM_SHEET_SLIDE_THRESHOLD))
+                BottomSheetCollapsedContent(alpha = collapseAlpha)
             } else {
-                BottomSheetExpandedContent(alpha = 1 - (bottomSheetSlide / BOTTOM_SHEET_SLIDE_THRESHOLD + ADDITIONAL_FLOAT))
+                BottomSheetExpandedContent(navController = navController, alpha = expandAlpha)
             }
         }
     }

@@ -3,23 +3,18 @@ package com.mashup.damgledamgle.repository.remote
 import android.util.Log
 import com.mashup.damgledamgle.data.BuildConfig
 import com.mashup.damgledamgle.domain.entity.GeoResult
-import com.mashup.damgledamgle.domain.entity.StoryEntity
-import com.mashup.damgledamgle.domain.repository.MapRepository
+
 import com.mashup.damgledamgle.domain.entity.base.Result
-import com.mashup.damgledamgle.mapper.StoryFeedMapper
+import com.mashup.damgledamgle.domain.repository.MapRepository
 import com.mashup.damgledamgle.mapper.geocodeMapper
-import com.mashup.damgledamgle.repository.network.DamgleApi
-import com.mashup.damgledamgle.repository.network.NaverApi
-import com.mashup.damgledamgle.repository.network.ServiceBuilder
+import com.mashup.damgledamgle.network.DamgleApi
+import com.mashup.damgledamgle.network.NaverApi
 import javax.inject.Inject
 
 class MapRepositoryImpl @Inject constructor(
-    private val serviceBuilder: ServiceBuilder,
-    private val storyFeedMapper: StoryFeedMapper,
-) : MapRepository {
+    private val naverApi: NaverApi
+    ) : MapRepository {
 
-    private val damgleApi by lazy { serviceBuilder.buildService<DamgleApi>() }
-    private val naverApi by lazy { serviceBuilder.naverBuildService<NaverApi>() }
 
     override suspend fun getReverseGeocoding(
         coors: String): Result<GeoResult> {

@@ -30,7 +30,7 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val homeViewModel : HomeViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     BackPressInterceptor(context)
 
@@ -43,9 +43,9 @@ fun HomeScreen(navController: NavHostController) {
         "${currentLocation?.longitude},${currentLocation?.latitude}"
     )
     val current = homeViewModel.locationTitle.observeAsState()
-    if(current.value != null) {
+    if (current.value != null) {
         locationTitle = current.value!!.ifEmpty {
-            currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context)}.toString()
+            currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }.toString()
         }
     }
 
@@ -66,7 +66,7 @@ fun HomeScreen(navController: NavHostController) {
                 topEnd = 24.dp
             ),
             sheetContent = {
-                BottomSheetContent(bottomSheetScaffoldState)
+                BottomSheetContent(navController, bottomSheetScaffoldState)
             },
             sheetPeekHeight = 100.dp,
             scaffoldState = bottomSheetScaffoldState,
@@ -98,7 +98,7 @@ fun HomeScreen(navController: NavHostController) {
             MapScreen(cameraPositionState)
         }
         val showLoading = homeViewModel.showLoading.observeAsState()
-        if(showLoading.value == true) {
+        if (showLoading.value == true) {
             LoadingLottie()
             Button(onClick = { navController.navigate(Screen.AllDamgleList.route) }) {
                 Text(text = "AllDamgleList")
@@ -117,7 +117,7 @@ fun LoadingLottie() {
     LaunchedEffect(composition) {
         lottieAnimatable.animate(
             composition = composition,
-            clipSpec = LottieClipSpec.Frame(0,2000),
+            clipSpec = LottieClipSpec.Frame(0, 2000),
             initialProgress = 0f
         )
     }

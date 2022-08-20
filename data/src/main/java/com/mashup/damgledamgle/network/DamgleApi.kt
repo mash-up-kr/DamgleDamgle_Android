@@ -1,10 +1,7 @@
-package com.mashup.damgledamgle.repository.network
+package com.mashup.damgledamgle.network
 
-import com.mashup.damgledamgle.repository.spec.*
-import com.mashup.damgledamgle.repository.spec.NickNameRequest
-import com.mashup.damgledamgle.repository.spec.NickNameResponse
-import com.mashup.damgledamgle.repository.spec.PickNickNameRequest
-import com.mashup.damgledamgle.repository.spec.UserResponse
+import com.mashup.damgledamgle.repository.spec.request.WriteDamgleRequest
+import com.mashup.damgledamgle.repository.spec.response.*
 import retrofit2.http.*
 
 /**
@@ -65,6 +62,12 @@ interface DamgleApi {
      */
     @PATCH("v1/auth/notify")
     suspend fun switchNotification(): NotifyResponse
+
+    /**
+     * Story : 담글 작성
+     */
+    @POST("v1/story")
+    suspend fun writeDamgle(@Body body: WriteDamgleRequest): DamgleResponse
 
     /**
      * Story - me : 내 담글 조회

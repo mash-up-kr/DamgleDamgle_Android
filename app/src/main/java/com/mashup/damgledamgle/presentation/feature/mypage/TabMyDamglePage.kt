@@ -16,9 +16,7 @@ import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
 import com.mashup.damgledamgle.presentation.navigation.Screen
-import com.mashup.damgledamgle.ui.theme.Gray400
-import com.mashup.damgledamgle.ui.theme.Gray800
-import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
+import com.mashup.damgledamgle.ui.theme.*
 
 /**
  *  TabMyDamglePage.kt
