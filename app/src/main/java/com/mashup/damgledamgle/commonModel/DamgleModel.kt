@@ -1,13 +1,13 @@
-package com.mashup.damgledamgle.domain.entity
+package com.mashup.damgledamgle.commonModel
 
 /**
- *  Damgle.kt
+ *  DamgleModel.kt
  *
- *  Created by Minji Jeong on 2022/07/31
+ *  Created by Minji Jeong on 2022/07/30
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
-data class Damgle(
+data class DamgleModel(
     val id: String,
     val userNo: String,
     val nickName: String,
@@ -18,8 +18,8 @@ data class Damgle(
     val reactionSummary : List<ReactionSummary>,
     val reactionOfMine : ReactionOfMine,
     val reports : List<Reports>,
-    val createAt: Long,
-    val updateAt: Long,
+    val createdAt: Long,
+    val updatedAt: Long,
 ) {
     data class Reaction(
         val userNo: Int,
