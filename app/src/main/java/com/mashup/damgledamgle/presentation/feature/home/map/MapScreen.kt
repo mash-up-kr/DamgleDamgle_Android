@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -10,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.util.LocationUtil
@@ -56,7 +58,6 @@ fun MapContent(
     mContext: Context
 ) {
     val mapViewModel : MapViewModel = hiltViewModel()
-    mapViewModel.getStoryFeedList(37.51, 37.49, 127.035,127.036)
 
     Box(Modifier.fillMaxSize()) {
         NaverMap(
@@ -71,15 +72,45 @@ fun MapContent(
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
             }
 
-            mapViewModel.getMakerList().forEach { markerInfo ->
-                val latitude = markerInfo.latitude
-                val longitude = markerInfo.longitude
+            MapEffect { map ->
+                val top = map.contentBounds.northLatitude
+                val bottom = map.contentBounds.southLatitude
+                val left = map.contentBounds.westLongitude
+                val right = map.contentBounds.eastLongitude
 
-                Marker(
-                    state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = OverlayImage.fromView(makeCustomMarkerView(markerInfo, mContext)),
-                )
+//                mapViewModel.getStoryFeedList(
+//                    top = top,
+//                    bottom = bottom,
+//                    left = left,
+//                    right = right
+//                )
             }
+
+
+            mapViewModel.getMakerList().forEach { markerInfo ->
+                    val latitude = markerInfo.latitude
+                    val longitude = markerInfo.longitude
+
+                    Marker(
+                        state = MarkerState(position = LatLng(latitude, longitude)),
+                        icon = OverlayImage.fromView(makeCustomMarkerView(markerInfo, mContext)),
+                    )
+                }
+
+//            when(mapViewModel.storyFeedState) {
+//                is ViewState.Success<*> -> {
+//                   val list =  mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
+//                    list.data.forEach {
+//                        val latitude = it.position.latitude
+//                        val longitude = it.position.longitude
+//
+//                        Marker(
+//                            state = MarkerState(position = LatLng(latitude, longitude)),
+//                            icon = OverlayImage.fromView(makeCustomMarkerView(it, mContext)),
+//                        )
+//                    }
+//                }
+//            }
         }
         Column(
             Modifier

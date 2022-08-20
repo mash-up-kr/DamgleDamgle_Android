@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.feature.home.model.GroupMarkerInfo
 
 
 @SuppressLint("InflateParams")
@@ -18,6 +19,16 @@ fun makeCustomMarkerView(markerInfo: MarkerInfo, context: Context) = (
     val balloonRes =
         if(markerInfo.isMine) R.drawable.ic_text_balloon_me
         else R.drawable.ic_text_balloon
+
+//    var res : Int = 0
+//    res = when(markerInfo.) {
+//        "angry" -> R.drawable.ic_angry_small
+//        "sad" -> R.drawable.ic_sad_small
+//        "amazing" -> R.drawable.ic_amazing_small
+//        "best" -> R.drawable.ic_best_small
+//        "like" -> R.drawable.ic_heart_small
+//        else -> R.drawable.ic_best_small
+//    }
 
     (this.getViewById(R.id.marker_icon) as ImageView).setImageResource(markerInfo.resId)
     (this.getViewById(R.id.balloon_background) as ImageView).setImageResource(balloonRes)

@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetDamgleStoryUseCase @Inject constructor(
     private val mapRepository: MapRepository
 ) {
-    suspend fun invoke(
+    suspend operator fun invoke(
         top : Double,
         bottom : Double,
         left : Double,

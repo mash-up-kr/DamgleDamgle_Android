@@ -18,7 +18,7 @@ data class DamgleModel(
     val content: String,
     val reactions: List<Reaction>,
     val reactionSummary: List<ReactionSummary>,
-    val reactionOfMine: ReactionOfMine,
+    val reactionOfMine: ReactionOfMine?,
     val reports: List<Reports>,
     val createdAt: Long,
     val updatedAt: Long,
@@ -35,8 +35,9 @@ data class DamgleModel(
     )
 
     data class ReactionOfMine(
-        val type : String,
-        val count : Int
+        val userNo : Int,
+        val nickname : String,
+        val type : String
     )
 
     data class Reports(

@@ -1,20 +1,19 @@
 package com.mashup.damgledamgle.util
 
 import com.mashup.damgledamgle.domain.entity.Damgle
+import com.mashup.damgledamgle.presentation.feature.home.model.MarkerModel
 
 object ReactionUtil {
 
-    fun getMainIcon(groupList : List<Damgle>) : String {
-        var mainIcon = ""
+    fun getMainIcon(groupList : List<MarkerModel>) : String {
+        var mainIcon : String? = null
         groupList.forEach { damgle ->
-            var maxCount = 0
-            damgle.reactionSummary.forEach { reaction ->
-                if(maxCount < reaction.count) { //5를 dataclass reaction count로 변경
-                    maxCount = reaction.count
-                    mainIcon = reaction.type
+            mainIcon = damgle.damgle.reactionSummary.maxWithOrNull(
+                Comparator.comparing {
+                    it.count
                 }
-            }
+            )?.type
         }
-        return mainIcon
+        return if(mainIcon == null) "best" else mainIcon as String
     }
 }
