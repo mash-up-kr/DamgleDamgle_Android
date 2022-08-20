@@ -76,6 +76,10 @@ dependencies {
     // Compose Navigation
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // google compose pager
+    implementation "com.google.accompanist:accompanist-pager:$compose_pager_version"
+    implementation "com.google.accompanist:accompanist-pager-indicators:$compose_pager_version"
+
     // Lottie
     implementation "com.airbnb.android:lottie-compose:$lottie_version"
 

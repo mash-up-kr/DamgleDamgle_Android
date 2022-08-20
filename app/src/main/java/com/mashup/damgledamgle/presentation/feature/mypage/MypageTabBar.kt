@@ -5,22 +5,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
+import com.google.accompanist.pager.*
+import com.mashup.damgledamgle.presentation.feature.mypage.model.MyPageTab
 import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.White
+import kotlinx.coroutines.launch
 
 /**
  *  MyPageTabBar.kt
@@ -29,13 +27,14 @@ import com.mashup.damgledamgle.ui.theme.White
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
+@ExperimentalPagerApi
 @Composable
 fun MyPageTabBar(
-    tabPage: TabPage,
-    onTabSelected: (tabPage: TabPage) -> Unit
+    tabItems: List<MyPageTab>,
+    pagerState: PagerState
 ) {
-    val context = LocalContext.current
-    val startPadding: Dp by animateDpAsState(if (tabPage == TabPage.MyDamgle) 0.dp else 90.dp)
+    val coroutineScope = rememberCoroutineScope()
+    val startPadding: Dp by animateDpAsState(if (pagerState.currentPage == MyPageTab.MyDamgle.index) 0.dp else 90.dp)
 
     Box(
         modifier = Modifier.padding(top = 56.dp)
@@ -51,23 +50,30 @@ fun MyPageTabBar(
                 .height(40.dp),
         )
         TabRow(
-            selectedTabIndex = tabPage.ordinal,
+            selectedTabIndex = pagerState.currentPage,
             backgroundColor = Color.Transparent,
             modifier = Modifier.width(180.dp),
-            indicator = {},
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    Modifier
+                        .pagerTabIndicatorOffset(pagerState, tabPositions)
+                        .width(0.dp)
+                        .height(0.dp)
+                )
+            },
             divider = {},
         ) {
-            Tab(
-                title = context.getString(R.string.mypage_tab_mydamgle),
-                isSelected = tabPage.ordinal == TabPage.MyDamgle.ordinal,
-                onClick = { onTabSelected(TabPage.MyDamgle) }
-            )
-
-            Tab(
-                title = context.getString(R.string.mypage_tab_setting),
-                isSelected = tabPage.ordinal == TabPage.Setting.ordinal,
-                onClick = { onTabSelected(TabPage.Setting) }
-            )
+            tabItems.forEachIndexed { index, tab ->
+                Tab(
+                    title = tab.title,
+                    isSelected = pagerState.currentPage == index,
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.scrollToPage(index)
+                        }
+                    }
+                )
+            }
         }
     }
 }
@@ -93,8 +99,14 @@ fun Tab(
     )
 }
 
+@ExperimentalPagerApi
 @Preview
 @Composable
 fun PreviewTabBar() {
-    MyPageTabBar(tabPage = TabPage.MyDamgle, onTabSelected = {})
+    val pagerState = rememberPagerState()
+
+    MyPageTabBar(
+        tabItems = listOf(),
+        pagerState = pagerState
+    )
 }
