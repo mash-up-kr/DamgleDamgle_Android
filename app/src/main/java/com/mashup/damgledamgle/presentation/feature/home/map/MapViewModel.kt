@@ -1,18 +1,22 @@
 package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.os.CountDownTimer
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.domain.entity.StoryEntity
-import com.mashup.damgledamgle.domain.entity.base.NetworkResponse
+import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
 import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.MarkerInfo
+import com.mashup.damgledamgle.presentation.feature.home.model.MainMarkerInfo
+import com.mashup.damgledamgle.util.ReactionUtil.getMainIcon
 import com.mashup.damgledamgle.util.TimeUtil
+import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -28,8 +32,7 @@ class MapViewModel @Inject constructor(
 
     private val _oneHourCheck = MutableLiveData(false)
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
-
-
+    
     fun getMakerList(): ArrayList<MarkerInfo> {
         val list: ArrayList<MarkerInfo> = arrayListOf()
         list.add(MarkerInfo(R.drawable.ic_heart_small,true, true,37.5455113, 127.0657011,0))
@@ -51,34 +54,92 @@ class MapViewModel @Inject constructor(
         right : Double
     ) {
         viewModelScope.launch {
-            when (val result = getStoryFeedUseCase.invoke()) {
-                is NetworkResponse.Success -> {
-                    divideMarkerPosition(
+            launchWithNetworkResult(
+                result = getStoryFeedUseCase.invoke(),
+                suspendOnSuccess = {
+                   val groupingStoryData = divideMarkerPosition(
                         top,
                         bottom,
                         left,
                         right,
-                        result.data
+                        it
                     )
-                    Log.d("storyFeedResult", result.data.toString())
+                    val mainMarker = mappingMarkerInfo(groupingStoryData)
+
+                },
+                suspendOnError = {
+
                 }
-                is NetworkResponse.Error -> {}
-            }
+            )
         }
     }
 
 
-    private suspend fun divideMarkerPosition(
+    private fun divideMarkerPosition(
         top: Double,
         bottom: Double,
         left: Double,
         right: Double,
-        data: List<StoryEntity>) {
-        val diffLat = (bottom - top) / 4
-        val diffLong = (right - left) / 3
+        data: List<StoryEntity>): ArrayList<ArrayList<StoryEntity>> {
+        val diffLat = (top - bottom) / LAT_DIVIDE // 4
+        val diffLng = (right - left) / LNG_DIVIDE // 3
+        val markerList : ArrayList<ArrayList<StoryEntity>> = arrayListOf()
 
+        CoroutineScope(Dispatchers.Default).launch {
+            for(x in 1..LAT_DIVIDE) {
+                for(y in 1..LNG_DIVIDE) {
+                    val startLat = top + diffLat * (x-1)
+                    val startLng = left + diffLng * (y-1)
+                    val latRang = top + diffLat * x
+                    val lngRang = left + diffLng * y
 
+                    val groupList : ArrayList<StoryEntity> = arrayListOf()
+                    data.forEach { storyEntity ->
+                        if (storyEntity.x in startLat..latRang && storyEntity.y in startLng..lngRang) {
+                            groupList.add(storyEntity)
+                        }
+                    }
+                    markerList.add(groupList)
+                }
+            }
+        }
 
+        return markerList
+    }
+
+    private fun mappingMarkerInfo(markerList : ArrayList<ArrayList<StoryEntity>>): ArrayList<MainMarkerInfo> {
+        val mainMarkerInfoList : ArrayList<MainMarkerInfo> = arrayListOf()
+        markerList.forEach { groupList ->
+            val mainIcon = getMainIcon(groupList)   //대표아이콘 계산
+            val mainPosition = getMarkerMainPosition(groupList)  // 대표 위치 - 랜덤으로 돌리기
+            val markerListSize = groupList.size // 리스트 개수 저장
+            val storyId = getStoryIdOfList(groupList)
+            mainMarkerInfoList.add(
+                MainMarkerInfo(
+                    mainIcon = mainIcon,
+                    position = mainPosition,
+                    count = markerListSize,
+                    storyId = storyId
+                )
+            )
+        }
+        return mainMarkerInfoList
+    }
+
+    private fun getMarkerMainPosition(groupList : List<StoryEntity>): LatLng {
+        val positionList : ArrayList<LatLng> = arrayListOf()
+        groupList.forEach { storyEntity ->
+            positionList.add(LatLng(storyEntity.x, storyEntity.y))
+        }
+        return positionList.random()
+    }
+
+    private fun getStoryIdOfList(groupList: List<StoryEntity>): ArrayList<String> {
+        val idList : ArrayList<String> = arrayListOf()
+        groupList.forEach { storyEntity ->
+            idList.add(storyEntity.id)
+        }
+        return idList
     }
 
     fun startTimer() {
@@ -98,5 +159,9 @@ class MapViewModel @Inject constructor(
     private fun pauseTimer() {
         countDownTimer?.cancel()
     }
+
+
+    private val LAT_DIVIDE = 4
+    private val LNG_DIVIDE = 3
 
 }
