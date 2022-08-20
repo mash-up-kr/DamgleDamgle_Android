@@ -33,7 +33,8 @@ fun DamgleDialogTwoButtonInner(
                 color = Black,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                maxLines = 1,
+                textAlign = Center,
+                maxLines = 2,
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(

@@ -35,6 +35,7 @@ fun TabSettingPage(
     val context = LocalContext.current
     val viewModel: MyPageViewModel = hiltViewModel()
     val openErrorDialog = remember { mutableStateOf(false) }
+    val openConfirmDeleteUserDialog = remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -57,7 +58,7 @@ fun TabSettingPage(
                 text = context.getString(R.string.mypage_delete_user),
                 modifier = Modifier
                     .padding(vertical = 32.dp)
-                    .clickable { viewModel.deleteUser() },
+                    .clickable { openConfirmDeleteUserDialog.value = true },
                 style = pretendardTextStyle.bodyMedium13,
                 color = Gray600
             )
@@ -85,6 +86,19 @@ fun TabSettingPage(
         DeleteUserErrorDialog(
             openDeleteUserErrorDialog = openErrorDialog,
             onButtonClick = { openErrorDialog.value = false }
+        )
+    }
+
+    if (openConfirmDeleteUserDialog.value) {
+        ConfirmDeleteUserDialog(
+            openConfirmDeleteUserDialog = openConfirmDeleteUserDialog,
+            onDeleteUserButtonClick = {
+                openConfirmDeleteUserDialog.value = false
+                viewModel.deleteUser()
+            },
+            onCancelButtonClick = {
+                openConfirmDeleteUserDialog.value = false
+            }
         )
     }
 }
