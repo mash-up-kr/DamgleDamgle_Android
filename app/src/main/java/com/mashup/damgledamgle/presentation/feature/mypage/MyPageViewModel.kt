@@ -8,10 +8,10 @@ import com.mashup.damgledamgle.domain.usecase.user.GetMyDamgleListUserCase
 import com.mashup.damgledamgle.domain.usecase.user.GetUserProfileUserCase
 import com.mashup.damgledamgle.domain.usecase.user.PatchNotificationAllowStateUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
-import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
 import com.mashup.damgledamgle.presentation.feature.mypage.model.UserProfileModel
 import com.mashup.damgledamgle.presentation.feature.mypage.model.mapper.DamgleMapper
 import com.mashup.damgledamgle.presentation.feature.mypage.model.mapper.UserProfileMapper
+import com.mashup.damgledamgle.presentation.model.DamgleModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

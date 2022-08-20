@@ -21,8 +21,8 @@ class DamgleMapper @Inject constructor() {
             y = spec.y,
             content = spec.content,
             reactions = mapToEntity(spec.reactions),
-            createAt = spec.createAt,
-            updateAt = spec.updateAt
+            createdAt = spec.createdAt,
+            updatedAt = spec.updatedAt
         )
     }
 

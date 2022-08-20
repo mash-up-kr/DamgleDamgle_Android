@@ -1,7 +1,11 @@
 package com.mashup.damgledamgle.presentation.feature.mypage
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,10 +18,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
+import com.mashup.damgledamgle.presentation.model.DamgleModel
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.Gray400
 import com.mashup.damgledamgle.ui.theme.Gray800
+import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 /**
@@ -84,16 +89,37 @@ fun TabMyDamglePage(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // TODO(minji): LazyColumn으로 교체 및 데이터 모델 전달하도록 수정
-            val scrollState = rememberScrollState()
             Column(
-                modifier = Modifier
-                    .padding(top = 20.dp)
-                    .fillMaxSize()
-                    .verticalScroll(scrollState)
+                modifier = Modifier.fillMaxHeight()
             ) {
-                repeat(10) {
-                    MyDamgleItem()
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .fillMaxWidth()
+                ) {
+                    itemsIndexed(
+                        myDamgleList
+                    ) { index, item ->
+                        MyDamgleItem()
+                    }
+                }
+
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.background_mydamgle_gray_gradient),
+                        contentDescription = "To hide Orange gradient when my damgle item count is small ",
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2000.dp)
+                            .padding(20.dp)
+                            .background(color = Grey500)
+                    )
                 }
             }
         }
@@ -115,12 +141,12 @@ fun PreviewTabListDamglePage() {
                 id = "",
                 userNo = "",
                 nickName = "",
-                x = "",
-                y = "",
+                x = 0.0,
+                y = 0.0,
                 content = "",
                 reactions = listOf(),
-                createAt = 0,
-                updateAt = 0
+                createdAt = 0,
+                updatedAt = 0
             )
         )
     )

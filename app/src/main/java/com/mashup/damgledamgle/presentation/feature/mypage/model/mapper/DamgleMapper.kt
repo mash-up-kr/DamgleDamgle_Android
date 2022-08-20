@@ -1,7 +1,8 @@
 package com.mashup.damgledamgle.presentation.feature.mypage.model.mapper
 
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.presentation.feature.mypage.model.DamgleModel
+import com.mashup.damgledamgle.presentation.model.DamgleModel
+import com.mashup.damgledamgle.presentation.model.DamgleReactionModel
 import javax.inject.Inject
 
 /**
@@ -22,14 +23,14 @@ class DamgleMapper @Inject constructor() {
                 y = it.y,
                 content = it.content,
                 reactions = it.reactions.map { mapToModel(it) },
-                createAt = it.createAt,
-                updateAt = it.updateAt
+                createdAt = it.createdAt,
+                updatedAt = it.updatedAt
             )
         }
     }
 
-    fun mapToModel(entity: Damgle.Reaction): DamgleModel.ReactionModel {
-        return DamgleModel.ReactionModel(
+    fun mapToModel(entity: Damgle.Reaction): DamgleReactionModel {
+        return DamgleReactionModel(
             userNo = entity.userNo,
             nickName = entity.nickName,
             type = entity.type
