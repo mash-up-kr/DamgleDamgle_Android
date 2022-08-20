@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.repository.network
+package com.mashup.damgledamgle.network
 
 import com.mashup.damgledamgle.repository.spec.request.WriteDamgleRequest
 import com.mashup.damgledamgle.repository.spec.response.*

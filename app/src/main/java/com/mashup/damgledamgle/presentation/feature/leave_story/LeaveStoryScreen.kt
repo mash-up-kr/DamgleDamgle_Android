@@ -30,7 +30,7 @@ fun LeaveStoryScreen(navController: NavHostController, content: String, leaveSto
         ) {
             when (val state = leaveStoryState) {
                 is ViewState.Loading -> LeaveStoryWriting()
-                is ViewState.Error -> LeaveStoryError()
+                is ViewState.Error -> state.error//LeaveStoryError()
                 is ViewState.Success -> LeaveStoryComplete(state.data)
             }
         }
