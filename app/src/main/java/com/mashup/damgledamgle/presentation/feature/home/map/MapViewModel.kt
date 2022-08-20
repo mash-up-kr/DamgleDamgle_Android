@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.domain.entity.Damgle
 import com.mashup.damgledamgle.domain.entity.StoryEntity
 import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
 import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
@@ -55,7 +56,12 @@ class MapViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             launchWithNetworkResult(
-                result = getStoryFeedUseCase.invoke(),
+                result = getStoryFeedUseCase.invoke(
+                    top =  37.51,
+                    bottom = 37.49,
+                    left = 127.035,
+                    right = 127.036
+                ),
                 suspendOnSuccess = {
                    val groupingStoryData = divideMarkerPosition(
                         top,
@@ -80,10 +86,10 @@ class MapViewModel @Inject constructor(
         bottom: Double,
         left: Double,
         right: Double,
-        data: List<StoryEntity>): ArrayList<ArrayList<StoryEntity>> {
+        data: List<Damgle>): ArrayList<ArrayList<Damgle>> {
         val diffLat = (top - bottom) / LAT_DIVIDE // 4
         val diffLng = (right - left) / LNG_DIVIDE // 3
-        val markerList : ArrayList<ArrayList<StoryEntity>> = arrayListOf()
+        val markerList : ArrayList<ArrayList<Damgle>> = arrayListOf()
 
         CoroutineScope(Dispatchers.Default).launch {
             for(x in 1..LAT_DIVIDE) {
@@ -93,10 +99,10 @@ class MapViewModel @Inject constructor(
                     val latRang = top + diffLat * x
                     val lngRang = left + diffLng * y
 
-                    val groupList : ArrayList<StoryEntity> = arrayListOf()
-                    data.forEach { storyEntity ->
-                        if (storyEntity.x in startLat..latRang && storyEntity.y in startLng..lngRang) {
-                            groupList.add(storyEntity)
+                    val groupList : ArrayList<Damgle> = arrayListOf()
+                    data.forEach { damgle ->
+                        if (damgle.x in startLat..latRang && damgle.y in startLng..lngRang) {
+                            groupList.add(damgle)
                         }
                     }
                     markerList.add(groupList)
@@ -107,7 +113,7 @@ class MapViewModel @Inject constructor(
         return markerList
     }
 
-    private fun mappingMarkerInfo(markerList : ArrayList<ArrayList<StoryEntity>>): ArrayList<MainMarkerInfo> {
+    private fun mappingMarkerInfo(markerList : ArrayList<ArrayList<Damgle>>): ArrayList<MainMarkerInfo> {
         val mainMarkerInfoList : ArrayList<MainMarkerInfo> = arrayListOf()
         markerList.forEach { groupList ->
             val mainIcon = getMainIcon(groupList)   //대표아이콘 계산
@@ -126,7 +132,7 @@ class MapViewModel @Inject constructor(
         return mainMarkerInfoList
     }
 
-    private fun getMarkerMainPosition(groupList : List<StoryEntity>): LatLng {
+    private fun getMarkerMainPosition(groupList : List<Damgle>): LatLng {
         val positionList : ArrayList<LatLng> = arrayListOf()
         groupList.forEach { storyEntity ->
             positionList.add(LatLng(storyEntity.x, storyEntity.y))
@@ -134,7 +140,7 @@ class MapViewModel @Inject constructor(
         return positionList.random()
     }
 
-    private fun getStoryIdOfList(groupList: List<StoryEntity>): ArrayList<String> {
+    private fun getStoryIdOfList(groupList: List<Damgle>): ArrayList<String> {
         val idList : ArrayList<String> = arrayListOf()
         groupList.forEach { storyEntity ->
             idList.add(storyEntity.id)

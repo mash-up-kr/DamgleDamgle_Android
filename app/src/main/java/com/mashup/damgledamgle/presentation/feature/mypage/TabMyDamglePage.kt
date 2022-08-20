@@ -113,12 +113,12 @@ fun PreviewTabListDamglePage() {
                 id = "",
                 userNo = "",
                 nickName = "",
-                x = "",
-                y = "",
+                x = 37.51,
+                y = 37.51,
                 content = "",
                 reactions = listOf(),
-                createAt = 0,
-                updateAt = 0
+                createdAt = 0,
+                updatedAt = 0
             )
         )
     )

@@ -12,12 +12,12 @@ data class DamgleModel(
     val id: String,
     val userNo: String,
     val nickName: String,
-    val x: String,
-    val y: String,
+    val x: Double,
+    val y: Double,
     val content: String,
     val reactions: List<ReactionModel>,
-    val createAt: Long,
-    val updateAt: Long,
+    val createdAt: Long,
+    val updatedAt: Long,
 ) {
     data class ReactionModel(
         val userNo: Int,

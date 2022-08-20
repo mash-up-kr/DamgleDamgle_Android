@@ -43,7 +43,7 @@ interface DamgleApi {
         @Query("bottom") bottom : Double,
         @Query("left") left : Double,
         @Query("right") right : Double
-    ) : StoryFeedResponse
+    ) : DamgleListResponse
 
     /**
      * Auth - Me : 내 정보

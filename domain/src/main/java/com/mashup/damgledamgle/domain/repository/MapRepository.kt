@@ -1,7 +1,6 @@
 package com.mashup.damgledamgle.domain.repository
 
-import com.mashup.damgledamgle.domain.entity.GeoResult
-import com.mashup.damgledamgle.domain.entity.StoryEntity
+import com.mashup.damgledamgle.domain.entity.*
 import com.mashup.damgledamgle.domain.entity.base.Result
 
 interface MapRepository {
@@ -11,5 +10,5 @@ interface MapRepository {
         bottom : Double,
         left : Double,
         right : Double
-    ) : Result<List<StoryEntity>>
+    ) : Result<List<Damgle>>
 }
