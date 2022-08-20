@@ -32,7 +32,7 @@ fun LeaveStoryComplete(damgle: Damgle) {
                 }
             )
             Spacer(modifier = Modifier.height(28.dp))
-            LeaveStoryInner(R.string.leave_story_now_leaving_a_story_complete, lottieRes = R.raw.paint)
+            LeaveStoryInner(R.string.leave_story_now_leaving_a_story_complete, lottieRes = R.raw.write)
         }
         LeaveStoryBottomButton(text = "확인하러 가기")
     }
