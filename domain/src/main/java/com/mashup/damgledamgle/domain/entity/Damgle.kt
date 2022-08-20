@@ -9,14 +9,14 @@ package com.mashup.damgledamgle.domain.entity
 
 data class Damgle(
     val id: String,
-    val userNo: Int,
-    val nickname: String,
-    val x: Double,
-    val y: Double,
+    val userNo: String,
+    val nickName: String,
+    val x: String,
+    val y: String,
     val content: String,
     val reactions: List<Reaction>,
-    val createAt: Long,
-    val updateAt: Long,
+    val createAt: Int,
+    val updateAt: Int,
 ) {
     data class Reaction(
         val userNo: Int,

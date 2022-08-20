@@ -32,7 +32,7 @@ class MapViewModel @Inject constructor(
 
     private val _oneHourCheck = MutableLiveData(false)
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
-    
+
     fun getMakerList(): ArrayList<MarkerInfo> {
         val list: ArrayList<MarkerInfo> = arrayListOf()
         list.add(MarkerInfo(R.drawable.ic_heart_small,true, true,37.5455113, 127.0657011,0))
