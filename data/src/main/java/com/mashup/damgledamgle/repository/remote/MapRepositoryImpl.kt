@@ -52,7 +52,6 @@ class MapRepositoryImpl @Inject constructor(
                 damgleMapper.mapToEntity(it)
             })
         } catch (e : Exception) {
-            Log.d("storyFeedError", e.message.toString())
             Result.Error(e)
         }
     }
