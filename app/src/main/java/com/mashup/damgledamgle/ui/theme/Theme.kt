@@ -1,8 +1,9 @@
 package com.mashup.damgledamgle.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 
 private val DarkColorPalette = darkColors(
         primary = Purple200,
@@ -25,6 +26,7 @@ private val LightColorPalette = lightColors(
     */
 )
 
+@ExperimentalFoundationApi
 @Composable
 fun DamgleDamgleTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
@@ -37,6 +39,10 @@ fun DamgleDamgleTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Comp
             colors = colors,
             typography = Typography,
             shapes = Shapes,
+    ) {
+        CompositionLocalProvider(
+            LocalOverscrollConfiguration provides null,
             content = content
-    )
+        )
+    }
 }
