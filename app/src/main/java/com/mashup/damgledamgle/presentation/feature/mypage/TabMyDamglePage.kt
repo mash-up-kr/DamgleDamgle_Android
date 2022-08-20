@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.model.DamgleModel
+import com.mashup.damgledamgle.commonModel.DamgleModel
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.*
 
@@ -113,14 +113,15 @@ fun PreviewTabListDamglePage() {
                 id = "",
                 userNo = "",
                 nickName = "",
-                x = 37.51,
-                y = 37.51,
+                x = 0.0,
+                y = 0.0,
                 content = "",
                 reactions = listOf(),
                 reactionSummary = listOf(),
                 reactionOfMine = DamgleModel.ReactionOfMine(
-                    type = "",
-                    count = 0
+                    userNo = 0,
+                    nickname = "",
+                    type = ""
                 ),
                 reports = listOf(),
                 createdAt = 0,

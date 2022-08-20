@@ -22,7 +22,7 @@ class DamgleMapper @Inject constructor() {
             content = spec.content,
             reactions = mapToEntity(spec.reactions),
             reactionSummary = convertReactionEntity(spec.reactionSummary),
-            reactionOfMine = convertMyReactionEntity(spec.reactionOfMine),
+            reactionOfMine = spec.reactionOfMine?.let { convertMyReactionEntity(it) },
             reports = convertReportEntity(spec.reports),
             createAt = spec.createdAt,
             updateAt = spec.updatedAt
@@ -50,8 +50,9 @@ class DamgleMapper @Inject constructor() {
 
     private fun convertMyReactionEntity(spec : DamgleResponse.ReactionOfMine) : Damgle.ReactionOfMine {
         return Damgle.ReactionOfMine(
-            type = spec.type,
-            count = spec.count
+            userNo = spec.userNo,
+            nickname = spec.nickname,
+            type = spec.type
         )
     }
 

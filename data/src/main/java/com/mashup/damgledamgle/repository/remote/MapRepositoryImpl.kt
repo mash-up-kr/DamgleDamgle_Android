@@ -1,10 +1,8 @@
 package com.mashup.damgledamgle.repository.remote
 
-import android.util.Log
 import com.mashup.damgledamgle.data.BuildConfig
 import com.mashup.damgledamgle.domain.entity.Damgle
 import com.mashup.damgledamgle.domain.entity.GeoResult
-
 import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.MapRepository
 import com.mashup.damgledamgle.mapper.DamgleMapper
@@ -14,11 +12,10 @@ import com.mashup.damgledamgle.network.NaverApi
 import javax.inject.Inject
 
 class MapRepositoryImpl @Inject constructor(
-    private val naverApi : NaverApi,
+    private val naverApi: NaverApi,
     private val damgleApi : DamgleApi,
-    private val damgleMapper: DamgleMapper,
+    private val damgleMapper : DamgleMapper
     ) : MapRepository {
-
 
     override suspend fun getReverseGeocoding(
         coors: String): Result<GeoResult> {

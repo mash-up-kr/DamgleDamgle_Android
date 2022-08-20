@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
 import com.mashup.damgledamgle.domain.usecase.user.*
-import com.mashup.damgledamgle.model.DamgleMapper
-import com.mashup.damgledamgle.model.DamgleModel
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.commonModel.DamgleModel
 import com.mashup.damgledamgle.presentation.feature.mypage.model.UserProfileModel
+import com.mashup.damgledamgle.commonModel.DamgleMapper
 import com.mashup.damgledamgle.presentation.feature.mypage.model.mapper.UserProfileMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
