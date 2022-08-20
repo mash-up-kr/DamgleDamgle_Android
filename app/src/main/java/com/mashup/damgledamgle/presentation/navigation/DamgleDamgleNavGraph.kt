@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.AllDamgleListScreen
 import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
@@ -14,6 +15,7 @@ import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.Grey500
 
+@ExperimentalPagerApi
 @Composable
 fun DamgleDamgleNavGraph(navController: NavHostController) {
 
