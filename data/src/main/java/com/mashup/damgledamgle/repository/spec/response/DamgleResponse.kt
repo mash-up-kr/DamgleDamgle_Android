@@ -18,7 +18,7 @@ data class DamgleResponse(
     @Json(name = "content") val content: String,
     @Json(name = "reactions") val reactions: List<ReactionResponse>,
     @Json(name = "reactionSummary") val reactionSummary : List<ReactionSummary>,
-    @Json(name = "reactionOfMine") val reactionOfMine : ReactionOfMine,
+    @Json(name = "reactionOfMine") val reactionOfMine : ReactionOfMine?,
     @Json(name = "reports") val reports : List<Reports> ,
     @Json(name = "createdAt") val createdAt: Long,
     @Json(name = "updatedAt") val updatedAt: Long,
@@ -35,8 +35,9 @@ data class DamgleResponse(
     )
 
     data class ReactionOfMine(
-        @Json(name = "type") val type : String,
-        @Json(name = "count") val count : Int
+        @Json(name = "userNo") val userNo : Int,
+        @Json(name = "nickname") val nickname : String,
+        @Json(name = "type") val type : String
     )
 
     data class Reports(

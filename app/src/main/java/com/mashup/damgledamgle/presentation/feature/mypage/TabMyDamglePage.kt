@@ -119,8 +119,9 @@ fun PreviewTabListDamglePage() {
                 reactions = listOf(),
                 reactionSummary = listOf(),
                 reactionOfMine = DamgleModel.ReactionOfMine(
-                    type = "",
-                    count = 0
+                    userNo = 0,
+                    nickname = "",
+                    type = ""
                 ),
                 reports = listOf(),
                 createdAt = 0,
