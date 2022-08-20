@@ -6,9 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,9 +18,7 @@ import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.navigation.Screen
-import com.mashup.damgledamgle.ui.theme.Gray600
-import com.mashup.damgledamgle.ui.theme.Orange500
-import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
+import com.mashup.damgledamgle.ui.theme.*
 
 /**
  *  TabSettingPage.kt

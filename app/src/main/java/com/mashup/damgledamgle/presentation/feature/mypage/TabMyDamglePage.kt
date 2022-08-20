@@ -1,8 +1,6 @@
 package com.mashup.damgledamgle.presentation.feature.mypage
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -18,12 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.model.DamgleModel
+import com.mashup.damgledamgle.commonModel.DamgleModel
 import com.mashup.damgledamgle.presentation.navigation.Screen
-import com.mashup.damgledamgle.ui.theme.Gray400
-import com.mashup.damgledamgle.ui.theme.Gray800
-import com.mashup.damgledamgle.ui.theme.Grey500
-import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
+import com.mashup.damgledamgle.ui.theme.*
 
 /**
  *  TabMyDamglePage.kt
@@ -145,6 +140,13 @@ fun PreviewTabListDamglePage() {
                 y = 0.0,
                 content = "",
                 reactions = listOf(),
+                reactionSummary = listOf(),
+                reactionOfMine = DamgleModel.ReactionOfMine(
+                    userNo = 0,
+                    nickname = "",
+                    type = ""
+                ),
+                reports = listOf(),
                 createdAt = 0,
                 updatedAt = 0
             )

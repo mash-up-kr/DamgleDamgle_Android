@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.mapper
 
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.repository.spec.DamgleResponse
+import com.mashup.damgledamgle.repository.spec.response.DamgleResponse
 import javax.inject.Inject
 
 /**
@@ -21,8 +21,11 @@ class DamgleMapper @Inject constructor() {
             y = spec.y,
             content = spec.content,
             reactions = mapToEntity(spec.reactions),
-            createdAt = spec.createdAt,
-            updatedAt = spec.updatedAt
+            reactionSummary = convertReactionEntity(spec.reactionSummary),
+            reactionOfMine = spec.reactionOfMine?.let { convertMyReactionEntity(it) },
+            reports = convertReportEntity(spec.reports),
+            createAt = spec.createdAt,
+            updateAt = spec.updatedAt
         )
     }
 
@@ -32,6 +35,32 @@ class DamgleMapper @Inject constructor() {
                 userNo = it.userNo,
                 nickName = it.nickName,
                 type = it.type
+            )
+        }
+    }
+
+    private fun convertReactionEntity(spec : List<DamgleResponse.ReactionSummary>) : List<Damgle.ReactionSummary> {
+        return spec.map {
+            Damgle.ReactionSummary(
+                type = it.type,
+                count = it.count
+            )
+        }
+    }
+
+    private fun convertMyReactionEntity(spec : DamgleResponse.ReactionOfMine) : Damgle.ReactionOfMine {
+        return Damgle.ReactionOfMine(
+            userNo = spec.userNo,
+            nickname = spec.nickname,
+            type = spec.type
+        )
+    }
+
+    private fun convertReportEntity(spec : List<DamgleResponse.Reports>) : List<Damgle.Reports> {
+        return spec.map {
+            Damgle.Reports(
+                userNo = it.userNo,
+                createdAt = it.createdAt
             )
         }
     }

@@ -15,12 +15,31 @@ data class Damgle(
     val y: Double,
     val content: String,
     val reactions: List<Reaction>,
-    val createdAt: Long,
-    val updatedAt: Long,
+    val reactionSummary : List<ReactionSummary>,
+    val reactionOfMine : ReactionOfMine?,
+    val reports : List<Reports>,
+    val createAt: Long,
+    val updateAt: Long,
 ) {
     data class Reaction(
         val userNo: Int,
         val nickName: String,
         val type: String,
+    )
+
+    data class ReactionSummary(
+        val type : String,
+        val count : Int
+    )
+
+    data class ReactionOfMine(
+        val userNo : Int,
+        val nickname : String,
+        val type : String
+    )
+
+    data class Reports(
+        val userNo : Int,
+        val createdAt : Long
     )
 }

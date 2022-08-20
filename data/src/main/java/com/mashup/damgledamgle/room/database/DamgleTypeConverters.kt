@@ -1,5 +1,3 @@
 package com.mashup.damgledamgle.room.database
 
-class DamgleTypeConverters {
-
-}
+class DamgleTypeConverters

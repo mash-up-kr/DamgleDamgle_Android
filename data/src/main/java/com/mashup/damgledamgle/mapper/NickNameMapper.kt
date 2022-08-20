@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.mapper
 
 import com.mashup.damgledamgle.domain.entity.NickName
-import com.mashup.damgledamgle.repository.spec.NickNameResponse
+import com.mashup.damgledamgle.repository.spec.response.NickNameResponse
 import javax.inject.Inject
 
 /**

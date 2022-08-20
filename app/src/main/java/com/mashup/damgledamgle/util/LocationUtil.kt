@@ -53,9 +53,9 @@ object LocationUtil {
     fun convertMyLocationToAddress(latLng: LatLng, context: Context) : String {
         val geocoder = Geocoder(context)
         val address: List<Address> = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5)
-        val position = address[0].getAddressLine(0).split(" ")
-        val gu = position[2]
-        val dong = position[3]
+        val position = address.getOrNull(0)?.getAddressLine(0)?.split(" ")
+        val gu = position?.getOrNull(2)
+        val dong = position?.getOrNull(3)
 
         return "$gu $dong"
     }

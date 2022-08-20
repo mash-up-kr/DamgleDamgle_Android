@@ -3,9 +3,7 @@ package com.mashup.damgledamgle.presentation.feature.splash
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,8 +11,8 @@ import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.StatusBar
-import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.presentation.navigation.Screen
+import com.mashup.damgledamgle.ui.theme.Grey500
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
