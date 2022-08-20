@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.util
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.*
@@ -21,9 +22,7 @@ object LocationUtil {
             != PackageManager.PERMISSION_GRANTED
         ) {
             Toast.makeText(context, "위치 권한에 동의해야 앱 사용이 가능합니다.", Toast.LENGTH_SHORT).show()
-            /**
-             * 앱 종료 or 그대로 둘지 추가
-             */
+            (context as? Activity)?.finish()
         }
         else {
             val currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) ?:

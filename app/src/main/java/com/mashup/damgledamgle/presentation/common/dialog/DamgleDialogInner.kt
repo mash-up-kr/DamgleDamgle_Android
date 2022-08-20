@@ -40,6 +40,7 @@ fun DamgleDialogTwoButtonInner(
                 text = description,
                 fontSize = 14.sp,
                 color = Gray600,
+                textAlign = Center
         )
         Spacer(modifier = Modifier.height(24.dp))
         Column(
