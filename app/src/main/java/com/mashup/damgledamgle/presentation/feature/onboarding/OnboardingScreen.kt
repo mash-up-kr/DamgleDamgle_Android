@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
 import com.mashup.damgledamgle.presentation.common.checkPermissionSelf
+import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
 
 /**
  *  OnboardingScreen.kt

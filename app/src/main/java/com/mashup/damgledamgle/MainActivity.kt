@@ -16,13 +16,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             DamgleDamgleTheme {
                 navController = rememberNavController()
-                DamgleDamgleNavGraph(
-                    navController = navController,
-                )
+                DamgleDamgleNavGraph(navController = navController)
             }
         }
     }

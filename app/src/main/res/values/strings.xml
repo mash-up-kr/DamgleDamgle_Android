@@ -28,6 +28,8 @@
     <string name="permission.alarm.maintext">우리 서비스를 이용하기 위해\n알람 동의가 꼭 필요해요!</string>
     <string name="permission.alarm.subtext">내 주변의 색다른 이야기가\n발견되면 알려드릴게요!</string>
 
+    <string name="home.map.paint_text">이번달 페인트칠</string>
+
     // Nickname
     <string name="nickname.maintext">이런 닉네임은\n어떠세요?</string>
     <string name="nickname.subtext">마음껏 바꾸면서 나만의 이름을 정해보세요.</string>
@@ -44,4 +46,5 @@
     <string name="mypage.mydamgle.empty">아직 내가 쓴 글이 없어요.</string>
     <string name="mypage.mydamgle.empty.button">담글 남기러 가기</string>
     <string name="mypage.delete.user">서비스 그만 사용하기</string>
+
 </resources>

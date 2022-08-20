@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/balloon_background"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_balloon_comm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/marker_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/balloon_background"
+        app:layout_constraintStart_toStartOf="@id/balloon_background"
+        app:layout_constraintTop_toTopOf="@id/balloon_background"
+        app:srcCompat="@drawable/ic_amazing_small" />
+
+    <ImageView
+        android:id="@+id/notify_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="4dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/balloon_background"
+        app:layout_constraintStart_toEndOf="@+id/marker_icon"
+        app:layout_constraintTop_toTopOf="@id/balloon_background"
+        android:background="@drawable/ic_notify" />
+
+    <ImageView
+        android:id="@+id/count_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:layout_constraintStart_toEndOf="@id/marker_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ic_count_background" />
+
+    <TextView
+        android:id="@+id/count_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:visibility="visible"
+        android:text="99+"
+        android:textSize="10sp"
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/count_icon"
+        app:layout_constraintEnd_toEndOf="@id/count_icon"
+        app:layout_constraintStart_toStartOf="@id/count_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

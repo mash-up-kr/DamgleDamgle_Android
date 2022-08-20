@@ -53,7 +53,6 @@ class MyPageViewModel @Inject constructor(
             }
         }
 
-
     init {
         getUserProfileInfo()
         getMyDamgleList()
