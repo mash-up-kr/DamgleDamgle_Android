@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home.bottomsheet
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -13,7 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.ui.theme.*
+import com.mashup.damgledamgle.ui.theme.Gray400
+import com.mashup.damgledamgle.ui.theme.Gray900
 
 @Composable
 fun BottomSheetExpandedContent(
@@ -61,38 +62,8 @@ fun BottomSheetExpandedContent(
             Spacer(modifier = Modifier.height(32.dp))
             DamgleStoryBox(backGroundColor = Gray400, textColor = Gray900, text = text, onTextChange = { text = it })
         }
-
-        // TODO 글자수에 따라 Clickable, 디자인 변경
-        if (text.isEmpty()) {
-            Button(
-                onClick = {},
-                modifier = Modifier
-                    .height(64.dp)
-                    .fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Gray600)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.home_bottomsheet_leave_a_story),
-                    fontSize = 18.sp,
-                    color = Gray400
-                )
-            }
-        } else {
-            Button(
-                onClick = {
-                    openLeaveStoryDialog.value = true
-                },
-                modifier = Modifier
-                    .height(64.dp)
-                    .fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Black)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.home_bottomsheet_leave_a_story),
-                    fontSize = 18.sp,
-                    color = Gray400
-                )
-            }
+        BottomSheetBottomButton(text = text) {
+            openLeaveStoryDialog.value = true
         }
     }
 }
