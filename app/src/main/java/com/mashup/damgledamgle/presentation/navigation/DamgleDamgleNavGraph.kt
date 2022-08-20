@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -37,9 +37,16 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
         composable(route = Screen.MyPage.route) {
             MyPageScreen(navController = navController)
         }
-        composable(route = Screen.LeaveStory.route) {
+        composable(
+            route = "${Screen.LeaveStory.route}/{content}",
+            arguments = listOf(
+                navArgument("content") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
             systemUiController.setSystemBarsColor(color = Grey500)
-            LeaveStoryScreen(navController = navController)
+            LeaveStoryScreen(navController = navController, entry.arguments?.getString("content") ?: "")
         }
         composable(route = Screen.AllDamgleList.route) {
             systemUiController.setSystemBarsColor(color = Grey500)

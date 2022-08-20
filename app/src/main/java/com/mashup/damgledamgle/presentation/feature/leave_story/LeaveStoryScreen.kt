@@ -1,34 +1,38 @@
 package com.mashup.damgledamgle.presentation.feature.leave_story
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.ui.theme.Grey500
 
 @Composable
-fun LeaveStoryScreen(navController: NavHostController) {
+fun LeaveStoryScreen(navController: NavHostController, content: String, leaveStoryViewModel: LeaveStoryViewModel = hiltViewModel()) {
+    LaunchedEffect(Unit) {
+        // TODO 위치 가져오는 로직 추가 필요
+        leaveStoryViewModel.leaveStory(32.0, 32.0, content)
+    }
+
+    val leaveStoryState by leaveStoryViewModel.leaveDamgleStoryState.collectAsState()
+
     Scaffold {
         Column(
             modifier = Modifier
                 .background(color = Grey500)
-                .fillMaxHeight()
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(118.dp))
-            Text(
-                modifier = Modifier.padding(horizontal = 20.dp),
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                text = stringResource(R.string.leave_story_now_leaving_a_story)
-            )
+            when (val state = leaveStoryState) {
+                is ViewState.Loading -> LeaveStoryWriting()
+                is ViewState.Error -> LeaveStoryError()
+                is ViewState.Success -> LeaveStoryComplete(state.data)
+            }
         }
     }
 }
