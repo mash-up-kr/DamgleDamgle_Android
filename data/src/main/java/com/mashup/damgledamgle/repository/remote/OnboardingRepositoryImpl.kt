@@ -8,8 +8,8 @@ import com.mashup.damgledamgle.mapper.AuthMapper
 import com.mashup.damgledamgle.mapper.NickNameMapper
 import com.mashup.damgledamgle.repository.network.DamgleApi
 import com.mashup.damgledamgle.repository.network.ServiceBuilder
-import com.mashup.damgledamgle.repository.spec.NickNameRequest
-import com.mashup.damgledamgle.repository.spec.PickNickNameRequest
+import com.mashup.damgledamgle.repository.spec.response.NickNameRequest
+import com.mashup.damgledamgle.repository.spec.response.PickNickNameRequest
 import retrofit2.HttpException
 import javax.inject.Inject
 

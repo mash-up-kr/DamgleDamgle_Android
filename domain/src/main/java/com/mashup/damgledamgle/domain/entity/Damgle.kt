@@ -15,8 +15,8 @@ data class Damgle(
     val y: String,
     val content: String,
     val reactions: List<Reaction>,
-    val createAt: Int,
-    val updateAt: Int,
+    val createAt: Long,
+    val updateAt: Long,
 ) {
     data class Reaction(
         val userNo: Int,
