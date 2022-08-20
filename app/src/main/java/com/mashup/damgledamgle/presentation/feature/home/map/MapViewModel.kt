@@ -58,9 +58,9 @@ class MapViewModel @Inject constructor(
             launchWithNetworkResult(
                 result = getStoryFeedUseCase.invoke(
                     top =  37.51,
-                    bottom = 37.49,
-                    left = 127.035,
-                    right = 127.036
+                    bottom = 37.45,
+                    left = 127.033,
+                    right = 127.037
                 ),
                 suspendOnSuccess = {
                    val groupingStoryData = divideMarkerPosition(
