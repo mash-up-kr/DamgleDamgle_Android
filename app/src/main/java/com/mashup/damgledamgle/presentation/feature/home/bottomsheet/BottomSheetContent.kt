@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.ui.theme.*
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -21,6 +23,7 @@ fun BottomSheetContent(
     bottomSheetScaffoldState: BottomSheetScaffoldState
 ) {
 
+    val composableScope = rememberCoroutineScope()
     val bottomSheetSlide = getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)
     val collapseAlpha =
         (bottomSheetSlide - BOTTOM_SHEET_SLIDE_THRESHOLD) / (1 + ADDITIONAL_FLOAT - BOTTOM_SHEET_SLIDE_THRESHOLD)
@@ -30,7 +33,7 @@ fun BottomSheetContent(
         modifier = Modifier
             .background(brush = backgroundGradient)
             .fillMaxWidth()
-            .fillMaxHeight()
+            .fillMaxHeight(0.9f)
     ) {
         Box(
             modifier = Modifier
@@ -62,7 +65,11 @@ fun BottomSheetContent(
             )
 
             if (bottomSheetSlide >= BOTTOM_SHEET_SLIDE_THRESHOLD) {
-                BottomSheetCollapsedContent(alpha = collapseAlpha)
+                BottomSheetCollapsedContent(alpha = collapseAlpha, onClickBottomSheet = {
+                    composableScope.launch {
+                        bottomSheetScaffoldState.bottomSheetState.expand()
+                    }
+                })
             } else {
                 BottomSheetExpandedContent(navController = navController, alpha = expandAlpha)
             }
