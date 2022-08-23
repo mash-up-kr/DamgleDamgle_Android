@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.pager.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.feature.leave_story.GNB
 import com.mashup.damgledamgle.presentation.feature.mypage.model.MyPageTab
 import com.mashup.damgledamgle.ui.theme.*
 
@@ -56,14 +57,18 @@ fun MyPageScreen(navController: NavHostController) {
                         .background(Grey500),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.ic_close),
-                        contentDescription = "my profile image",
-                        modifier = Modifier
-                            .padding(20.dp)
-                            .size(24.dp)
-                            .align(Alignment.End)
-                            .clickable { navController.popBackStack() },
+                    GNB(
+                        rightContent = {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_close),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .width(24.dp)
+                                    .offset(x = (-16).dp)
+                                    .padding(top = 28.dp)
+                                    .clickable { navController.popBackStack() }
+                            )
+                        }
                     )
 
                     MyProfile(profile.data.nickName)
