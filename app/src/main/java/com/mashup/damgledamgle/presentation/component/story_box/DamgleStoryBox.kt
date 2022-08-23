@@ -28,7 +28,7 @@ fun DamgleStoryBox(
             .padding(horizontal = 16.dp)
     ) {
         Text(
-            text = damgleStoryBoxState.placeName,
+            text = damgleStoryBoxState.addressMain,
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold,
             color = Gray1000

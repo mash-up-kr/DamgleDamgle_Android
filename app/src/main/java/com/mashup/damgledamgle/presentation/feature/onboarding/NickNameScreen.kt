@@ -1,6 +1,5 @@
 package com.mashup.damgledamgle.presentation.feature.onboarding
 
-import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -16,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.feature.home.LoadingLottie
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.*
 
@@ -33,6 +33,8 @@ fun NickNameScreen(
 ) {
     val context = LocalContext.current
     val viewModel: OnboardingViewModel = hiltViewModel()
+    val openNickNameErrorDialog = remember { mutableStateOf(false) }
+    val signUpLoadingState = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -114,12 +116,33 @@ fun NickNameScreen(
             )
         }
 
-        LaunchedEffect(key1 = viewModel.authState.collectAsState().value) {
-            when(val authState = viewModel.authState.value) {
-                is ViewState.Success -> navController.navigate(Screen.Home.route)
-                is ViewState.Error -> Toast.makeText(context, authState.error, Toast.LENGTH_SHORT).show()
+        LaunchedEffect(key1 = viewModel.uiState.collectAsState().value) {
+            if (viewModel.uiState.value is ViewState.Error) {
+                openNickNameErrorDialog.value = true
             }
         }
+
+        LaunchedEffect(key1 = viewModel.authState.collectAsState().value) {
+            when (viewModel.authState.value) {
+                is ViewState.Loading -> signUpLoadingState.value = true
+                is ViewState.Success -> navController.navigate(Screen.Home.route)
+                is ViewState.Error -> {
+                    signUpLoadingState.value = false
+                    openNickNameErrorDialog.value = true
+                }
+            }
+        }
+    }
+
+    if (openNickNameErrorDialog.value) {
+        NickNameErrorDialog(
+            openNickNameErrorDialog = openNickNameErrorDialog,
+            onButtonClick = { openNickNameErrorDialog.value = false }
+        )
+    }
+
+    if (signUpLoadingState.value) {
+        LoadingLottie()
     }
 }
 

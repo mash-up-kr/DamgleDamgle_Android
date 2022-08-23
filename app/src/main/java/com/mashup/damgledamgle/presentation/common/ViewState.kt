@@ -8,7 +8,11 @@ package com.mashup.damgledamgle.presentation.common
  */
 
 sealed class ViewState<out T> {
-    data class Success<T>(val data: T): ViewState<T>()
-    data class Error(val error: String): ViewState<Nothing>()
-    object Loading: ViewState<Nothing>()
+    data class Success<T>(val data: T) : ViewState<T>()
+    data class Error(val error: String) : ViewState<Nothing>()
+    object Loading : ViewState<Nothing>()
+}
+
+fun <T> ViewState<T>.successOrNull(): T? {
+    return if (this is ViewState.Success<T>) return this.data else null
 }

@@ -5,6 +5,7 @@ import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.DamgleRepository
 import com.mashup.damgledamgle.mapper.DamgleMapper
 import com.mashup.damgledamgle.network.DamgleApi
+import com.mashup.damgledamgle.repository.spec.request.ReactDamgleRequest
 import com.mashup.damgledamgle.repository.spec.request.WriteDamgleRequest
 import javax.inject.Inject
 
@@ -37,4 +38,22 @@ class DamgleRepositoryImpl @Inject constructor(
             Result.Error(e)
         }
     }
+
+    override suspend fun createDamgleReaction(reaction: String, storyId: String): Result<Damgle> {
+        return try {
+            val result = damgleApi.createDamgleReaction(ReactDamgleRequest(reaction), storyId)
+            Result.Success(damgleMapper.mapToEntity(result))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    override suspend fun deleteDamgleReaction(storyId: String): Result<Damgle> {
+            return try {
+                val result = damgleApi.deleteDamgleReaction(storyId)
+                Result.Success(damgleMapper.mapToEntity(result))
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
 }

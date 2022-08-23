@@ -9,9 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
-import com.mashup.damgledamgle.presentation.common.checkPermissionSelf
-import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
+import com.mashup.damgledamgle.presentation.common.*
 
 /**
  *  OnboardingScreen.kt
@@ -24,6 +22,7 @@ import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
 fun OnboardingScreen(navController: NavHostController) {
     val context = LocalContext.current
     var backPressWaitTime by remember { mutableStateOf(0L) }
+    val openSettingPermissionDialogState = remember { mutableStateOf(false) }
 
     var isLocationPermissionAllowed by remember { mutableStateOf(checkPermissionSelf(context, Manifest.permission.ACCESS_FINE_LOCATION)) }
     val locationPermissionLauncher = rememberLauncherForActivityResult(
@@ -32,7 +31,7 @@ fun OnboardingScreen(navController: NavHostController) {
         if (isGranted) {
             isLocationPermissionAllowed = true
         } else {
-            Toast.makeText(context, "위치 권한에 동의해야 앱 사용이 가능합니다.", Toast.LENGTH_SHORT).show()
+            openSettingPermissionDialogState.value = true
         }
     }
 
@@ -51,11 +50,19 @@ fun OnboardingScreen(navController: NavHostController) {
             subText = context.getString(R.string.permission_location_subtext),
             iconResId = R.drawable.ic_permission_location,
             permissionLauncher = locationPermissionLauncher,
-            permission = Manifest.permission.ACCESS_FINE_LOCATION
+            permission = Manifest.permission.ACCESS_FINE_LOCATION,
+            openSettingPermissionDialogState = openSettingPermissionDialogState
         )
     } else {
         // 현재 안드로이드는 Notification 퍼미션을 받지 않아서 회원가입 할 때는 무조건 true
-        //HomeScreen(navController = navController)
         NickNameScreen(navController, true)
+    }
+
+    if (openSettingPermissionDialogState.value) {
+        SettingPermissionDialog(
+            openSettingPermissionDialogState = openSettingPermissionDialogState,
+            onMoveToSettingButton = { moveToPermissionSettingPage(context) },
+            onKillAppButton = { (context as? Activity)?.finish() }
+        )
     }
 }

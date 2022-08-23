@@ -2,6 +2,8 @@ package com.mashup.damgledamgle.presentation.feature.mypage
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -53,7 +55,7 @@ fun TabMyDamglePage(
                 Text(
                     text = context.getString(R.string.mypage_mydamgle_empty),
                     style = pretendardTextStyle.bodyMedium16,
-                    color = Gray800,
+                    color = Gray700,
                     modifier = Modifier.align(Alignment.BottomCenter)
                 )
             }
@@ -82,16 +84,37 @@ fun TabMyDamglePage(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // TODO(minji): LazyColumn으로 교체 및 데이터 모델 전달하도록 수정
-            val scrollState = rememberScrollState()
             Column(
-                modifier = Modifier
-                    .padding(top = 20.dp)
-                    .fillMaxSize()
-                    .verticalScroll(scrollState)
+                modifier = Modifier.fillMaxHeight()
             ) {
-                repeat(10) {
-                    MyDamgleItem()
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .fillMaxWidth()
+                ) {
+                    itemsIndexed(
+                        myDamgleList
+                    ) { index, item ->
+                        MyDamgleItem(navController)
+                    }
+                }
+
+                Box(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.background_mydamgle_gray_gradient),
+                        contentDescription = "To hide Orange gradient when my damgle item count is small ",
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2000.dp)
+                            .padding(20.dp)
+                            .background(color = Grey500)
+                    )
                 }
             }
         }
