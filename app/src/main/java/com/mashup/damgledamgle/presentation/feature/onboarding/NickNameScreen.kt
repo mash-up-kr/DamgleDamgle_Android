@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.feature.home.LoadingLottie
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.*
 
@@ -33,6 +34,7 @@ fun NickNameScreen(
     val context = LocalContext.current
     val viewModel: OnboardingViewModel = hiltViewModel()
     val openNickNameErrorDialog = remember { mutableStateOf(false) }
+    val signUpLoadingState = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -122,9 +124,12 @@ fun NickNameScreen(
 
         LaunchedEffect(key1 = viewModel.authState.collectAsState().value) {
             when (viewModel.authState.value) {
-                is ViewState.Loading -> {}
+                is ViewState.Loading -> signUpLoadingState.value = true
                 is ViewState.Success -> navController.navigate(Screen.Home.route)
-                is ViewState.Error -> openNickNameErrorDialog.value = true
+                is ViewState.Error -> {
+                    signUpLoadingState.value = false
+                    openNickNameErrorDialog.value = true
+                }
             }
         }
     }
@@ -134,6 +139,10 @@ fun NickNameScreen(
             openNickNameErrorDialog = openNickNameErrorDialog,
             onButtonClick = { openNickNameErrorDialog.value = false }
         )
+    }
+
+    if (signUpLoadingState.value) {
+        LoadingLottie()
     }
 }
 

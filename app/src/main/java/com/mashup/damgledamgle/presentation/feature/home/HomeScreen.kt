@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -17,6 +18,7 @@ import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
+import com.mashup.damgledamgle.presentation.common.DisabledInteractionSource
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
@@ -127,6 +129,7 @@ fun LoadingLottie() {
             .fillMaxWidth()
             .fillMaxHeight()
             .background(LottieBackGround.copy(0.5F))
+            .clickable(interactionSource = DisabledInteractionSource(), indication = null) { },
     ) {
         LottieAnimation(
             modifier = Modifier
