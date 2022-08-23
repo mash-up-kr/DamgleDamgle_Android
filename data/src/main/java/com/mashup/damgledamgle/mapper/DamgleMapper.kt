@@ -20,6 +20,7 @@ class DamgleMapper @Inject constructor() {
             x = spec.x,
             y = spec.y,
             content = spec.content,
+            isMine = spec.isMine,
             reactions = mapToEntity(spec.reactions),
             reactionSummary = convertReactionEntity(spec.reactionSummary),
             reactionOfMine = spec.reactionOfMine?.let { convertMyReactionEntity(it) },

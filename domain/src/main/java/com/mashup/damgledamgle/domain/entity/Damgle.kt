@@ -14,6 +14,7 @@ data class Damgle(
     val x: Double,
     val y: Double,
     val content: String,
+    val isMine : Boolean,
     val reactions: List<Reaction>,
     val reactionSummary : List<ReactionSummary>,
     val reactionOfMine : ReactionOfMine?,

@@ -16,6 +16,7 @@ data class DamgleResponse(
     @Json(name = "x") val x: Double,
     @Json(name = "y") val y: Double,
     @Json(name = "content") val content: String,
+    @Json(name = "isMine") val isMine: Boolean,
     @Json(name = "reactions") val reactions: List<ReactionResponse>,
     @Json(name = "reactionSummary") val reactionSummary : List<ReactionSummary>,
     @Json(name = "reactionOfMine") val reactionOfMine : ReactionOfMine?,

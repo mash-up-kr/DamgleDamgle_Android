@@ -1,12 +1,44 @@
 package com.mashup.damgledamgle.util
 
 import android.icu.util.Calendar
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
 
 object TimeUtil {
 
     private fun getCurrentTime(): Long {
         return System.currentTimeMillis()
+    }
+
+    fun dateFormat(date: String): LocalDate? {
+        return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    }
+
+    fun getTodayDate(): String {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = if(calendar.get(Calendar.MONTH) < 10) {
+            "0${calendar.get(Calendar.MONTH)}"
+        } else {
+            calendar.get(Calendar.MONTH).toString()
+        }
+        val day = if(calendar.get(Calendar.DATE) < 10) {
+            "0${calendar.get(Calendar.DATE)}"
+        } else {
+            calendar.get(Calendar.DATE).toString()
+        }
+        return "$year-$month-$day"
+    }
+
+    fun getDateDiff(date : String): String {
+        val saveDate = dateFormat(date)
+        val value = when(val diffDateFromFirst = saveDate!!.dayOfMonth - 1) {
+            0 -> "오늘"
+            1 ->  "어제"
+            else -> "${diffDateFromFirst}일 전에"
+        }
+        return value
     }
 
     fun getFormattedTimeDiff(now: Long): String {
