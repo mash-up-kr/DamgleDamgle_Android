@@ -1,5 +1,6 @@
 package com.mashup.damgledamgle.network
 
+import com.mashup.damgledamgle.repository.spec.request.ReactDamgleRequest
 import com.mashup.damgledamgle.repository.spec.request.WriteDamgleRequest
 import com.mashup.damgledamgle.repository.spec.response.*
 import retrofit2.http.*
@@ -39,11 +40,11 @@ interface DamgleApi {
      */
     @GET("/v1/story/feed")
     suspend fun getStoryFeed(
-        @Query("top") top : Double,
-        @Query("bottom") bottom : Double,
-        @Query("left") left : Double,
-        @Query("right") right : Double
-    ) : DamgleListResponse
+        @Query("top") top: Double,
+        @Query("bottom") bottom: Double,
+        @Query("left") left: Double,
+        @Query("right") right: Double
+    ): DamgleListResponse
 
     /**
      * Auth - Me : 내 정보
@@ -68,6 +69,18 @@ interface DamgleApi {
      */
     @POST("v1/story")
     suspend fun writeDamgle(@Body body: WriteDamgleRequest): DamgleResponse
+
+    /**
+     * Story : 담글 리액션
+     */
+    @POST("v1/story/react/{storyId}")
+    suspend fun createDamgleReaction(@Body body: ReactDamgleRequest, @Path("storyId") storyId: String): DamgleResponse
+
+    /**
+     * Story : 담글 리액션 제거
+     */
+    @DELETE("v1/story/react/{storyId}")
+    suspend fun deleteDamgleReaction(@Path("storyId") storyId: String): DamgleResponse
 
     /**
      * Story - me : 내 담글 조회
