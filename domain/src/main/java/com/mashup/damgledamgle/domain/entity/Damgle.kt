@@ -20,7 +20,6 @@ data class Damgle(
     val reactionOfMine: ReactionOfMine?,
     val address1: String,
     val address2: String,
-    val isMine: Boolean,
     val reports: List<Reports>,
     val createAt: Long,
     val updateAt: Long,
