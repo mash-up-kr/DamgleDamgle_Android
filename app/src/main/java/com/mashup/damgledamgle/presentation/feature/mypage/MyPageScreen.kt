@@ -4,17 +4,19 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.google.accompanist.pager.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.leave_story.GNB
-import com.mashup.damgledamgle.presentation.feature.mypage.model.TabPage
+import com.mashup.damgledamgle.presentation.feature.mypage.model.MyPageTab
 import com.mashup.damgledamgle.ui.theme.*
 
 /**
@@ -24,10 +26,13 @@ import com.mashup.damgledamgle.ui.theme.*
  *  Copyright © 2022 MashUp All rights reserved.
  */
 
+@ExperimentalPagerApi
 @Composable
 fun MyPageScreen(navController: NavHostController) {
-    var currentPage by remember { mutableStateOf(TabPage.MyDamgle) }
+    val pagerState = rememberPagerState()
     val myPageViewModel: MyPageViewModel = hiltViewModel()
+
+    val tabItems = listOf(MyPageTab.MyDamgle, MyPageTab.Setting)
 
     Box(
         modifier = Modifier
@@ -69,13 +74,20 @@ fun MyPageScreen(navController: NavHostController) {
                     MyProfile(profile.data.nickName)
 
                     MyPageTabBar(
-                        tabPage = currentPage,
-                        onTabSelected = { currentPage = it }
+                        tabItems = tabItems,
+                        pagerState = pagerState,
                     )
 
-                    when (currentPage) {
-                        TabPage.MyDamgle -> TabMyDamglePage(navController, myDamgleList.data)
-                        TabPage.Setting -> TabSettingPage(navController, profile.data.notification)
+                    HorizontalPager(
+                        count = tabItems.size,
+                        state = pagerState,
+                        modifier = Modifier.fillMaxSize()
+                    ) { page ->
+                        if (page == MyPageTab.MyDamgle.index) {
+                            TabMyDamglePage(navController, myDamgleList.data)
+                        } else {
+                            TabSettingPage(navController, profile.data.notification)
+                        }
                     }
                 }
             }

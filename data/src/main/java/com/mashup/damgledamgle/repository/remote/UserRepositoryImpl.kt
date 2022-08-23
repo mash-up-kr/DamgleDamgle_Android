@@ -3,6 +3,7 @@ package com.mashup.damgledamgle.repository.remote
 import com.mashup.damgledamgle.domain.entity.UserProfile
 import com.mashup.damgledamgle.domain.entity.base.Result
 import com.mashup.damgledamgle.domain.repository.UserRepository
+import com.mashup.damgledamgle.domain.usecase.token.SetTokenUseCase
 import com.mashup.damgledamgle.mapper.UserProfileMapper
 import com.mashup.damgledamgle.network.DamgleApi
 import javax.inject.Inject
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val damgleApi: DamgleApi,
     private val userMapper: UserProfileMapper,
+    private val setTokenUseCase: SetTokenUseCase
 ) : UserRepository {
 
     override suspend fun getUserProfile(): Result<UserProfile> {
@@ -31,6 +33,7 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun deleteUserProfile(): Result<String> {
         return try {
             val resultData = damgleApi.deleteMe()
+            setTokenUseCase("", "")
             Result.Success(resultData.message)
         } catch (e: Exception) {
             Result.Error(e)

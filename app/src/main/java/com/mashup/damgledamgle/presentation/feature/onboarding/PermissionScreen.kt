@@ -1,15 +1,12 @@
 package com.mashup.damgledamgle.presentation.feature.onboarding
 
 import android.Manifest
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +35,7 @@ fun PermissionScreen(
     iconResId: Int,
     permissionLauncher: ManagedActivityResultLauncher<String, Boolean>?,
     permission: String,
+    openSettingPermissionDialogState: MutableState<Boolean>
 ) {
     val context = LocalContext.current
 
@@ -74,11 +72,7 @@ fun PermissionScreen(
         if (!shouldShowPermissionRationale(context, permission)) {
             permissionLauncher?.launch(permission)
         } else {
-            // TODO: 앱 설정으로 이동할지 여부 물어보는 Dialog 필요
-            val appIntent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${context.packageName}"))
-            appIntent.addCategory(Intent.CATEGORY_DEFAULT)
-            appIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(appIntent)
+            openSettingPermissionDialogState.value = true
         }
     }
 }
@@ -87,12 +81,14 @@ fun PermissionScreen(
 @Composable
 fun PreviewPermissionScreen() {
     val context = LocalContext.current
+    val openSettingPermissionDialogState = remember { mutableStateOf(false) }
 
     PermissionScreen(
         mainText = context.getString(R.string.permission_location_maintext),
         subText = context.getString(R.string.permission_location_subtext),
         iconResId = R.drawable.ic_permission_location,
         permissionLauncher = null,
-        permission = Manifest.permission.ACCESS_FINE_LOCATION
+        permission = Manifest.permission.ACCESS_FINE_LOCATION,
+        openSettingPermissionDialogState = openSettingPermissionDialogState
     )
 }
