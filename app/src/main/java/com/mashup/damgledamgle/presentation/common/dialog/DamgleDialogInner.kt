@@ -33,7 +33,8 @@ fun DamgleDialogTwoButtonInner(
                 color = Black,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                maxLines = 1,
+                textAlign = Center,
+                maxLines = 2,
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
@@ -74,3 +75,53 @@ fun DamgleDialogTwoButtonInner(
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
+
+@Composable
+fun DamgleDialogOneButtonInner(
+    title: String,
+    description: String,
+    firstButtonText: String,
+    firstButtonAction: () -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Spacer(modifier = Modifier.height(24.dp))
+        Text(
+            text = title,
+            color = Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = description,
+            fontSize = 14.sp,
+            color = Gray600,
+            textAlign = Center
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .width(288.dp),
+        ) {
+            Text(
+                modifier = Modifier
+                    .clickable { firstButtonAction() }
+                    .padding(vertical = 13.dp)
+                    .fillMaxWidth(),
+                fontSize = 16.sp,
+                textAlign = Center,
+                fontWeight = FontWeight.Bold,
+                text = firstButtonText,
+                color = Black
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
