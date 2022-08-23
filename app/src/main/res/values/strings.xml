@@ -37,8 +37,6 @@
     <string name="nickname.button.start">시작하기</string>
 
     // MyPage
-    <string name="mypage.tab.mydamgle">내 담글</string>
-    <string name="mypage.tab.setting">설정</string>
     <string name="mypage.delete.popup.title">정말 내 정보를 삭제하고\n서비스를 그만 사용하실건가요?</string>
     <string name="mypage.delete.popup.message">모든 계정 정보를 삭제하시면\n다시 되살릴 수 없어요!</string>
     <string name="mypage.delete.yes">삭제</string>

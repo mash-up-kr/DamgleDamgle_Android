@@ -78,6 +78,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun signUp(nickName: NickNameModel, notification: Boolean) {
         viewModelScope.launch {
+            _authState.emit(ViewState.Loading)
             when(val pickedNickNameResult = pickNickNameUseCase(nickName.adjective, nickName.noun)) {
                 is Result.Success -> {
                     when(val result = signUpUseCase(pickedNickNameResult.data.name, notification)) {

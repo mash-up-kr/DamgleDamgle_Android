@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.Orange500
 
 /**
@@ -31,10 +33,14 @@ import com.mashup.damgledamgle.ui.theme.Orange500
  */
 
 @Composable
-fun MyDamgleItem() {
+fun MyDamgleItem(
+    navHostController: NavHostController?
+) {
     Box(
         modifier = Modifier.padding(horizontal = 20.dp)
-            .clickable {  }
+            .clickable {
+                navHostController?.navigate(Screen.MyDamgle.route)
+            }
     ) {
         Image(
             painter = painterResource(id = R.drawable.background_mydamgle_gray_gradient),
@@ -112,7 +118,7 @@ fun MyDamgleEmoji(emojiDrawableId: Int, count: Int, modifier: Modifier) {
 @Preview
 @Composable
 fun PreviewMyDamgleItem() {
-    MyDamgleItem()
+    MyDamgleItem(null)
 }
 
 @Preview

@@ -16,6 +16,6 @@ ext {
     okhttp_version = "4.3.1"
     moshi_version = "1.9.3"
     lottie_version = "5.2.0"
-
+    compose_pager_version = "0.21.0-beta"
 }
 
