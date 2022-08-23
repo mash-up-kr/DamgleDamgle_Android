@@ -95,7 +95,7 @@ fun TabMyDamglePage(
                     itemsIndexed(
                         myDamgleList
                     ) { index, item ->
-                        MyDamgleItem()
+                        MyDamgleItem(navController)
                     }
                 }
 
