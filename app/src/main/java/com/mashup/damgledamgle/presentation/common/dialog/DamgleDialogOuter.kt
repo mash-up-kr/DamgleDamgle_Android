@@ -17,8 +17,8 @@ fun DamgleDialogOuter(
 ) {
     Card(
             modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth(),
+                .padding(horizontal = 20.dp)
+                .fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
             backgroundColor = Gray400
     ) {

@@ -32,9 +32,23 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val homeViewModel: HomeViewModel = hiltViewModel()
+    val homeViewModel : HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     BackPressInterceptor(context)
+
+    val openDamglePaintDialog = remember { mutableStateOf(false) }
+    if(homeViewModel.checkEntryAfterDamgleDay()) {
+        openDamglePaintDialog.value = true
+    }
+    if(openDamglePaintDialog.value) {
+        DamglePaintDialog(
+            date = homeViewModel.getLastEntryDamgleDay(),
+            openDamglePainDialog = openDamglePaintDialog
+        ) {
+            openDamglePaintDialog.value = false
+            homeViewModel.setLastEntryDamgleDay()
+        }
+    }
 
     var locationTitle by remember {
         mutableStateOf("")
@@ -72,39 +86,14 @@ fun HomeScreen(navController: NavHostController) {
             },
             sheetPeekHeight = 100.dp,
             scaffoldState = bottomSheetScaffoldState,
-            floatingActionButton = {
-                Spacer(modifier = Modifier.height(240.dp))
-                FloatingActionButton(
-                    fabIcon = R.drawable.ic_refresh,
-                    description = "refresh_btn",
-                    modifier = Modifier.size(48.dp, 48.dp),
-                    onClick = {
-                        val updateLocation = LocationUtil.getMyLocation(context)
-                        homeViewModel.homeRefreshBtnEvent(updateLocation)
-                    }
-                )
-                FloatingActionButton(
-                    fabIcon = R.drawable.ic_location_point,
-                    description = "location_btn",
-                    modifier = Modifier
-                        .paddingFromBaseline(56.dp)
-                        .size(48.dp, 48.dp),
-                    onClick = {
-                        currentLocation?.let { latLng ->
-                            cameraPositionState.move(CameraUpdate.scrollTo(latLng))
-                        }
-                    }
-                )
-            }
         ) {
-            MapScreen(cameraPositionState)
+            MapScreen(
+                navController,
+                cameraPositionState)
         }
         val showLoading = homeViewModel.showLoading.observeAsState()
         if (showLoading.value == true) {
             LoadingLottie()
-            Button(onClick = { navController.navigate(Screen.AllDamgleList.route) }) {
-                Text(text = "AllDamgleList")
-            }
         }
     }
 }
