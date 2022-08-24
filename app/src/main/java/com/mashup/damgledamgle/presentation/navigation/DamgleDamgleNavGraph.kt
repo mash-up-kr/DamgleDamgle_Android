@@ -55,7 +55,9 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
         composable(route = Screen.AllDamgleList.route) {
             systemUiController.setSystemBarsColor(color = Grey500)
             val markerBound = navController.previousBackStackEntry?.savedStateHandle?.get<Bound>("bound")
-            AllDamgleListScreen(navController = navController)
+            if (markerBound != null) {
+                AllDamgleListScreen(navController = navController, markerBound)
+            }
         }
         composable(route = Screen.MyDamgle.route) {
             systemUiController.setSystemBarsColor(color = Grey500)
