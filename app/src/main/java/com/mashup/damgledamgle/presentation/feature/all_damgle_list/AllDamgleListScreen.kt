@@ -4,13 +4,19 @@ import androidx.compose.runtime.*
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.feature.home.model.Bound
 
 @Composable
-fun AllDamgleListScreen(navController: NavHostController, viewModel: AllDamgleListViewModel = hiltViewModel()) {
+fun AllDamgleListScreen(navController: NavHostController, bound: Bound, viewModel: AllDamgleListViewModel = hiltViewModel()) {
     val damgleList by viewModel.damgleFeedState.collectAsState(ViewState.Loading)
 
     LaunchedEffect(Unit) {
-        viewModel.init(37.516486063, 37.476486063, 127.008361548, 127.048361548)
+        viewModel.init(
+            top = bound.top,
+            bottom = bound.bottom,
+            left = bound.left,
+            right = bound.right
+        )
     }
 
     when (val state = damgleList) {
