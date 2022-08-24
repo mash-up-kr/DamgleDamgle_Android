@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetNaverGeocodeUseCase @Inject constructor(
     private val mapRepository: MapRepository
     ) {
-    suspend fun invoke(coords: String) : Result<GeoResult>
+    suspend operator fun invoke(coords: String) : Result<GeoResult>
         = mapRepository.getReverseGeocoding(coords)
 }

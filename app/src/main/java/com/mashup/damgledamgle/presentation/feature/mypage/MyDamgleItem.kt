@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.commonModel.DamgleModel
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.Orange500
 
@@ -34,10 +35,12 @@ import com.mashup.damgledamgle.ui.theme.Orange500
 
 @Composable
 fun MyDamgleItem(
-    navHostController: NavHostController?
+    navHostController: NavHostController?,
+    damgleModel: DamgleModel
 ) {
     Box(
-        modifier = Modifier.padding(horizontal = 20.dp)
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
             .clickable {
                 navHostController?.navigate(Screen.MyDamgle.route)
             }
@@ -118,7 +121,25 @@ fun MyDamgleEmoji(emojiDrawableId: Int, count: Int, modifier: Modifier) {
 @Preview
 @Composable
 fun PreviewMyDamgleItem() {
-    MyDamgleItem(null)
+    MyDamgleItem(
+        null,
+        DamgleModel(
+            id = "",
+            userNo = "",
+            nickName = "",
+            x = 0.0,
+            y = 0.0,
+            content = "",
+            reactions = listOf(),
+            reactionSummary = listOf(),
+            reactionOfMine = null,
+            address1 = "",
+            address2 = "",
+            reports = listOf(),
+            createdAt = 0,
+            updatedAt = 0
+        )
+    )
 }
 
 @Preview
