@@ -11,7 +11,7 @@ import com.mashup.damgledamgle.domain.entity.base.Result
  */
 
 interface DamgleRepository {
-    suspend fun writeDamgle(longitude: Double, latitude: Double, content: String): Result<Damgle>
+    suspend fun writeDamgle(longitude: Double, latitude: Double, content: String, address1: String, address2: String): Result<Damgle>
     suspend fun getMyDamgleList(): Result<List<Damgle>>
 
     suspend fun createDamgleReaction(reaction: String, storyId: String): Result<Damgle>

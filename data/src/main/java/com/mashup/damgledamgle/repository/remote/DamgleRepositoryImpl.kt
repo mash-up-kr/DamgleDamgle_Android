@@ -21,9 +21,9 @@ class DamgleRepositoryImpl @Inject constructor(
     private val damgleMapper: DamgleMapper,
 ) : DamgleRepository {
 
-    override suspend fun writeDamgle(longitude: Double, latitude: Double, content: String): Result<Damgle> {
+    override suspend fun writeDamgle(longitude: Double, latitude: Double, content: String, address1: String, address2: String): Result<Damgle> {
         return try {
-            val result = damgleApi.writeDamgle(WriteDamgleRequest(longitude, latitude, content))
+            val result = damgleApi.writeDamgle(WriteDamgleRequest(longitude, latitude, content, address1, address2))
             Result.Success(damgleMapper.mapToEntity(result))
         } catch (e: Exception) {
             Result.Error(e)

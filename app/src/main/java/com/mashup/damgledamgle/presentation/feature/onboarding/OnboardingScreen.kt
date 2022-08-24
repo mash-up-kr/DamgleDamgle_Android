@@ -2,6 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.onboarding
 
 import android.Manifest
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,7 +32,8 @@ fun OnboardingScreen(navController: NavHostController) {
         if (isGranted) {
             isLocationPermissionAllowed = true
         } else {
-            openSettingPermissionDialogState.value = true
+            Log.d("TAG", "openSettingPermissionDialogState")
+//            openSettingPermissionDialogState.value = true
         }
     }
 
@@ -59,6 +61,7 @@ fun OnboardingScreen(navController: NavHostController) {
     }
 
     if (openSettingPermissionDialogState.value) {
+        Log.d("TAG", "openSettingPermissionDialogState: ${openSettingPermissionDialogState.value}")
         SettingPermissionDialog(
             openSettingPermissionDialogState = openSettingPermissionDialogState,
             onMoveToSettingButton = { moveToPermissionSettingPage(context) },
