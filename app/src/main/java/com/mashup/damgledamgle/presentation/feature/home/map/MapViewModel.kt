@@ -4,7 +4,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
+import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.model.*
@@ -31,7 +31,6 @@ class MapViewModel @Inject constructor(
 
     val storyFeedState = MutableStateFlow<ViewState<ArrayList<GroupMarkerInfo>>>(ViewState.Loading)
 
-
     fun getStoryFeedList(
         top: Double,
         bottom: Double,
@@ -39,7 +38,7 @@ class MapViewModel @Inject constructor(
         right: Double
     ) {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 result = getStoryFeedUseCase.invoke(
                     top = top,
                     bottom = bottom,

@@ -11,7 +11,11 @@ import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.domain.entity.Damgle
 
 @Composable
-fun LeaveStoryComplete(damgle: Damgle) {
+fun LeaveStoryComplete(
+    damgle: Damgle,
+    onClickBottomButton: (damgle: Damgle) -> Unit,
+    onClickClose: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -26,7 +30,7 @@ fun LeaveStoryComplete(damgle: Damgle) {
                             .width(24.dp)
                             .offset(x = (-16).dp)
                             .clickable {
-                                // TODO 백스택 로직이 정해지면 수정
+                                onClickClose()
                             }
                     )
                 }
@@ -34,7 +38,7 @@ fun LeaveStoryComplete(damgle: Damgle) {
             Spacer(modifier = Modifier.height(28.dp))
             LeaveStoryInner(R.string.leave_story_now_leaving_a_story_complete, lottieRes = R.raw.write)
         }
-        LeaveStoryBottomButton(text = "확인하러 가기")
+        LeaveStoryBottomButton(text = "확인하러 가기") { onClickBottomButton(damgle) }
     }
 }
 

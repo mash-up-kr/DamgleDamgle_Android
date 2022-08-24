@@ -1,10 +1,9 @@
 package com.mashup.damgledamgle.presentation.feature.leave_story
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
+import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.damgle.LeaveDamgleStoryUseCase
 import com.mashup.damgledamgle.domain.usecase.home.GetNaverGeocodeUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
@@ -26,16 +25,16 @@ class LeaveStoryViewModel @Inject constructor(
     fun leaveStory(latitude: Double, longitude: Double, content: String) {
         viewModelScope.launch {
             delay(1500L)
-            launchWithNetworkResult(
+            launchWithResult(
                 result = getNaverGeocodeUseCase("$longitude,$latitude"),
                 suspendOnSuccess = {
                     val address1 = it.region.area3.name
                     val address2 = it.land.name
 
-                    launchWithNetworkResult(
+                    launchWithResult(
                         result = leaveDamgleStoryRequestUseCase(longitude, latitude, content, address1, address2),
-                        suspendOnSuccess = { _leaveDamgleStoryState.emit(ViewState.Success(it)) },
-                        suspendOnError = { _leaveDamgleStoryState.emit(ViewState.Error(it.toString())) }
+                        suspendOnSuccess = { damgle -> _leaveDamgleStoryState.emit(ViewState.Success(damgle)) },
+                        suspendOnError = { error -> _leaveDamgleStoryState.emit(ViewState.Error(error.toString())) }
                     )
                 },
                 suspendOnError = {

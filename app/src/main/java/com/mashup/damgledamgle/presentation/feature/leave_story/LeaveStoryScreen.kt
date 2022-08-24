@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.util.LocationUtil
 
@@ -35,8 +36,18 @@ fun LeaveStoryScreen(navController: NavHostController, content: String, leaveSto
         ) {
             when (val state = leaveStoryState) {
                 is ViewState.Loading -> LeaveStoryWriting()
-                is ViewState.Error -> LeaveStoryError()
-                is ViewState.Success -> LeaveStoryComplete(state.data)
+                is ViewState.Error -> LeaveStoryError {
+                    navController.navigate(Screen.Home.route)
+                }
+                is ViewState.Success -> LeaveStoryComplete(
+                    state.data,
+                    { damgle ->
+                        navController.popBackStack()
+                        navController.currentBackStackEntry?.savedStateHandle?.set("id", damgle.id)
+                        navController.navigate("${Screen.MyDamgle.route}/${damgle.id}")
+                    },
+                    { navController.popBackStack() }
+                )
             }
         }
     }

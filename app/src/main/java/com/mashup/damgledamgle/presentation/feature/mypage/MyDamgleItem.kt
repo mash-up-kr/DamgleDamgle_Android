@@ -44,7 +44,7 @@ fun MyDamgleItem(
         modifier = Modifier
             .padding(horizontal = 20.dp)
             .clickable {
-                navHostController?.navigate(Screen.MyDamgle.route)
+                navHostController?.navigate("${Screen.MyDamgle.route}/${damgleModel.id}")
             }
     ) {
         Image(

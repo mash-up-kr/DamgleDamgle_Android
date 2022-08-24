@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.leave_story
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,12 +12,13 @@ import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.White
 
 @Composable
-fun LeaveStoryBottomButton(text: String) {
+fun LeaveStoryBottomButton(text: String, onClickButton: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(64.dp)
             .background(Black)
+            .clickable { onClickButton() }
     ) {
         Text(
             text = text,

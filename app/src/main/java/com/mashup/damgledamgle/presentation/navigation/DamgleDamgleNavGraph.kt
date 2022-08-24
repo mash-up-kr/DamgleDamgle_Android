@@ -59,7 +59,14 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
                 AllDamgleListScreen(navController = navController, markerBound)
             }
         }
-        composable(route = Screen.MyDamgle.route) {
+        composable(
+            route = "${Screen.MyDamgle.route}/{id}",
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
             systemUiController.setSystemBarsColor(color = Grey500)
             MyDamgleScreen(navController)
         }
