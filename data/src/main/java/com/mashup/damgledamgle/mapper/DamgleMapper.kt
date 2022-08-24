@@ -27,8 +27,8 @@ class DamgleMapper @Inject constructor() {
             reports = convertReportEntity(spec.reports),
             createAt = spec.createdAt,
             updateAt = spec.updatedAt,
-            address1 = spec.address1,
-            address2 = spec.address2,
+            address1 = spec.address1 ?: "",
+            address2 = spec.address2 ?: "",
         )
     }
 
