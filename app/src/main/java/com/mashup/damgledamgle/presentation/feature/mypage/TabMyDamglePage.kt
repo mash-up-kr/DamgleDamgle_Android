@@ -95,7 +95,7 @@ fun TabMyDamglePage(
                     itemsIndexed(
                         myDamgleList
                     ) { index, item ->
-                        MyDamgleItem(navController)
+                        MyDamgleItem(navController, item)
                     }
                 }
 
@@ -146,6 +146,8 @@ fun PreviewTabListDamglePage() {
                     nickname = "",
                     type = ""
                 ),
+                address1 = "",
+                address2 = "",
                 reports = listOf(),
                 createdAt = 0,
                 updatedAt = 0

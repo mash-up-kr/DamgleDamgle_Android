@@ -22,8 +22,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.commonModel.DamgleModel
 import com.mashup.damgledamgle.presentation.navigation.Screen
-import com.mashup.damgledamgle.ui.theme.Orange500
+import com.mashup.damgledamgle.ui.theme.*
+import com.mashup.damgledamgle.util.ReactionUtil
+import com.mashup.damgledamgle.util.TimeUtil
 
 /**
  *  MyDamgleItem.kt
@@ -34,10 +37,12 @@ import com.mashup.damgledamgle.ui.theme.Orange500
 
 @Composable
 fun MyDamgleItem(
-    navHostController: NavHostController?
+    navHostController: NavHostController?,
+    damgleModel: DamgleModel
 ) {
     Box(
-        modifier = Modifier.padding(horizontal = 20.dp)
+        modifier = Modifier
+            .padding(horizontal = 20.dp)
             .clickable {
                 navHostController?.navigate(Screen.MyDamgle.route)
             }
@@ -55,21 +60,42 @@ fun MyDamgleItem(
                 .matchParentSize()
                 .padding(horizontal = 20.dp),
         ) {
-            Row {
-                MyDamgleEmoji(R.drawable.ic_heart_big, 11, Modifier.weight(1f, false))
-                Text(
-                    text = "GANGNAMGU\nYEOKSAMDONG",
-                    style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+            Row(
+                verticalAlignment = CenterVertically
+            ) {
+                val res = when (ReactionUtil.getMainIconFromReactionSummaryList(damgleModel.reactionSummary)) {
+                    "angry" -> R.drawable.ic_angry_big
+                    "sad" -> R.drawable.ic_sad_big
+                    "amazing" -> R.drawable.ic_amazing_big
+                    "best" -> R.drawable.ic_best_big
+                    "like" -> R.drawable.ic_heart_big
+                    else -> R.drawable.ic_noreaction_small
+                }
+
+                MyDamgleEmoji(res, damgleModel.reactions.count(), Modifier.weight(1f, false))
+                Column(
                     modifier = Modifier
-                        .padding(bottom = 4.dp, start = 12.dp)
-                        .height(42.dp)
-                        .weight(1f, false)
-                        .align(CenterVertically),
-                )
+                        .padding(start = 12.dp, bottom = 4.dp)
+                ) {
+                    Text(
+                        text = damgleModel.address1,
+                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                        color = Gray900,
+                        modifier = Modifier.weight(1f, false)
+                    )
+
+                    Text(
+                        text = damgleModel.address2,
+                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                        color = Gray900,
+                        modifier = Modifier.weight(1f, false)
+                    )
+                }
             }
             Text(
-                text = "5분 전",
-                style = TextStyle(fontSize = 13.sp, color = Orange500),
+                text = TimeUtil.getFormattedTimeDiff(damgleModel.updatedAt),
+                style = pretendardTextStyle.bodyMedium13,
+                color = Orange500,
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .weight(1f, false),
@@ -110,7 +136,11 @@ fun MyDamgleEmoji(emojiDrawableId: Int, count: Int, modifier: Modifier) {
                 contentDescription = "MyDamgle Emoji Count",
             )
 
-            Text(text = count.toString(), style = TextStyle(fontSize = 10.sp))
+            Text(
+                text = count.toString(),
+                style = pretendardTextStyle.bodyMedium10,
+                color = Gray1000
+            )
         }
     }
 }
@@ -118,7 +148,25 @@ fun MyDamgleEmoji(emojiDrawableId: Int, count: Int, modifier: Modifier) {
 @Preview
 @Composable
 fun PreviewMyDamgleItem() {
-    MyDamgleItem(null)
+    MyDamgleItem(
+        null,
+        DamgleModel(
+            id = "",
+            userNo = "",
+            nickName = "",
+            x = 0.0,
+            y = 0.0,
+            content = "",
+            reactions = listOf(),
+            reactionSummary = listOf(),
+            reactionOfMine = null,
+            address1 = "",
+            address2 = "",
+            reports = listOf(),
+            createdAt = 0,
+            updatedAt = 0
+        )
+    )
 }
 
 @Preview

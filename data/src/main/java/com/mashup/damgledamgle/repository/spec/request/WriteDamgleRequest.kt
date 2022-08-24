@@ -9,4 +9,8 @@ data class WriteDamgleRequest(
     val latitude: Double,
     @Json(name = "content")
     val content: String,
+    @Json(name = "address1")
+    val address1: String,
+    @Json(name = "address2")
+    val address2: String,
 )
