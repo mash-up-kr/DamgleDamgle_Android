@@ -9,17 +9,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
+import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
+import com.mashup.damgledamgle.presentation.feature.home.FloatingActionButton
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
+import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.util.LocationUtil
 import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
 
 @Composable
-fun MapScreen(cameraPositionState: CameraPositionState) {
+fun MapScreen(
+    navController: NavHostController,
+    cameraPositionState: CameraPositionState) {
     val mContext = LocalContext.current
     val mapProperties by remember {
         mutableStateOf(
@@ -39,6 +46,7 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
     }
 
     MapContent(
+        navController,
         cameraPositionState = cameraPositionState,
         mapProperties = mapProperties,
         mapUiSettings = mapUiSettings,
@@ -50,6 +58,7 @@ fun MapScreen(cameraPositionState: CameraPositionState) {
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapContent(
+    navController : NavHostController,
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
@@ -70,14 +79,40 @@ fun MapContent(
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
             }
 
-            mapViewModel.getMakerList().forEach { markerInfo ->
-                val latitude = markerInfo.latitude
-                val longitude = markerInfo.longitude
+            MapEffect { map ->
+                val top = map.contentBounds.northLatitude
+                val bottom = map.contentBounds.southLatitude
+                val left = map.contentBounds.westLongitude
+                val right = map.contentBounds.eastLongitude
 
-                Marker(
-                    state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = OverlayImage.fromView(makeCustomMarkerView(markerInfo, mContext)),
+                mapViewModel.getStoryFeedList(
+                    top = top,
+                    bottom = bottom,
+                    left = left,
+                    right = right
                 )
+            }
+
+            when(mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
+                is ViewState.Success -> {
+                   val list =  mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
+                    list.data.forEach {
+                        val latitude = it.position.latitude
+                        val longitude = it.position.longitude
+                        val bound = it.bound
+
+                        Marker(
+                            state = MarkerState(position = LatLng(latitude, longitude)),
+                            icon = OverlayImage.fromView(makeCustomMarkerView(it, mContext)),
+                            onClick = {
+                                navController.currentBackStackEntry?.savedStateHandle?.set("bound", bound)
+                                navController.navigate((Screen.AllDamgleList.route))
+                                true
+                            }
+                        )
+                    }
+                }
+                else -> {}
             }
         }
         Column(
@@ -86,6 +121,31 @@ fun MapContent(
                 .padding(top = 16.dp)
         ) {
             CheckDamgleTime(mapViewModel = mapViewModel)
+        }
+        Column(
+            Modifier
+                .align(Alignment.BottomEnd)
+                .padding(bottom = 120.dp, end = 8.dp)
+        ) {
+            FloatingActionButton(
+                fabIcon = R.drawable.ic_refresh,
+                description = "refresh_btn",
+                modifier = Modifier.size(48.dp, 48.dp),
+                onClick = {
+                }
+            )
+            FloatingActionButton(
+                fabIcon = R.drawable.ic_location_point,
+                description = "location_btn",
+                modifier = Modifier
+                    .paddingFromBaseline(10.dp)
+                    .size(48.dp, 48.dp),
+                onClick = {
+                    LocationUtil.getMyLocation(mContext)?.let { latLng ->
+                            cameraPositionState.move(CameraUpdate.scrollTo(latLng))
+                    }
+                }
+            )
         }
     }
 }

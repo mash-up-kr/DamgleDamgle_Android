@@ -11,6 +11,7 @@ import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.onboarding.model.NickNameModel
 import com.mashup.damgledamgle.presentation.feature.onboarding.model.mapper.NickNameMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,8 +33,8 @@ class OnboardingViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<ViewState<*>>(ViewState.Loading)
     val uiState: StateFlow<ViewState<*>> = _uiState.asStateFlow()
 
-    private val _authState = MutableStateFlow<ViewState<User>>(ViewState.Loading)
-    val authState: StateFlow<ViewState<User>> = _authState.asStateFlow()
+    private val _authState = MutableStateFlow<ViewState<User>?>(null)
+    val authState: StateFlow<ViewState<User>?> = _authState.asStateFlow()
 
     val nickName = mutableStateOf(NickNameModel())
 
@@ -83,14 +84,17 @@ class OnboardingViewModel @Inject constructor(
                 is Result.Success -> {
                     when(val result = signUpUseCase(pickedNickNameResult.data.name, notification)) {
                         is Result.Success -> {
+                            delay(2000)
                             _authState.emit(ViewState.Success(result.data))
                         }
                         is Result.Error -> {
+                            delay(2000)
                             _authState.emit(ViewState.Error(result.exception.message.toString()))
                         }
                     }
                 }
                 is Result.Error -> {
+                    delay(2000)
                     _authState.emit(ViewState.Error(pickedNickNameResult.exception.message.toString()))
                 }
             }

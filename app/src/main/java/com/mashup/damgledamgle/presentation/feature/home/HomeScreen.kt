@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -17,6 +18,7 @@ import androidx.navigation.NavHostController
 import com.airbnb.lottie.compose.*
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
+import com.mashup.damgledamgle.presentation.common.DisabledInteractionSource
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
@@ -30,9 +32,23 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val homeViewModel: HomeViewModel = hiltViewModel()
+    val homeViewModel : HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     BackPressInterceptor(context)
+
+    val openDamglePaintDialog = remember { mutableStateOf(false) }
+    if(homeViewModel.checkEntryAfterDamgleDay()) {
+        openDamglePaintDialog.value = true
+    }
+    if(openDamglePaintDialog.value) {
+        DamglePaintDialog(
+            date = homeViewModel.getLastEntryDamgleDay(),
+            openDamglePainDialog = openDamglePaintDialog
+        ) {
+            openDamglePaintDialog.value = false
+            homeViewModel.setLastEntryDamgleDay()
+        }
+    }
 
     var locationTitle by remember {
         mutableStateOf("")
@@ -70,39 +86,14 @@ fun HomeScreen(navController: NavHostController) {
             },
             sheetPeekHeight = 100.dp,
             scaffoldState = bottomSheetScaffoldState,
-            floatingActionButton = {
-                Spacer(modifier = Modifier.height(240.dp))
-                FloatingActionButton(
-                    fabIcon = R.drawable.ic_refresh,
-                    description = "refresh_btn",
-                    modifier = Modifier.size(48.dp, 48.dp),
-                    onClick = {
-                        val updateLocation = LocationUtil.getMyLocation(context)
-                        homeViewModel.homeRefreshBtnEvent(updateLocation)
-                    }
-                )
-                FloatingActionButton(
-                    fabIcon = R.drawable.ic_location_point,
-                    description = "location_btn",
-                    modifier = Modifier
-                        .paddingFromBaseline(56.dp)
-                        .size(48.dp, 48.dp),
-                    onClick = {
-                        currentLocation?.let { latLng ->
-                            cameraPositionState.move(CameraUpdate.scrollTo(latLng))
-                        }
-                    }
-                )
-            }
         ) {
-            MapScreen(cameraPositionState)
+            MapScreen(
+                navController,
+                cameraPositionState)
         }
         val showLoading = homeViewModel.showLoading.observeAsState()
         if (showLoading.value == true) {
             LoadingLottie()
-            Button(onClick = { navController.navigate(Screen.AllDamgleList.route) }) {
-                Text(text = "AllDamgleList")
-            }
         }
     }
 }
@@ -127,6 +118,7 @@ fun LoadingLottie() {
             .fillMaxWidth()
             .fillMaxHeight()
             .background(LottieBackGround.copy(0.5F))
+            .clickable(interactionSource = DisabledInteractionSource(), indication = null) { },
     ) {
         LottieAnimation(
             modifier = Modifier

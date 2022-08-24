@@ -37,7 +37,7 @@ interface DamgleApi {
 
     /**
      * Map - Story Feed 가져오기
-     */
+     * */
     @GET("/v1/story/feed")
     suspend fun getStoryFeed(
         @Query("top") top: Double,
