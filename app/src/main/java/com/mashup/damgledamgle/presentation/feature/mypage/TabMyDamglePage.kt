@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.commonModel.DamgleModel
-import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.*
 
 /**
@@ -30,7 +29,8 @@ import com.mashup.damgledamgle.ui.theme.*
 @Composable
 fun TabMyDamglePage(
     navController: NavHostController?,
-    myDamgleList: List<DamgleModel>
+    myDamgleList: List<DamgleModel>,
+    openLeaveStoryBottomSheet: (() -> Unit)?,
 ) {
     val context = LocalContext.current
 
@@ -64,11 +64,7 @@ fun TabMyDamglePage(
                 text = context.getString(R.string.mypage_mydamgle_empty_button),
                 style = pretendardTextStyle.bodySemibold16,
                 modifier = Modifier
-                    .clickable {
-                        navController?.navigate(Screen.Home.route) {
-                            popUpTo(0)
-                        }
-                    }
+                    .clickable { openLeaveStoryBottomSheet?.invoke() }
                     .clip(RoundedCornerShape(8.dp))
                     .background(Gray400)
                     .padding(horizontal = 48.dp, vertical = 20.dp)
@@ -124,7 +120,7 @@ fun TabMyDamglePage(
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewTabEmptyDamglePage() {
-    TabMyDamglePage(null, emptyList())
+    TabMyDamglePage(null, emptyList()) {}
 }
 
 @Preview(showSystemUi = true)
@@ -153,5 +149,5 @@ fun PreviewTabListDamglePage() {
                 updatedAt = 0
             )
         )
-    )
+    ) {}
 }
