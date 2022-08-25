@@ -67,6 +67,8 @@ fun MapContent(
     val mapViewModel : MapViewModel = hiltViewModel()
     val homeViewModel : HomeViewModel = hiltViewModel()
     val openNetworkDialog = remember { mutableStateOf(false) }
+    val showLoading = mapViewModel.showLoading.observeAsState()
+
     Box(Modifier.fillMaxSize()) {
         NaverMap(
             cameraPositionState = cameraPositionState,
@@ -125,6 +127,15 @@ fun MapContent(
                 }
                 else -> {}
             }
+            if(showLoading.value == true) {
+                MapEffect { map ->
+                    val top = map.contentBounds.northLatitude
+                    val bottom = map.contentBounds.southLatitude
+                    val left = map.contentBounds.westLongitude
+                    val right = map.contentBounds.eastLongitude
+                    mapViewModel.bound = Bound(top, bottom, left, right)
+                }
+            }
         }
         Column(
             Modifier
@@ -161,8 +172,9 @@ fun MapContent(
                 }
             )
         }
-        val showLoading = mapViewModel.showLoading.observeAsState()
-        if(showLoading.value == true) LoadingLottie()
+        if(showLoading.value == true) {
+            LoadingLottie()
+        }
     }
 }
 

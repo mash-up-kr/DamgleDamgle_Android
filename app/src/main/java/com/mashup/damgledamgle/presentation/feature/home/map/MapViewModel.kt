@@ -9,7 +9,7 @@ import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.model.*
-import com.mashup.damgledamgle.util.ReactionUtil.getMainIcon
+import com.mashup.damgledamgle.util.ReactionUtil.getMainIconFromGroupList
 import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -138,7 +138,7 @@ class MapViewModel @Inject constructor(
     private fun mappingMarkerInfo(markerList: ArrayList<MarkerModel>): ArrayList<GroupMarkerInfo> {
         val mainMarkerInfoList: ArrayList<GroupMarkerInfo> = arrayListOf()
         markerList.forEach { groupList ->
-            val mainIcon = getMainIcon(groupList.damgle)
+            val mainIcon = getMainIconFromGroupList(groupList.damgle)
             val mainPosition = getMarkerRandomPosition(groupList.damgle)
             val markerListSize = groupList.damgle.size
             val isMine = isMyStoryCheck(groupList.damgle)
