@@ -89,9 +89,9 @@ interface DamgleApi {
     suspend fun getMyDamgleList(): DamgleListResponse
 
     /**
-     * Story - me : 내 담글 조회
+     * Story : 담글 조회
      */
     @GET("v1/story/{id}")
-    suspend fun getDamgle(id: String): DamgleResponse
+    suspend fun getDamgle(@Path("id") id: String): DamgleResponse
 
 }

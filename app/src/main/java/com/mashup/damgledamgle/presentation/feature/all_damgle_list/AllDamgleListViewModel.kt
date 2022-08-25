@@ -18,7 +18,7 @@ import javax.inject.Inject
 @SuppressLint("MutableCollectionMutableState")
 @HiltViewModel
 class AllDamgleListViewModel @Inject constructor(
-    private val getDamgleStoryUseCase: GetDamgleStoryUseCase,
+    private val getDamgleStoryUseCase: GetDamgleStoriesUseCase,
     private val createDamgleReactionUseCase: CreateDamgleReactionUseCase,
     private val deleteDamgleReactionUseCase: DeleteDamgleReactionUseCase,
 ) : ViewModel() {

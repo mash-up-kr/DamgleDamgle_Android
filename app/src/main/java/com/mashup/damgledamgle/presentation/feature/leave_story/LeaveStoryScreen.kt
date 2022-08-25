@@ -44,7 +44,7 @@ fun LeaveStoryScreen(navController: NavHostController, content: String, leaveSto
                     { damgle ->
                         navController.popBackStack()
                         navController.currentBackStackEntry?.savedStateHandle?.set("id", damgle.id)
-                        navController.navigate("${Screen.MyDamgle.route}/${damgle.id}")
+                        navController.navigate("${Screen.SingleDamgle.route}/${damgle.id}")
                     },
                     { navController.popBackStack() }
                 )
