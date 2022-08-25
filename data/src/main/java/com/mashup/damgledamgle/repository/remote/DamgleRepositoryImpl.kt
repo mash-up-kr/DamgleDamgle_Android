@@ -21,7 +21,13 @@ class DamgleRepositoryImpl @Inject constructor(
     private val damgleMapper: DamgleMapper,
 ) : DamgleRepository {
 
-    override suspend fun writeDamgle(longitude: Double, latitude: Double, content: String, address1: String, address2: String): Result<Damgle> {
+    override suspend fun writeDamgle(
+        longitude: Double,
+        latitude: Double,
+        content: String,
+        address1: String,
+        address2: String
+    ): Result<Damgle> {
         return try {
             val result = damgleApi.writeDamgle(WriteDamgleRequest(longitude, latitude, content, address1, address2))
             Result.Success(damgleMapper.mapToEntity(result))
@@ -39,6 +45,15 @@ class DamgleRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getDamgle(id: String): Result<Damgle> {
+        return try {
+            val resultData = damgleApi.getDamgle(id)
+            Result.Success(damgleMapper.mapToEntity(resultData))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     override suspend fun createDamgleReaction(reaction: String, storyId: String): Result<Damgle> {
         return try {
             val result = damgleApi.createDamgleReaction(ReactDamgleRequest(reaction), storyId)
@@ -49,11 +64,11 @@ class DamgleRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteDamgleReaction(storyId: String): Result<Damgle> {
-            return try {
-                val result = damgleApi.deleteDamgleReaction(storyId)
-                Result.Success(damgleMapper.mapToEntity(result))
-            } catch (e: Exception) {
-                Result.Error(e)
-            }
+        return try {
+            val result = damgleApi.deleteDamgleReaction(storyId)
+            Result.Success(damgleMapper.mapToEntity(result))
+        } catch (e: Exception) {
+            Result.Error(e)
         }
+    }
 }
