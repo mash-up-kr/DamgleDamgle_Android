@@ -1,29 +1,20 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.airbnb.lottie.compose.*
-import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
-import com.mashup.damgledamgle.presentation.common.DisabledInteractionSource
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
+import com.mashup.damgledamgle.presentation.feature.home.damgle.DamglePaintDialog
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
-import com.mashup.damgledamgle.ui.theme.LottieBackGround
 import com.mashup.damgledamgle.util.LocationUtil
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
@@ -48,6 +39,7 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             openDamglePaintDialog.value = false
             homeViewModel.setLastEntryDamgleDay()
+            navController.navigate("damgle_clear_time_screen")
         }
     }
 
@@ -102,44 +94,6 @@ fun HomeScreen(navController: NavHostController) {
                 }
             }
         }
-
-        val showLoading = homeViewModel.showLoading.observeAsState()
-        if (showLoading.value == true) {
-            LoadingLottie()
-        }
     }
 }
 
-@Composable
-fun LoadingLottie() {
-    val composition by rememberLottieComposition(
-        LottieCompositionSpec.RawRes(R.raw.refresh_lottie)
-    )
-    val lottieAnimatable = rememberLottieAnimatable()
-
-    LaunchedEffect(composition) {
-        lottieAnimatable.animate(
-            composition = composition,
-            clipSpec = LottieClipSpec.Frame(0, 2000),
-            initialProgress = 0f
-        )
-    }
-
-    Box(
-        Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(LottieBackGround.copy(0.5F))
-            .clickable(interactionSource = DisabledInteractionSource(), indication = null) { },
-    ) {
-        LottieAnimation(
-            modifier = Modifier
-                .size(100.dp)
-                .align(Alignment.Center),
-            contentScale = ContentScale.Fit,
-            composition = composition,
-            progress = lottieAnimatable.progress
-        )
-    }
-
-}

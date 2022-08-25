@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.enumerate.toKorean
+import com.mashup.damgledamgle.presentation.component.story_box.DamgleStoryBox
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryBoxModel
 import com.mashup.damgledamgle.presentation.feature.leave_story.GNB
 import com.mashup.damgledamgle.ui.theme.*

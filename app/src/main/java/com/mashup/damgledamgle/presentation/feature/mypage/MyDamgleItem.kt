@@ -77,19 +77,23 @@ fun MyDamgleItem(
                     modifier = Modifier
                         .padding(start = 12.dp, bottom = 4.dp)
                 ) {
-                    Text(
-                        text = damgleModel.address1,
-                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                        color = Gray900,
-                        modifier = Modifier.weight(1f, false)
-                    )
+                    damgleModel.address1?.let {
+                        Text(
+                            text = it,
+                            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                            color = Gray900,
+                            modifier = Modifier.weight(1f, false)
+                        )
+                    }
 
-                    Text(
-                        text = damgleModel.address2,
-                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
-                        color = Gray900,
-                        modifier = Modifier.weight(1f, false)
-                    )
+                    damgleModel.address2?.let {
+                        Text(
+                            text = it,
+                            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                            color = Gray900,
+                            modifier = Modifier.weight(1f, false)
+                        )
+                    }
                 }
             }
             Text(

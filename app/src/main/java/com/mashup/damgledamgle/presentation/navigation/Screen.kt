@@ -8,4 +8,6 @@ sealed class Screen(val route: String) {
     object LeaveStory : Screen("leave_story_screen")
     object AllDamgleList : Screen("all_damgle_list_screen")
     object SingleDamgle: Screen("single_damgle_screen")
+    object DamgleTime: Screen("damgle_clear_time_screen")
+    object DamgleComplete: Screen("damgle_clear_complete_screen")
 }

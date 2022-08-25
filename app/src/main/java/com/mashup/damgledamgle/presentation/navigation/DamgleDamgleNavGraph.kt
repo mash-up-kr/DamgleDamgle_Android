@@ -8,6 +8,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.AllDamgleListScreen
 import com.mashup.damgledamgle.presentation.feature.home.HomeScreen
+import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleClearComplete
+import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleClearTime
 import com.mashup.damgledamgle.presentation.feature.home.model.Bound
 import com.mashup.damgledamgle.presentation.feature.leave_story.LeaveStoryScreen
 import com.mashup.damgledamgle.presentation.feature.mypage.MyPageScreen
@@ -69,6 +71,14 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
         ) { entry ->
             systemUiController.setSystemBarsColor(color = Grey500)
             SingleDamgleScreen(navController, entry.arguments?.getString("id") ?: "")
+        }
+        composable(route = Screen.DamgleTime.route) {
+            systemUiController.setSystemBarsColor(color = Grey500)
+            DamgleClearTime(navController)
+        }
+        composable(route = Screen.DamgleComplete.route) {
+            systemUiController.setSystemBarsColor(color = Grey500)
+            DamgleClearComplete(navController)
         }
     }
 }
