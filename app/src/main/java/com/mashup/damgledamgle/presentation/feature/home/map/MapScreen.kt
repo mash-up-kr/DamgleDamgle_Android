@@ -12,9 +12,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
-import com.mashup.damgledamgle.presentation.feature.home.DamgleTimeCheckBox
-import com.mashup.damgledamgle.presentation.feature.home.FloatingActionButton
+import com.mashup.damgledamgle.presentation.common.dialog.NetworkErrorDialog
+import com.mashup.damgledamgle.presentation.feature.home.*
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
+import com.mashup.damgledamgle.presentation.feature.home.model.Bound
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.util.LocationUtil
 import com.mashup.damgledamgle.util.TimeUtil
@@ -31,8 +32,7 @@ fun MapScreen(
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
-                //마커 테스트를 위해 잠시 주석 처리
-               // minZoom = 14.5,
+                minZoom = 14.5,
             )
         )
     }
@@ -65,18 +65,20 @@ fun MapContent(
     mContext: Context
 ) {
     val mapViewModel : MapViewModel = hiltViewModel()
-
+    val homeViewModel : HomeViewModel = hiltViewModel()
+    val openNetworkDialog = remember { mutableStateOf(false) }
     Box(Modifier.fillMaxSize()) {
         NaverMap(
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
             uiSettings = mapUiSettings
         ){
-
             LocationUtil.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
                 Marker(
                     state = it,
-                    icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker))
+                    zIndex = -1,
+                    icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker)
+                )
             }
 
             MapEffect { map ->
@@ -85,6 +87,7 @@ fun MapContent(
                 val left = map.contentBounds.westLongitude
                 val right = map.contentBounds.eastLongitude
 
+                mapViewModel.bound = Bound(top,bottom,left,right)
                 mapViewModel.getStoryFeedList(
                     top = top,
                     bottom = bottom,
@@ -92,10 +95,9 @@ fun MapContent(
                     right = right
                 )
             }
-
             when(mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
                 is ViewState.Success -> {
-                   val list =  mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
+                    val list =  mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
                     list.data.forEach {
                         val latitude = it.position.latitude
                         val longitude = it.position.longitude
@@ -109,6 +111,15 @@ fun MapContent(
                                 navController.navigate((Screen.AllDamgleList.route))
                                 true
                             }
+                        )
+                    }
+                }
+                is ViewState.Error -> {
+                    openNetworkDialog.value = true
+                    if (openNetworkDialog.value) {
+                        NetworkErrorDialog(
+                            openNetworkDialog = openNetworkDialog,
+                            onButtonClick = { openNetworkDialog.value = false }
                         )
                     }
                 }
@@ -132,6 +143,9 @@ fun MapContent(
                 description = "refresh_btn",
                 modifier = Modifier.size(48.dp, 48.dp),
                 onClick = {
+                    mapViewModel.showLoading.value = true
+                    val updateLocation = LocationUtil.getMyLocation(mContext)
+                    mapViewModel.homeRefreshBtnEvent(homeViewModel, updateLocation)
                 }
             )
             FloatingActionButton(
@@ -147,6 +161,8 @@ fun MapContent(
                 }
             )
         }
+        val showLoading = mapViewModel.showLoading.observeAsState()
+        if(showLoading.value == true) LoadingLottie()
     }
 }
 

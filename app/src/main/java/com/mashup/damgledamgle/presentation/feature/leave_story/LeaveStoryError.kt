@@ -38,7 +38,9 @@ fun LeaveStoryError() {
                 lottieRes = R.raw.paint
             )
         }
-        LeaveStoryBottomButton("다시 담글 남기러 가기")
+        LeaveStoryBottomButton("다시 담글 남기러 가기", onButtonClick = {
+
+        })
     }
 }
 

@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.all_damgle_list
+package com.mashup.damgledamgle.presentation.component.story_box
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -10,7 +10,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.enumerate.Reaction
-import com.mashup.damgledamgle.presentation.component.story_box.DamgleStoryBoxInner
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryBoxModel
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.reaction.ReactionBox
 import com.mashup.damgledamgle.ui.theme.*
@@ -27,12 +26,14 @@ fun DamgleStoryBox(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
-        Text(
-            text = damgleStoryBoxState.addressMain,
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
-            color = Gray1000
-        )
+        damgleStoryBoxState.addressMain?.let {
+            Text(
+                text = it,
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = Gray1000
+            )
+        }
         Spacer(modifier = Modifier.height(7.dp))
         Row(modifier = Modifier.height(16.dp)) {
             Text(

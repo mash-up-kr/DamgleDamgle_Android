@@ -7,11 +7,13 @@ import com.mashup.damgledamgle.domain.entity.Damgle
 import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
 import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
+import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.model.*
 import com.mashup.damgledamgle.util.ReactionUtil.getMainIcon
 import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -25,12 +27,32 @@ class MapViewModel @Inject constructor(
     private var countDownTimer: CountDownTimer? = null
     private val _time = MutableLiveData("")
     val time: LiveData<String> = _time
-
     private val _oneHourCheck = MutableLiveData(false)
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
+    val showLoading = MutableLiveData(false)
+    var bound : Bound? = null
 
     val storyFeedState = MutableStateFlow<ViewState<ArrayList<GroupMarkerInfo>>>(ViewState.Loading)
 
+    fun homeRefreshBtnEvent(
+        homeViewModel: HomeViewModel,
+        updateLocation: LatLng?
+    ) {
+        viewModelScope.launch {
+            delay(2000)
+            homeViewModel.getNaverGeocode(
+                "${updateLocation?.longitude},${updateLocation?.latitude}")
+            if(bound != null) {
+                getStoryFeedList(
+                    bound!!.top,
+                    bound!!.bottom,
+                    bound!!.left,
+                    bound!!.right
+                )
+            }
+            showLoading.value = false
+        }
+    }
 
     fun getStoryFeedList(
         top : Double,
@@ -60,6 +82,7 @@ class MapViewModel @Inject constructor(
                     }
                 },
                 suspendOnError = {
+                    Log.d("error_message", it.message.toString())
                     storyFeedState.emit(ViewState.Error(it.message.orEmpty()))
                 }
             )

@@ -1,32 +1,29 @@
-package com.mashup.damgledamgle.presentation.feature.home
+package com.mashup.damgledamgle.presentation.common.dialog
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mashup.damgledamgle.presentation.common.dialog.*
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun DamglePaintDialog(
-    date : String,
-    openDamglePainDialog: MutableState<Boolean>,
-    onConfirmButtonClick: () -> Unit,
-){
+fun NetworkErrorDialog(
+    openNetworkDialog: MutableState<Boolean>,
+    onButtonClick: () -> Unit,
+) {
     Dialog(
         onDismissRequest = {
-            openDamglePainDialog.value = false
+            openNetworkDialog.value = false
         },
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
         DamgleDialogOuter {
             DamgleDialogOneButtonInner(
-                title = "$date 새롭게 담벼락을 칠했어요.",
-                description = "아래 확인 버튼을 눌러서 \n" +
-                        "새롭게 시작주세요.",
+                title = "네트워크가 불안정해요.",
+                description = "지금은 내용을 불러오기 어려워요.\n잠시 후에 다시 시도해주세요.",
                 firstButtonText = "확인",
-                firstButtonAction = onConfirmButtonClick,
+                firstButtonAction = onButtonClick,
             )
         }
     }

@@ -23,8 +23,8 @@ data class DamgleResponse(
     @Json(name = "reports") val reports: List<Reports>,
     @Json(name = "createdAt") val createdAt: Long,
     @Json(name = "updatedAt") val updatedAt: Long,
-    @Json(name = "address1") val address1: String,
-    @Json(name = "address2") val address2: String,
+    @Json(name = "address1") val address1: String? = null,
+    @Json(name = "address2") val address2: String? = null,
 ) {
     data class ReactionResponse(
         @Json(name = "userNo") val userNo: Int,

@@ -20,7 +20,7 @@ class Bound(
 ) : Parcelable
 
 data class GroupMarkerInfo(
-    var mainIcon : String = "nothing",
+    var mainIcon : String,
     var position : LatLng,
     var count : Int,
     var isMine : Boolean,
