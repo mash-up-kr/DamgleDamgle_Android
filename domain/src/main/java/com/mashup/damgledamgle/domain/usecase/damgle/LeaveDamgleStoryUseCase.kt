@@ -8,7 +8,7 @@ import javax.inject.Inject
 class LeaveDamgleStoryUseCase @Inject constructor(
     private val damgleRepository: DamgleRepository
 ) {
-    suspend operator fun invoke(longitude: Double, latitude: Double, content: String): Result<Damgle> {
-        return damgleRepository.writeDamgle(longitude, latitude, content)
+    suspend operator fun invoke(longitude: Double, latitude: Double, content: String, address1: String, address2: String): Result<Damgle> {
+        return damgleRepository.writeDamgle(longitude, latitude, content, address1, address2)
     }
 }

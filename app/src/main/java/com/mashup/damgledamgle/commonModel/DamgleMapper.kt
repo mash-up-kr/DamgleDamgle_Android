@@ -23,6 +23,8 @@ class DamgleMapper @Inject constructor() {
                 reactions = it.reactions.map { mapToModel(it) },
                 reactionSummary = convertReactionEntity(it.reactionSummary),
                 reactionOfMine = it.reactionOfMine?.let { it1 -> convertMyReactionEntity(it1) },
+                address1 = it.address1,
+                address2 = it.address2,
                 reports = convertReportEntity(it.reports),
                 createdAt = it.createAt,
                 updatedAt = it.updateAt

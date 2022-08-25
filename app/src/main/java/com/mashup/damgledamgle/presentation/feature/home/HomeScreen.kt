@@ -19,6 +19,7 @@ import com.mashup.damgledamgle.util.LocationUtil
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 import com.naver.maps.map.compose.rememberCameraPositionState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
@@ -82,6 +83,15 @@ fun HomeScreen(navController: NavHostController) {
             MapScreen(
                 navController,
                 cameraPositionState)
+        }
+
+        val coroutineScope = rememberCoroutineScope()
+        BackPressInterceptor(context = LocalContext.current) {
+            if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
+                coroutineScope.launch {
+                    bottomSheetScaffoldState.bottomSheetState.collapse()
+                }
+            }
         }
     }
 }
