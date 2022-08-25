@@ -32,8 +32,7 @@ fun MapScreen(
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
-                //마커 테스트를 위해 잠시 주석 처리
-               // minZoom = 14.5,
+                minZoom = 14.5,
             )
         )
     }
