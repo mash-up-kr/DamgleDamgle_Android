@@ -6,8 +6,8 @@ import com.mashup.damgledamgle.presentation.feature.all_damgle_list.ReactionBoxS
 data class DamgleStoryBoxModel(
     val id: String,
     val coordinate: Pair<Double, Double>,
-    val addressMain: String,
-    val addressSub: String,
+    val addressMain: String? = null,
+    val addressSub: String? = null,
     val writer: String,
     val isMine: Boolean,
     val dateTime: Long,
