@@ -27,7 +27,8 @@ import com.naver.maps.map.overlay.OverlayImage
 @Composable
 fun MapScreen(
     navController: NavHostController,
-    cameraPositionState: CameraPositionState) {
+    cameraPositionState: CameraPositionState
+) {
     val mContext = LocalContext.current
     val mapProperties by remember {
         mutableStateOf(
@@ -58,22 +59,27 @@ fun MapScreen(
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapContent(
-    navController : NavHostController,
+    navController: NavHostController,
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
     mContext: Context
 ) {
-    val mapViewModel : MapViewModel = hiltViewModel()
-    val homeViewModel : HomeViewModel = hiltViewModel()
+    val mapViewModel: MapViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val openNetworkDialog = remember { mutableStateOf(false) }
     Box(Modifier.fillMaxSize()) {
         NaverMap(
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
             uiSettings = mapUiSettings
-        ){
-            LocationUtil.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
+        ) {
+
+            LocationUtil.getMyLocation(mContext) {
+                mapViewModel.updateMyLocation(it)
+            }
+
+            mapViewModel.myLocation.observeAsState().value?.let { MarkerState(position = it) }?.let {
                 Marker(
                     state = it,
                     zIndex = -1,
@@ -87,7 +93,7 @@ fun MapContent(
                 val left = map.contentBounds.westLongitude
                 val right = map.contentBounds.eastLongitude
 
-                mapViewModel.bound = Bound(top,bottom,left,right)
+                mapViewModel.bound = Bound(top, bottom, left, right)
                 mapViewModel.getStoryFeedList(
                     top = top,
                     bottom = bottom,
@@ -95,9 +101,9 @@ fun MapContent(
                     right = right
                 )
             }
-            when(mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
+            when (mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
                 is ViewState.Success -> {
-                    val list =  mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
+                    val list = mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
                     list.data.forEach {
                         val latitude = it.position.latitude
                         val longitude = it.position.longitude
@@ -144,8 +150,9 @@ fun MapContent(
                 modifier = Modifier.size(48.dp, 48.dp),
                 onClick = {
                     mapViewModel.showLoading.value = true
-                    val updateLocation = LocationUtil.getMyLocation(mContext)
-                    mapViewModel.homeRefreshBtnEvent(homeViewModel, updateLocation)
+                    LocationUtil.getMyLocation(mContext) {
+                        mapViewModel.homeRefreshBtnEvent(homeViewModel, it)
+                    }
                 }
             )
             FloatingActionButton(
@@ -155,21 +162,21 @@ fun MapContent(
                     .paddingFromBaseline(10.dp)
                     .size(48.dp, 48.dp),
                 onClick = {
-                    LocationUtil.getMyLocation(mContext)?.let { latLng ->
-                            cameraPositionState.move(CameraUpdate.scrollTo(latLng))
+                    LocationUtil.getMyLocation(mContext) { latLng ->
+                        latLng?.let { cameraPositionState.move(CameraUpdate.scrollTo(it)) }
                     }
                 }
             )
         }
         val showLoading = mapViewModel.showLoading.observeAsState()
-        if(showLoading.value == true) LoadingLottie()
+        if (showLoading.value == true) LoadingLottie()
     }
 }
 
 @Composable
 fun CheckDamgleTime(mapViewModel: MapViewModel) {
     val result = TimeUtil.getCalendarLastDay()
-    if(result.contains("D")) {
+    if (result.contains("D")) {
         DamgleTimeCheckBox(result, false)
     } else {
         mapViewModel.startTimer()

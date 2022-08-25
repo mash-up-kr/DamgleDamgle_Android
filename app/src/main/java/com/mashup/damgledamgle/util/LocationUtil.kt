@@ -4,18 +4,19 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.*
-import android.util.Log
+import android.location.Address
+import android.location.Geocoder
+import android.os.Looper
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.*
+import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
 import com.naver.maps.geometry.LatLng
 
 object LocationUtil {
 
-    fun getMyLocation(context : Context) : LatLng? {
-        val locationManager = context.getSystemService(ComponentActivity.LOCATION_SERVICE) as LocationManager
-        var latLng : LatLng? = null
+    fun getMyLocation(context: Context, onLocationChange: (LatLng?) -> Unit) {
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -23,33 +24,30 @@ object LocationUtil {
         ) {
             Toast.makeText(context, "위치 권한에 동의해야 앱 사용이 가능합니다.", Toast.LENGTH_SHORT).show()
             (context as? Activity)?.finish()
-        }
-        else {
-            val currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) ?:
-            locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        } else {
+            val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
-            latLng = currentLocation?.latitude?.let { LatLng(it, currentLocation.longitude) }
-            val gpsListener =  object : LocationListener {
-                override fun onLocationChanged(location : Location) {
-                    val latitude = location.latitude
-                    val longitude = location.longitude
-                    Log.d("Test", "GPS Location changed, Latitude: $latitude" +
-                            ", Longitude: $longitude")
-                    latLng = LatLng(latitude,longitude)
-                }
-                override fun onProviderDisabled(provider: String) {}
-                override fun onProviderEnabled(provider: String) {}
+            val locationRequest = LocationRequest.create().apply {
+                priority = PRIORITY_HIGH_ACCURACY
             }
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000,
-                50.0f,
-                gpsListener)
+            val locationCallback = object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    locationResult.locations.firstOrNull()?.let { location ->
+                        onLocationChange(LatLng(location.latitude, location.longitude))
+                    }
+                }
+            }
+
+            fusedLocationClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
         }
-        return latLng
     }
 
-    fun convertMyLocationToAddress(latLng: LatLng, context: Context) : String {
+    fun convertMyLocationToAddress(latLng: LatLng, context: Context): String {
         val geocoder = Geocoder(context)
         val address: List<Address> = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5)
         val position = address.getOrNull(0)?.getAddressLine(0)?.split(" ")

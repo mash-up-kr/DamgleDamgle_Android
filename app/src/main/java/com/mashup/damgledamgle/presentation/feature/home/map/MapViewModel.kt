@@ -29,11 +29,18 @@ class MapViewModel @Inject constructor(
     val time: LiveData<String> = _time
     private val _oneHourCheck = MutableLiveData(false)
 
-    val oneHourCheck : LiveData<Boolean> = _oneHourCheck
+    val oneHourCheck: LiveData<Boolean> = _oneHourCheck
     val showLoading = MutableLiveData(false)
-    var bound : Bound? = null
+    var bound: Bound? = null
+
+    private val _myLocation = MutableLiveData<LatLng?>(null)
+    val myLocation: LiveData<LatLng?> = _myLocation
 
     val storyFeedState = MutableStateFlow<ViewState<ArrayList<GroupMarkerInfo>>>(ViewState.Loading)
+
+    fun updateMyLocation(latLng: LatLng?) {
+        _myLocation.value = latLng
+    }
 
     fun homeRefreshBtnEvent(
         homeViewModel: HomeViewModel,
@@ -42,8 +49,9 @@ class MapViewModel @Inject constructor(
         viewModelScope.launch {
             delay(2000)
             homeViewModel.getNaverGeocode(
-                "${updateLocation?.longitude},${updateLocation?.latitude}")
-            if(bound != null) {
+                "${updateLocation?.longitude},${updateLocation?.latitude}"
+            )
+            if (bound != null) {
                 getStoryFeedList(
                     bound!!.top,
                     bound!!.bottom,

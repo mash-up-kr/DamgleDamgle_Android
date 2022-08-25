@@ -16,6 +16,7 @@ import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.util.LocationUtil
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
 import com.naver.maps.map.compose.rememberCameraPositionState
@@ -24,7 +25,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val homeViewModel : HomeViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     BackPressInterceptor(context)
 
@@ -47,19 +48,19 @@ fun HomeScreen(navController: NavHostController) {
         mutableStateOf("")
     }
     val cameraPositionState = rememberCameraPositionState()
-    val currentLocation = LocationUtil.getMyLocation(context)
-    homeViewModel.getNaverGeocode(
-        "${currentLocation?.longitude},${currentLocation?.latitude}"
-    )
-    val current = homeViewModel.locationTitle.observeAsState()
-    if (current.value != null) {
-        locationTitle = current.value!!.ifEmpty {
-            currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }.toString()
-        }
-    }
+    LocationUtil.getMyLocation(context) { currentLocation ->
+        homeViewModel.getNaverGeocode(
+            "${currentLocation?.latitude},${currentLocation?.longitude}"
+        )
+        currentLocation?.let { CameraUpdate.scrollTo(it) }
+            ?.let { cameraPositionState.move(it) }
 
-    currentLocation?.let { CameraUpdate.scrollTo(it) }
-        ?.let { cameraPositionState.move(it) }
+        locationTitle =
+            LocationUtil.convertMyLocationToAddress(
+                LatLng(currentLocation?.latitude ?: 0.0, currentLocation?.longitude ?: 0.0),
+                context
+            )
+    }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     Scaffold {
