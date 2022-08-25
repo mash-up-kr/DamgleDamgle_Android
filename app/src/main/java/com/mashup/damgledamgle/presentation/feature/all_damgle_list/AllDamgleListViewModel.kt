@@ -3,7 +3,7 @@ package com.mashup.damgledamgle.presentation.feature.all_damgle_list
 import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
+import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.damgle.*
 import com.mashup.damgledamgle.enumerate.*
 import com.mashup.damgledamgle.presentation.common.ViewState
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @SuppressLint("MutableCollectionMutableState")
 @HiltViewModel
 class AllDamgleListViewModel @Inject constructor(
-    private val getDamgleStoryUseCase: GetDamgleStoryUseCase,
+    private val getDamgleStoryUseCase: GetDamgleStoriesUseCase,
     private val createDamgleReactionUseCase: CreateDamgleReactionUseCase,
     private val deleteDamgleReactionUseCase: DeleteDamgleReactionUseCase,
 ) : ViewModel() {
@@ -52,7 +52,7 @@ class AllDamgleListViewModel @Inject constructor(
         right: Double
     ) {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 getDamgleStoryUseCase(top, bottom, left, right),
                 { data ->
                     _damgleFeedState.emit(
@@ -92,7 +92,7 @@ class AllDamgleListViewModel @Inject constructor(
 
     fun reactDamgle(id: String, reaction: Reaction) {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 createDamgleReactionUseCase(storyId = id, reaction = reaction.toEnglish()),
                 { damgle ->
                     ViewState.Success(_damgleFeedState.value.successOrNull()
@@ -115,7 +115,7 @@ class AllDamgleListViewModel @Inject constructor(
 
     fun deleteReaction(id: String) {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 deleteDamgleReactionUseCase(storyId = id),
                 { damgle ->
                     ViewState.Success(_damgleFeedState.value.successOrNull()

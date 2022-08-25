@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
 
 @Composable
-fun LeaveStoryError() {
+fun LeaveStoryError(onClickBottomButton: () -> Unit) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -38,9 +38,7 @@ fun LeaveStoryError() {
                 lottieRes = R.raw.paint
             )
         }
-        LeaveStoryBottomButton("다시 담글 남기러 가기", onButtonClick = {
-
-        })
+        LeaveStoryBottomButton("다시 담글 남기러 가기") { onClickBottomButton() }
     }
 }
 

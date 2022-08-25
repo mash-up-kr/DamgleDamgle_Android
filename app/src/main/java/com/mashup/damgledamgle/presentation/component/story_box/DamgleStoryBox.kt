@@ -26,14 +26,18 @@ fun DamgleStoryBox(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
-        damgleStoryBoxState.addressMain?.let {
-            Text(
-                text = it,
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Gray1000
-            )
-        }
+        Text(
+            text = damgleStoryBoxState.addressMain ?: "",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = Gray1000
+        )
+        Text(
+            text = damgleStoryBoxState.addressSub ?: "",
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
+            color = Gray1000
+        )
         Spacer(modifier = Modifier.height(7.dp))
         Row(modifier = Modifier.height(16.dp)) {
             Text(

@@ -2,22 +2,13 @@ package com.mashup.damgledamgle.domain.usecase.damgle
 
 import com.mashup.damgledamgle.domain.entity.Damgle
 import com.mashup.damgledamgle.domain.entity.base.Result
-import com.mashup.damgledamgle.domain.repository.MapRepository
+import com.mashup.damgledamgle.domain.repository.DamgleRepository
 import javax.inject.Inject
 
 class GetDamgleStoryUseCase @Inject constructor(
-    private val mapRepository: MapRepository
+    private val damgleRepository: DamgleRepository
 ) {
     suspend operator fun invoke(
-        top : Double,
-        bottom : Double,
-        left : Double,
-        right : Double
-    ) : Result<List<Damgle>>
-            = mapRepository.getStoryFeedList(
-        top = top,
-        bottom = bottom,
-        left = left,
-        right = right
-    )
+        id: String
+    ): Result<Damgle> = damgleRepository.getDamgle(id)
 }

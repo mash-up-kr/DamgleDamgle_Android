@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
 import androidx.lifecycle.*
-import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
+import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.home.*
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.util.TimeUtil.dateFormat
@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
 
     fun getNaverGeocode(coords : String) {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 result = getNaverGeocodeUseCase.invoke(coords),
                 suspendOnSuccess = {
                     val geocode = "${it.region.area3.name} ${it.land.name}"

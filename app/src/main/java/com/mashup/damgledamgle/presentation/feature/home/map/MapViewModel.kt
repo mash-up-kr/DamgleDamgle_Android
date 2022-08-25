@@ -4,7 +4,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.*
 import com.mashup.damgledamgle.domain.entity.Damgle
-import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
+import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
@@ -28,6 +28,7 @@ class MapViewModel @Inject constructor(
     private val _time = MutableLiveData("")
     val time: LiveData<String> = _time
     private val _oneHourCheck = MutableLiveData(false)
+
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
     val showLoading = MutableLiveData(false)
     var bound : Bound? = null
@@ -55,21 +56,21 @@ class MapViewModel @Inject constructor(
     }
 
     fun getStoryFeedList(
-        top : Double,
-        bottom : Double,
-        left : Double,
-        right : Double
+        top: Double,
+        bottom: Double,
+        left: Double,
+        right: Double
     ) {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 result = getStoryFeedUseCase.invoke(
-                    top =  top,
+                    top = top,
                     bottom = bottom,
                     left = left,
                     right = right
                 ),
                 suspendOnSuccess = {
-                    if(it.isNotEmpty()) {
+                    if (it.isNotEmpty()) {
                         val groupingStoryData = divideMarkerPosition(
                             top = top,
                             bottom = bottom,
@@ -95,44 +96,47 @@ class MapViewModel @Inject constructor(
         bottom: Double,
         left: Double,
         right: Double,
-        data: List<Damgle>): ArrayList<MarkerModel> {
+        data: List<Damgle>
+    ): ArrayList<MarkerModel> {
 
         val diffLat = (top - bottom) / LAT_DIVIDE.toDouble()
         val diffLng = (right - left) / LNG_DIVIDE.toDouble()
         Log.d("damgleDiffPosition", "${diffLat}, $diffLng")
 
-        val markerList : ArrayList<MarkerModel> = arrayListOf()
+        val markerList: ArrayList<MarkerModel> = arrayListOf()
 
-        for(x in 1..LAT_DIVIDE) {
-            for(y in 1..LNG_DIVIDE) {
-                val startLat = top - diffLat * (x-1).toDouble()
-                val startLng = left + diffLng * (y-1).toDouble()
+        for (x in 1..LAT_DIVIDE) {
+            for (y in 1..LNG_DIVIDE) {
+                val startLat = top - diffLat * (x - 1).toDouble()
+                val startLng = left + diffLng * (y - 1).toDouble()
                 val endLat = top - diffLat * x.toDouble()
                 val endLng = left + diffLng * y.toDouble()
-                val groupList : ArrayList<Damgle> = arrayListOf()
+                val groupList: ArrayList<Damgle> = arrayListOf()
                 data.forEach { damgle ->
                     if (damgle.y in endLat..startLat && damgle.x in startLng..endLng) {
                         groupList.add(damgle)
                     }
                 }
-                if(groupList.size != 0) {
-                    markerList.add(MarkerModel(
-                        bound = Bound(
-                            top = startLat,
-                            bottom = endLat,
-                            left = startLng,
-                            right = endLng
-                        ),
-                        groupList
-                    ))
+                if (groupList.size != 0) {
+                    markerList.add(
+                        MarkerModel(
+                            bound = Bound(
+                                top = startLat,
+                                bottom = endLat,
+                                left = startLng,
+                                right = endLng
+                            ),
+                            groupList
+                        )
+                    )
                 }
             }
         }
         return markerList
     }
 
-    private fun mappingMarkerInfo(markerList : ArrayList<MarkerModel>) : ArrayList<GroupMarkerInfo> {
-        val mainMarkerInfoList : ArrayList<GroupMarkerInfo> = arrayListOf()
+    private fun mappingMarkerInfo(markerList: ArrayList<MarkerModel>): ArrayList<GroupMarkerInfo> {
+        val mainMarkerInfoList: ArrayList<GroupMarkerInfo> = arrayListOf()
         markerList.forEach { groupList ->
             val mainIcon = getMainIcon(groupList.damgle)
             val mainPosition = getMarkerRandomPosition(groupList.damgle)
@@ -153,11 +157,11 @@ class MapViewModel @Inject constructor(
         return mainMarkerInfoList
     }
 
-    private fun isMyStoryCheck(groupList: List<Damgle>) : Boolean {
+    private fun isMyStoryCheck(groupList: List<Damgle>): Boolean {
         var isMine = false
         run {
             groupList.forEach {
-                if(it.isMine) {
+                if (it.isMine) {
                     isMine = true
                     return@run
                 }
@@ -166,8 +170,8 @@ class MapViewModel @Inject constructor(
         return isMine
     }
 
-    private fun getMarkerRandomPosition(groupList : List<Damgle>): LatLng {
-        val positionList : ArrayList<LatLng> = arrayListOf()
+    private fun getMarkerRandomPosition(groupList: List<Damgle>): LatLng {
+        val positionList: ArrayList<LatLng> = arrayListOf()
         groupList.forEach { storyEntity ->
             positionList.add(LatLng(storyEntity.y, storyEntity.x))
         }
@@ -175,7 +179,7 @@ class MapViewModel @Inject constructor(
     }
 
     private fun getStoryIdOfList(groupList: List<Damgle>): ArrayList<String> {
-        val idList : ArrayList<String> = arrayListOf()
+        val idList: ArrayList<String> = arrayListOf()
         groupList.forEach { storyEntity ->
             idList.add(storyEntity.id)
         }
@@ -189,6 +193,7 @@ class MapViewModel @Inject constructor(
                 val hms = TimeUtil.formatTimerTime(millisRemaining)
                 _time.value = hms
             }
+
             override fun onFinish() {
                 pauseTimer()
             }

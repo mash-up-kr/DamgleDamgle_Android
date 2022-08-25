@@ -15,7 +15,7 @@ sealed class Result<out T> {
     class Error(val exception: Exception) : Result<Nothing>()
 }
 
-fun <T> CoroutineScope.launchWithNetworkResult(
+fun <T> CoroutineScope.launchWithResult(
     result: Result<T>,
     suspendOnSuccess: suspend CoroutineScope.(T) -> Unit,
     suspendOnError: suspend CoroutineScope.(Exception) -> Unit,

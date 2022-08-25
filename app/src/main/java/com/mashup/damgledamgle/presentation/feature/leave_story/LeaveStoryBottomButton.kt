@@ -12,7 +12,7 @@ import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.White
 
 @Composable
-fun LeaveStoryBottomButton(text: String, onButtonClick: () -> Unit ) {
+fun LeaveStoryBottomButton(text: String, onButtonClick: () -> Unit) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -20,7 +20,7 @@ fun LeaveStoryBottomButton(text: String, onButtonClick: () -> Unit ) {
         onClick = onButtonClick,
         colors = ButtonDefaults.buttonColors(backgroundColor = Black),
         shape = CutCornerShape(0)
-    ){
+    ) {
         Text(
             text = text,
             color = White,

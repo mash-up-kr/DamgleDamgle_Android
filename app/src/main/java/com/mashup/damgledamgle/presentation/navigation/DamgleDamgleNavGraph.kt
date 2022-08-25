@@ -12,9 +12,9 @@ import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleClearCompl
 import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleClearTime
 import com.mashup.damgledamgle.presentation.feature.home.model.Bound
 import com.mashup.damgledamgle.presentation.feature.leave_story.LeaveStoryScreen
-import com.mashup.damgledamgle.presentation.feature.mydamgle.MyDamgleScreen
 import com.mashup.damgledamgle.presentation.feature.mypage.MyPageScreen
 import com.mashup.damgledamgle.presentation.feature.onboarding.OnboardingScreen
+import com.mashup.damgledamgle.presentation.feature.single_damgle.SingleDamgleScreen
 import com.mashup.damgledamgle.presentation.feature.splash.SplashScreen
 import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.Grey500
@@ -61,9 +61,16 @@ fun DamgleDamgleNavGraph(navController: NavHostController) {
                 AllDamgleListScreen(navController = navController, markerBound)
             }
         }
-        composable(route = Screen.MyDamgle.route) {
+        composable(
+            route = "${Screen.SingleDamgle.route}/{id}",
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.StringType
+                }
+            )
+        ) { entry ->
             systemUiController.setSystemBarsColor(color = Grey500)
-            MyDamgleScreen(navController)
+            SingleDamgleScreen(navController, entry.arguments?.getString("id") ?: "")
         }
         composable(route = Screen.DamgleTime.route) {
             systemUiController.setSystemBarsColor(color = Grey500)

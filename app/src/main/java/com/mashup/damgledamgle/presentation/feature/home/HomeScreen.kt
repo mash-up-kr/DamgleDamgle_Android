@@ -29,10 +29,10 @@ fun HomeScreen(navController: NavHostController) {
     BackPressInterceptor(context)
 
     val openDamglePaintDialog = remember { mutableStateOf(false) }
-    if(homeViewModel.checkEntryAfterDamgleDay()) {
+    if (homeViewModel.checkEntryAfterDamgleDay()) {
         openDamglePaintDialog.value = true
     }
-    if(openDamglePaintDialog.value) {
+    if (openDamglePaintDialog.value) {
         DamglePaintDialog(
             date = homeViewModel.getLastEntryDamgleDay(),
             openDamglePainDialog = openDamglePaintDialog
@@ -82,7 +82,8 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             MapScreen(
                 navController,
-                cameraPositionState)
+                cameraPositionState
+            )
         }
 
         val coroutineScope = rememberCoroutineScope()

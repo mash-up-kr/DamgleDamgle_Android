@@ -2,7 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.mypage
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.damgledamgle.domain.entity.base.launchWithNetworkResult
+import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.user.*
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.commonModel.DamgleModel
@@ -54,7 +54,7 @@ class MyPageViewModel @Inject constructor(
 
     private fun getUserProfileInfo() {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 result = getUserProfileUserCase(),
                 suspendOnSuccess = {
                     userProfileState.emit(ViewState.Success(userProfileMapper.mapToModel(it)))
@@ -68,7 +68,7 @@ class MyPageViewModel @Inject constructor(
 
     private fun getMyDamgleList() {
         viewModelScope.launch {
-            launchWithNetworkResult(
+            launchWithResult(
                 result = getMyDamgleListUseCase(),
                 suspendOnSuccess = {
                     myDamgleListState.emit(ViewState.Success(damgleMapper.mapToModel(it)))
@@ -83,7 +83,7 @@ class MyPageViewModel @Inject constructor(
     fun deleteUser() {
         viewModelScope.launch {
             _deleteUserState.emit(ViewState.Loading)
-            launchWithNetworkResult(
+            launchWithResult(
                 result = deleteUserProfileUseCase(),
                 suspendOnSuccess = { _deleteUserState.emit(ViewState.Success("회원 탈퇴 성공!")) },
                 suspendOnError = { _deleteUserState.emit(ViewState.Error("회원 탈퇴 실패..")) }
