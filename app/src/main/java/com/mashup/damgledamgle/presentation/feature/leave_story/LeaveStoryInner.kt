@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.presentation.component.common.LottieBox
+import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 @Composable
 fun LeaveStoryInner(@StringRes titleRes: Int, @StringRes subscriptionRes: Int? = null, @RawRes lottieRes: Int) {
@@ -21,15 +22,14 @@ fun LeaveStoryInner(@StringRes titleRes: Int, @StringRes subscriptionRes: Int? =
         Spacer(modifier = Modifier.height(28.dp))
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
-            fontSize = 32.sp,
-            fontWeight = FontWeight.Bold,
+            style = pretendardTextStyle.title1Bold32,
             text = stringResource(titleRes),
         )
         Box(modifier = Modifier.height(56.dp)) {
             if (subscriptionRes != null)
                 Text(
                     modifier = Modifier.padding(horizontal = 20.dp),
-                    fontSize = 13.sp,
+                    style = pretendardTextStyle.bodyMedium13,
                     text = stringResource(subscriptionRes),
                 )
         }

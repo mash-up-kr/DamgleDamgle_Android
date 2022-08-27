@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.ui.theme.Gray1000
+import com.mashup.damgledamgle.ui.theme.*
 import com.mashup.damgledamgle.util.noRippleClickable
 
 @Composable
@@ -33,8 +33,7 @@ fun BottomSheetCollapsedContent(
                 .alpha(alpha)
                 .align(Alignment.Center),
             color = Gray1000,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            style = pretendardTextStyle.bodyBold18,
             text = stringResource(R.string.home_bottomsheet_leave_my_story)
         )
     }

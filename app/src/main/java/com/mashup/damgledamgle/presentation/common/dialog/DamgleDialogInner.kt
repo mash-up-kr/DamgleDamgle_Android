@@ -10,8 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mashup.damgledamgle.ui.theme.Black
-import com.mashup.damgledamgle.ui.theme.Gray600
+import com.mashup.damgledamgle.ui.theme.*
 
 @Composable
 fun DamgleDialogTwoButtonInner(
@@ -31,15 +30,14 @@ fun DamgleDialogTwoButtonInner(
         Text(
                 text = title,
                 color = Black,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
+                style = pretendardTextStyle.bodyMedium18,
                 textAlign = Center,
                 maxLines = 2,
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
                 text = description,
-                fontSize = 14.sp,
+                style = pretendardTextStyle.bodyMedium13,
                 color = Gray600,
                 textAlign = Center
         )
@@ -54,9 +52,8 @@ fun DamgleDialogTwoButtonInner(
                             .clickable { firstButtonAction() }
                             .padding(vertical = 13.dp)
                             .fillMaxWidth(),
-                    fontSize = 16.sp,
                     textAlign = Center,
-                    fontWeight = FontWeight.Bold,
+                    style = pretendardTextStyle.bodySemibold16,
                     text = firstButtonText,
                     color = Black
             )
@@ -65,9 +62,8 @@ fun DamgleDialogTwoButtonInner(
                             .clickable { secondButtonAction() }
                             .padding(vertical = 13.dp)
                             .fillMaxWidth(),
-                    fontSize = 16.sp,
                     textAlign = Center,
-                    fontWeight = FontWeight.Bold,
+                    style = pretendardTextStyle.bodySemibold16,
                     text = secondButtonText,
                     color = Black
             )
@@ -92,14 +88,13 @@ fun DamgleDialogOneButtonInner(
         Text(
             text = title,
             color = Black,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            style = pretendardTextStyle.bodyMedium18,
             maxLines = 1,
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = description,
-            fontSize = 14.sp,
+            style = pretendardTextStyle.bodyMedium13,
             color = Gray600,
             textAlign = Center
         )
@@ -114,9 +109,8 @@ fun DamgleDialogOneButtonInner(
                     .clickable { firstButtonAction() }
                     .padding(vertical = 13.dp)
                     .fillMaxWidth(),
-                fontSize = 16.sp,
                 textAlign = Center,
-                fontWeight = FontWeight.Bold,
+                style = pretendardTextStyle.bodySemibold16,
                 text = firstButtonText,
                 color = Black
             )

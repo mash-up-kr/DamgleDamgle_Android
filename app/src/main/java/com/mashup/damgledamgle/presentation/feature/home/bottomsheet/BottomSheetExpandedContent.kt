@@ -13,8 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.R
-import com.mashup.damgledamgle.ui.theme.Gray400
-import com.mashup.damgledamgle.ui.theme.Gray900
+import com.mashup.damgledamgle.ui.theme.*
 
 @Composable
 fun BottomSheetExpandedContent(
@@ -51,16 +50,18 @@ fun BottomSheetExpandedContent(
             Spacer(modifier = Modifier.height(56.dp))
             Text(
                 fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
+                style = pretendardTextStyle.title1Bold32,
                 text = stringResource(R.string.home_bottomsheet_leave_story_on_this_place)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                fontSize = 13.sp,
+                fontSize = 15.sp,
+                color = Gray900,
+                style = pretendardTextStyle.bodyMedium16,
                 text = stringResource(R.string.home_bottomsheet_story_left_here_disappears_after_a_month)
             )
             Spacer(modifier = Modifier.height(32.dp))
-            DamgleStoryBox(backGroundColor = Gray400, textColor = Gray900, text = text, onTextChange = { text = it })
+            DamgleStoryBox(backGroundColor = Gray400, textColor = Gray600, text = text, onTextChange = { text = it })
         }
         BottomSheetBottomButton(text = text) {
             openLeaveStoryDialog.value = true
