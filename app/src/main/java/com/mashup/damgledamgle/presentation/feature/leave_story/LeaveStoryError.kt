@@ -34,7 +34,6 @@ fun LeaveStoryError(onClickBottomButton: () -> Unit) {
             LeaveStoryInner(
                 titleRes = R.string.leave_story_now_leaving_a_story_error,
                 subscriptionRes = R.string.leave_story_now_leaving_a_story_error_description,
-                // TODO 에러로 파일 교체
                 lottieRes = R.raw.write_fail
             )
         }
