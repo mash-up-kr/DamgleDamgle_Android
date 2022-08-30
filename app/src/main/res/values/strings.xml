@@ -50,4 +50,7 @@
     <string name="damgle.clear.complete">담벼락이 모두\n칠해졌어요!</string>
     <string name="damgle.subtext">이제 새로워진 담벼락에 마음껏 글을 남겨보세요!</string>
 
+    //Paint
+    <string name="damgle.paint.explain.title">이번 달 페인트칠이란?</string>
+    <string name="damgle.paint.explain.content">매월 마지막날, 담벼락을 새로\n페인트칠하면 모든 담글이 깨끗히 지워져요.\n해당 타이머를 보고 다음 페인트칠까지\n남은 시간을 확인하세요.</string>
 </resources>

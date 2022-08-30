@@ -16,16 +16,17 @@ object ReactionUtil {
                 }
             }
         }
-        val maxIcon = iconMap.maxByOrNull { it.value}
-        return if(maxIcon?.key == null) "nothing"
+        val maxIcon = iconMap.maxByOrNull {it.value}
+        return if(maxIcon?.key == null || maxIcon.value == 0) "nothing"
         else maxIcon.key
     }
 
     fun getMainIconFromReactionSummaryList(reactionList: List<DamgleModel.ReactionSummary>): String {
-        return reactionList.maxWithOrNull(
-            Comparator.comparing {
-                it.count
-            }
-        )?.type ?: "nothing"
+        val maxCount = reactionList.maxOf { it.count }
+        return if (maxCount < 1) {
+            "nothing"
+        } else {
+            reactionList.find { it.count == maxCount }?.type ?: "nothing"
+        }
     }
 }

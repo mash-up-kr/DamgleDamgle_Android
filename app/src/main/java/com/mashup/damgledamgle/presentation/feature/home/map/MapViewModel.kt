@@ -31,8 +31,7 @@ class MapViewModel @Inject constructor(
 
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
     val showLoading = MutableLiveData(false)
-    var bound : Bound? = null
-
+    var currentBound : Bound? = null
     val storyFeedState = MutableStateFlow<ViewState<ArrayList<GroupMarkerInfo>>>(ViewState.Loading)
 
     fun homeRefreshBtnEvent(
@@ -43,12 +42,12 @@ class MapViewModel @Inject constructor(
             delay(2000)
             homeViewModel.getNaverGeocode(
                 "${updateLocation?.longitude},${updateLocation?.latitude}")
-            if(bound != null) {
+            if(currentBound != null) {
                 getStoryFeedList(
-                    bound!!.top,
-                    bound!!.bottom,
-                    bound!!.left,
-                    bound!!.right
+                    currentBound!!.top,
+                    currentBound!!.bottom,
+                    currentBound!!.left,
+                    currentBound!!.right
                 )
             }
             showLoading.value = false

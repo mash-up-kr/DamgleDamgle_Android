@@ -14,6 +14,7 @@ import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.common.dialog.NetworkErrorDialog
 import com.mashup.damgledamgle.presentation.feature.home.*
+import com.mashup.damgledamgle.presentation.feature.home.damgle.DamglePaintExplainDialog
 import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.presentation.feature.home.model.Bound
@@ -28,12 +29,13 @@ import com.naver.maps.map.overlay.OverlayImage
 @Composable
 fun MapScreen(
     navController: NavHostController,
-    cameraPositionState: CameraPositionState) {
+    cameraPositionState: CameraPositionState
+) {
     val mContext = LocalContext.current
     val mapProperties by remember {
         mutableStateOf(
             MapProperties(
-                minZoom = 14.5,
+                minZoom = 10.0,
             )
         )
     }
@@ -68,8 +70,10 @@ fun MapContent(
     val mapViewModel : MapViewModel = hiltViewModel()
     val homeViewModel : HomeViewModel = hiltViewModel()
     val openNetworkDialog = remember { mutableStateOf(false) }
+    val openPaintExplainDialog = remember { mutableStateOf(false) }
+    StateDamglePaintExplain(openPaintExplainDialog)
     val showLoading = mapViewModel.showLoading.observeAsState()
-
+    
     Box(Modifier.fillMaxSize()) {
         NaverMap(
             cameraPositionState = cameraPositionState,
@@ -90,7 +94,7 @@ fun MapContent(
                 val left = map.contentBounds.westLongitude
                 val right = map.contentBounds.eastLongitude
 
-                mapViewModel.bound = Bound(top,bottom,left,right)
+                mapViewModel.currentBound = Bound(top,bottom,left,right)
                 mapViewModel.getStoryFeedList(
                     top = top,
                     bottom = bottom,
@@ -134,7 +138,7 @@ fun MapContent(
                     val bottom = map.contentBounds.southLatitude
                     val left = map.contentBounds.westLongitude
                     val right = map.contentBounds.eastLongitude
-                    mapViewModel.bound = Bound(top, bottom, left, right)
+                    mapViewModel.currentBound = Bound(top, bottom, left, right)
                 }
             }
         }
@@ -143,7 +147,9 @@ fun MapContent(
                 .align(Alignment.TopCenter)
                 .padding(top = 16.dp)
         ) {
-            CheckDamgleTime(mapViewModel = mapViewModel)
+            CheckDamgleTime(mapViewModel = mapViewModel,
+                openPaintExplainDialog = openPaintExplainDialog
+            )
         }
         Column(
             Modifier
@@ -180,14 +186,26 @@ fun MapContent(
 }
 
 @Composable
-fun CheckDamgleTime(mapViewModel: MapViewModel) {
+fun CheckDamgleTime(mapViewModel: MapViewModel, openPaintExplainDialog: MutableState<Boolean>) {
     val result = TimeUtil.getCalendarLastDay()
     if(result.contains("D")) {
-        DamgleTimeCheckBox(result, false)
+        DamgleTimeCheckBox(result, false) { openPaintExplainDialog.value = true }
     } else {
         mapViewModel.startTimer()
         val time by mapViewModel.time.observeAsState()
         val oneHourCheck by mapViewModel.oneHourCheck.observeAsState()
-        time?.let { oneHourCheck?.let { it1 -> DamgleTimeCheckBox(it, it1) } }
+        time?.let { oneHourCheck?.let { it1 -> DamgleTimeCheckBox(it, it1) {
+            openPaintExplainDialog.value = true } } }
+    }
+}
+
+@Composable
+fun StateDamglePaintExplain(openPaintExplainDialog : MutableState<Boolean>){
+    if (openPaintExplainDialog.value) {
+        DamglePaintExplainDialog(
+            openDamglePainDialog = openPaintExplainDialog
+        ) {
+            openPaintExplainDialog.value = false
+        }
     }
 }
