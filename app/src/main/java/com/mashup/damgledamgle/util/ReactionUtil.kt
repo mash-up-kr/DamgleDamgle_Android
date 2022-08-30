@@ -22,11 +22,15 @@ object ReactionUtil {
     }
 
     fun getMainIconFromReactionSummaryList(reactionList: List<DamgleModel.ReactionSummary>): String {
-        val maxCount = reactionList.maxOf { it.count }
-        return if (maxCount < 1) {
-            "nothing"
-        } else {
-            reactionList.find { it.count == maxCount }?.type ?: "nothing"
+        val maxCount = reactionList.maxOfOrNull { it.count }
+        var icon = ""
+        if (maxCount != null) {
+            icon = if (maxCount < 1) {
+                "nothing"
+            } else {
+                reactionList.find { it.count == maxCount }?.type ?: "nothing"
+            }
         }
+        return icon
     }
 }
