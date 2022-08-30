@@ -14,6 +14,7 @@ import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.common.dialog.NetworkErrorDialog
 import com.mashup.damgledamgle.presentation.feature.home.*
+import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleTimeCheckBox
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.presentation.feature.home.model.Bound
 import com.mashup.damgledamgle.presentation.navigation.Screen
@@ -147,7 +148,7 @@ fun MapContent(
         Column(
             Modifier
                 .align(Alignment.BottomEnd)
-                .padding(bottom = 120.dp, end = 8.dp)
+                .padding(bottom = 120.dp, end = 20.dp)
         ) {
             FloatingActionButton(
                 fabIcon = R.drawable.ic_refresh,

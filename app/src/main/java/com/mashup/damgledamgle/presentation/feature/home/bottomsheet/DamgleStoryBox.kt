@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.component.ErrorText
+import com.mashup.damgledamgle.ui.theme.*
 
 @Composable
 fun DamgleStoryBox(
@@ -39,6 +40,7 @@ fun DamgleStoryBox(
             Column {
                 TextField(
                     modifier = Modifier
+                        .padding(start = 4.dp)
                         .wrapContentHeight(),
                     value = text,
                     onValueChange = {
@@ -63,7 +65,13 @@ fun DamgleStoryBox(
                         disabledIndicatorColor = Color.Transparent
                     ),
                     maxLines = 6,
-                    placeholder = { Text(text = stringResource(id = R.string.home_bottomsheet_leave_your_own_story)) }
+                    placeholder = {
+                        Text(
+                            text = stringResource(id = R.string.home_bottomsheet_leave_your_own_story),
+                            color = Gray600,
+                            style = pretendardTextStyle.bodyMedium16,
+                        )
+                    }
                 )
                 if (textErrorState)
                     ErrorText(
@@ -98,6 +106,8 @@ fun DamgleStoryBox(
                         .padding(16.dp)
                         .wrapContentWidth()
                         .align(Alignment.BottomEnd),
+                    color = Gray800,
+                    style = pretendardTextStyle.bodyMedium13,
                     text = "${text.count()}/100 자"
                 )
             }

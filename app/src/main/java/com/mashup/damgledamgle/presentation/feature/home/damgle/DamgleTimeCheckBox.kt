@@ -1,4 +1,4 @@
-package com.mashup.damgledamgle.presentation.feature.home
+package com.mashup.damgledamgle.presentation.feature.home.damgle
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
