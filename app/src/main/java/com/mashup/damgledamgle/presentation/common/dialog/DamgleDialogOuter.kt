@@ -7,7 +7,7 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.mashup.damgledamgle.ui.theme.Gray400
+import com.mashup.damgledamgle.ui.theme.BackgroundDim
 
 
 @Composable
@@ -20,7 +20,7 @@ fun DamgleDialogOuter(
                 .padding(horizontal = 20.dp)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
-            backgroundColor = Gray400
+            backgroundColor = BackgroundDim
     ) {
         content()
     }
