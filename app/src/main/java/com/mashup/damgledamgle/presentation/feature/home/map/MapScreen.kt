@@ -84,8 +84,6 @@ fun MapContent(
             cameraPositionState.position.target.latitude,
             cameraPositionState.position.target.longitude
         )
-        mapViewModel.movingBound?.let { CameraUpdate.scrollTo(it) }
-            ?.let { cameraPositionState.move(it) }
     }
 
     Box(Modifier.fillMaxSize()) {
