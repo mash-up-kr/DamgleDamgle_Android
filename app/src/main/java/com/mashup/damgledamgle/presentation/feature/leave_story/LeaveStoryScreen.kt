@@ -20,10 +20,8 @@ fun LeaveStoryScreen(navController: NavHostController, content: String, leaveSto
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        LocationUtil.getMyLocation(context) {
-            it?.let {
-                leaveStoryViewModel.leaveStory(it.latitude, it.longitude, content)
-            }
+        LocationUtil.getMyLocation(context)?.let {
+            leaveStoryViewModel.leaveStory(it.latitude, it.longitude, content)
         }
     }
 
