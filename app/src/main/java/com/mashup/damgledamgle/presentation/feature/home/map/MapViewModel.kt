@@ -32,6 +32,7 @@ class MapViewModel @Inject constructor(
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
     val showLoading = MutableLiveData(false)
     var currentBound : Bound? = null
+    var movingBound : LatLng? = null
     val storyFeedState = MutableStateFlow<ViewState<ArrayList<GroupMarkerInfo>>>(ViewState.Loading)
 
     fun homeRefreshBtnEvent(

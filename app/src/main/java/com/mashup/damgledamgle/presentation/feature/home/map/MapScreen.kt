@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -28,8 +29,7 @@ import com.naver.maps.map.overlay.OverlayImage
 
 @Composable
 fun MapScreen(
-    navController: NavHostController,
-    cameraPositionState: CameraPositionState
+    navController: NavHostController
 ) {
     val mContext = LocalContext.current
     val mapProperties by remember {
@@ -48,6 +48,7 @@ fun MapScreen(
         )
     }
 
+    val cameraPositionState = rememberCameraPositionState()
     MapContent(
         navController,
         cameraPositionState = cameraPositionState,
@@ -74,6 +75,19 @@ fun MapContent(
     StateDamglePaintExplain(openPaintExplainDialog)
     val showLoading = mapViewModel.showLoading.observeAsState()
     
+    if(mapViewModel.movingBound == null) {
+        LocationUtil.getMyLocation(mContext)?.let { CameraUpdate.scrollTo(it) }
+        ?.let { cameraPositionState.move(it) }
+    }
+    if(cameraPositionState.isMoving) {
+        mapViewModel.movingBound = LatLng(
+            cameraPositionState.position.target.latitude,
+            cameraPositionState.position.target.longitude
+        )
+        mapViewModel.movingBound?.let { CameraUpdate.scrollTo(it) }
+            ?.let { cameraPositionState.move(it) }
+    }
+
     Box(Modifier.fillMaxSize()) {
         NaverMap(
             cameraPositionState = cameraPositionState,

@@ -16,12 +16,10 @@ import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.util.LocationUtil
-import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
-import com.naver.maps.map.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val homeViewModel : HomeViewModel = hiltViewModel()
@@ -46,7 +44,6 @@ fun HomeScreen(navController: NavHostController) {
     var locationTitle by remember {
         mutableStateOf("")
     }
-    val cameraPositionState = rememberCameraPositionState()
     val currentLocation = LocationUtil.getMyLocation(context)
     homeViewModel.getNaverGeocode(
         "${currentLocation?.longitude},${currentLocation?.latitude}"
@@ -57,9 +54,6 @@ fun HomeScreen(navController: NavHostController) {
             currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }.toString()
         }
     }
-
-    currentLocation?.let { CameraUpdate.scrollTo(it) }
-        ?.let { cameraPositionState.move(it) }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     Scaffold {
@@ -80,10 +74,7 @@ fun HomeScreen(navController: NavHostController) {
             sheetPeekHeight = 100.dp,
             scaffoldState = bottomSheetScaffoldState,
         ) {
-            MapScreen(
-                navController,
-                cameraPositionState
-            )
+            MapScreen(navController)
         }
 
         val coroutineScope = rememberCoroutineScope()
