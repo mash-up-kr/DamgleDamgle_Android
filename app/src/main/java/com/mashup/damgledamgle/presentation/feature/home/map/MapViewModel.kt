@@ -15,6 +15,7 @@ import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -27,9 +28,12 @@ class MapViewModel @Inject constructor(
     private var countDownTimer: CountDownTimer? = null
     private val _time = MutableLiveData("")
     val time: LiveData<String> = _time
-    private val _oneHourCheck = MutableLiveData(false)
+    private val _timerStatus = MutableStateFlow(false)
+    val timerStatus: StateFlow<Boolean> = _timerStatus
 
+    private val _oneHourCheck = MutableLiveData(false)
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
+
     val showLoading = MutableLiveData(false)
     var currentBound : Bound? = null
     var movingBound : LatLng? = null
@@ -189,6 +193,7 @@ class MapViewModel @Inject constructor(
     fun startTimer() {
         countDownTimer = object : CountDownTimer(TimeUtil.getCalDiffTime(), 1000) {
             override fun onTick(millisRemaining: Long) {
+                _timerStatus.value = true
                 _oneHourCheck.value = TimeUnit.MILLISECONDS.toHours(millisRemaining) < 1
                 val hms = TimeUtil.formatTimerTime(millisRemaining)
                 _time.value = hms
@@ -202,6 +207,7 @@ class MapViewModel @Inject constructor(
     }
 
     private fun pauseTimer() {
+        _timerStatus.value = false
         countDownTimer?.cancel()
 
     }

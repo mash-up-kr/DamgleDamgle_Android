@@ -1,7 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.home.map
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -74,7 +74,7 @@ fun MapContent(
     val openPaintExplainDialog = remember { mutableStateOf(false) }
     StateDamglePaintExplain(openPaintExplainDialog)
     val showLoading = mapViewModel.showLoading.observeAsState()
-    
+
     if(mapViewModel.movingBound == null) {
         LocationUtil.getMyLocation(mContext)?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
@@ -199,13 +199,14 @@ fun MapContent(
     }
 }
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun CheckDamgleTime(mapViewModel: MapViewModel, openPaintExplainDialog: MutableState<Boolean>) {
     val result = TimeUtil.getCalendarLastDay()
     if(result.contains("D")) {
         DamgleTimeCheckBox(result, false) { openPaintExplainDialog.value = true }
     } else {
-        mapViewModel.startTimer()
+        if(!mapViewModel.timerStatus.value) mapViewModel.startTimer()
         val time by mapViewModel.time.observeAsState()
         val oneHourCheck by mapViewModel.oneHourCheck.observeAsState()
         time?.let { oneHourCheck?.let { it1 -> DamgleTimeCheckBox(it, it1) {
