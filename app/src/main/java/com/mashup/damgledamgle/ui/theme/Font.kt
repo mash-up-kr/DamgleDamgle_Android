@@ -14,12 +14,14 @@ import com.mashup.damgledamgle.R
 
 data class Pretendard(
     val title1Bold32: TextStyle,
+    val bodyBold24: TextStyle,
     val bodyMedium24: TextStyle,
     val bodyBold18: TextStyle,
     val bodyMedium18: TextStyle,
     val bodySemibold16: TextStyle,
     val bodyMedium16: TextStyle,
     val bodyBold13: TextStyle,
+    val bodyMedium14: TextStyle,
     val bodyMedium13: TextStyle,
     val bodyMedium10: TextStyle,
     val bodySemibold11: TextStyle,
@@ -49,6 +51,11 @@ val pretendardTextStyle = Pretendard(
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
         letterSpacing = (-1).sp
+    ),
+    bodyBold24 = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
     ),
     bodyMedium24 = TextStyle(
         fontFamily = pretendard,
@@ -84,6 +91,12 @@ val pretendardTextStyle = Pretendard(
         fontFamily = pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 13.sp,
+        letterSpacing = (-0.3).sp
+    ),
+    bodyMedium14 = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
         letterSpacing = (-0.3).sp
     ),
     bodyMedium13 = TextStyle(

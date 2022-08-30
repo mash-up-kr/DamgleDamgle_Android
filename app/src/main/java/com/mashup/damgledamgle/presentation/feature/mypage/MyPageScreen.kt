@@ -39,6 +39,8 @@ fun MyPageScreen(navController: NavHostController) {
 
     val tabItems = listOf(MyPageTab.MyDamgle, MyPageTab.Setting)
 
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -116,11 +118,13 @@ fun MyPageScreen(navController: NavHostController) {
                     }
                 }
 
-                BackPressInterceptor(context = LocalContext.current) {
+                BackPressInterceptor(context = context) {
                     if (bottomSheetScaffoldState.bottomSheetState.isExpanded) {
                         coroutineScope.launch {
                             bottomSheetScaffoldState.bottomSheetState.collapse()
                         }
+                    } else {
+                        navController.popBackStack()
                     }
                 }
             }
