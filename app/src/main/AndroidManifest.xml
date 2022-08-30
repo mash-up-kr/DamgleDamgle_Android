@@ -21,11 +21,11 @@
 
     <application
         android:name=".DamgleDamgleApplication"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:allowBackup="false"
         android:theme="@style/Theme.DamgleDamgle">
         <activity
             android:name=".MainActivity"

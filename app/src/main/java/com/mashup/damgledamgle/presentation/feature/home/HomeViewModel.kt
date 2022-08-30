@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
 
     private var _locationTitle = MutableLiveData("")
     val locationTitle: LiveData<String> = _locationTitle
-    val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
+    private val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
 
 
     fun getNaverGeocode(coords : String) {

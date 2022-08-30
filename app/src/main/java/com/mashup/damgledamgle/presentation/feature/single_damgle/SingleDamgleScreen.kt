@@ -1,5 +1,7 @@
 package com.mashup.damgledamgle.presentation.feature.single_damgle
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -9,6 +11,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.ui.theme.Grey500
+import com.mashup.damgledamgle.ui.theme.backgroundGradient
 
 /**
  *  SingleDamgleScreen.kt
@@ -29,14 +32,22 @@ fun SingleDamgleScreen(navController: NavHostController, id: String, viewModel: 
             viewModel.init(id)
         }
 
-        when (val state = damgle) {
-            is ViewState.Success -> SingleDamgleSuccessScreen(
-                navController = navController,
-                viewModel = viewModel,
-                damgle = state.data
-            )
-            is ViewState.Loading -> {}
-            is ViewState.Error -> Text(text = state.error)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = backgroundGradient
+                )
+        ) {
+            when (val state = damgle) {
+                is ViewState.Success -> SingleDamgleSuccessScreen(
+                    navController = navController,
+                    viewModel = viewModel,
+                    damgle = state.data
+                )
+                is ViewState.Loading -> {}
+                is ViewState.Error -> Text(text = state.error)
+            }
         }
     }
 }

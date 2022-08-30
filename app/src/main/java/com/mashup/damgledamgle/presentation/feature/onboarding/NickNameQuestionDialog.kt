@@ -11,6 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mashup.damgledamgle.R
@@ -59,9 +60,7 @@ fun DamgleNickNameQuestionDialogInner(
             .padding(horizontal = 20.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Top,
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
@@ -73,23 +72,28 @@ fun DamgleNickNameQuestionDialogInner(
                     append(context.getString(R.string.nickname_nth_onboarding_title))
                 },
                 color = Gray1000,
-                style = pretendardTextStyle.bodyBold24,
-                textAlign = TextAlign.Start,
+                style = pretendardTextStyle.bodyBold18,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                lineHeight = 26.sp
             )
 
             Image(
                 painter = painterResource(id = R.drawable.ic_close),
                 contentDescription = "닫기",
                 modifier = Modifier.clickable { actionCancel() }
+                    .align(Alignment.TopEnd)
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = context.getString(R.string.nickname_nth_onboarding_message),
             style = pretendardTextStyle.bodyMedium16,
             color = Gray900,
-            textAlign = TextAlign.Start,
-            modifier = Modifier.fillMaxWidth()
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+            lineHeight = 24.sp
         )
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }

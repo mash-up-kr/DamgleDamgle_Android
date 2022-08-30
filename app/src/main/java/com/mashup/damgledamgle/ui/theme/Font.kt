@@ -21,6 +21,7 @@ data class Pretendard(
     val bodySemibold16: TextStyle,
     val bodyMedium16: TextStyle,
     val bodyBold13: TextStyle,
+    val bodyMedium14: TextStyle,
     val bodyMedium13: TextStyle,
     val bodyMedium10: TextStyle,
     val bodySemibold11: TextStyle,
@@ -90,6 +91,12 @@ val pretendardTextStyle = Pretendard(
         fontFamily = pretendard,
         fontWeight = FontWeight.Bold,
         fontSize = 13.sp,
+        letterSpacing = (-0.3).sp
+    ),
+    bodyMedium14 = TextStyle(
+        fontFamily = pretendard,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
         letterSpacing = (-0.3).sp
     ),
     bodyMedium13 = TextStyle(
