@@ -25,7 +25,7 @@ fun LeaveStoryError(onClickBottomButton: () -> Unit) {
                             .width(24.dp)
                             .offset(x = (-16).dp)
                             .clickable {
-                                // TODO 백스택 로직이 정해지면 수정
+                                onClickBottomButton()
                             }
                     )
                 }
