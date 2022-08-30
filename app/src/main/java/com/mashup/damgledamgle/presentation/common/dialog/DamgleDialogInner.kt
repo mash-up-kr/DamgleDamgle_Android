@@ -104,7 +104,7 @@ fun DamgleDialogOneButtonInner(
             color = Gray900,
             textAlign = Center
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
