@@ -17,4 +17,5 @@ interface DamgleRepository {
 
     suspend fun createDamgleReaction(reaction: String, storyId: String): Result<Damgle>
     suspend fun deleteDamgleReaction(storyId: String): Result<Damgle>
+    suspend fun reportDamgle(storyId: String): Result<Damgle>
 }
