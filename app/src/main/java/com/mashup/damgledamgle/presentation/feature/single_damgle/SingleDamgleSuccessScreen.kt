@@ -62,7 +62,8 @@ fun SingleDamgleSuccessScreen(
                     ToastUtil.show(context, "${reaction.toKorean()} 이모지로 수정되었어요!")
                     viewModel.reactDamgle(damgle.id, reaction)
                 }
-            }
+            },
+            isMine = damgle.isMine
         )
     }
 

@@ -20,6 +20,8 @@ fun DamgleStoryBox(
     damgleStoryBoxState: DamgleStoryBoxModel,
     onClickNowReaction: () -> Unit,
     onClickReaction: (Reaction) -> Unit,
+    onClickReport: () -> Unit = {},
+    isMine: Boolean,
 ) {
     Column(
         modifier = Modifier
@@ -66,12 +68,15 @@ fun DamgleStoryBox(
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        DamgleStoryBoxInner(damgleStoryBoxState)
+        DamgleStoryBoxInner(
+            damgleStoryBoxState,
+            onClickReport = { onClickReport() }
+        )
         Spacer(modifier = Modifier.height(16.dp))
         ReactionBox(
             damgleStoryBoxState.reactionBoxState,
             { onClickNowReaction() },
-            { reaction -> onClickReaction(reaction) }
+            { reaction -> onClickReaction(reaction) },
         )
         Spacer(modifier = Modifier.height(32.dp))
     }
