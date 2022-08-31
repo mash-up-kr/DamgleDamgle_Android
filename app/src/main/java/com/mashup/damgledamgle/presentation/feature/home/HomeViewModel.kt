@@ -1,5 +1,6 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.home.*
@@ -41,11 +42,14 @@ class HomeViewModel @Inject constructor(
     }
 
     fun checkEntryAfterDamgleDay(): Boolean {
-        if(getLastEntryDamgleDayUseCase.invoke() != "") {
+        if(getLastEntryDamgleDayUseCase.invoke().isEmpty()) return true
+        else {
             val lastEntryDay = dateFormat(getLastEntryDamgleDayUseCase.invoke())
             val today = dateFormat(getTodayDate())
-            if(lastEntryDay != null && today != null)
+            if(lastEntryDay != null && today != null) {
+                Log.d("Day", lastEntryDay.toString())
                 return lastEntryDay.year != today.year || lastEntryDay.month < today.month
+            }
         }
         return false
     }

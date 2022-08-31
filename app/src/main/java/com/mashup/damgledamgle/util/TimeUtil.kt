@@ -18,10 +18,10 @@ object TimeUtil {
     fun getTodayDate(): String {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
-        val month = if(calendar.get(Calendar.MONTH) < 10) {
-            "0${calendar.get(Calendar.MONTH)}"
+        val month = if(calendar.get(Calendar.MONTH)+1 < 10) {
+            "0${calendar.get(Calendar.MONTH)+1}"
         } else {
-            calendar.get(Calendar.MONTH).toString()
+            (calendar.get(Calendar.MONTH)+1).toString()
         }
         val day = if(calendar.get(Calendar.DATE) < 10) {
             "0${calendar.get(Calendar.DATE)}"
