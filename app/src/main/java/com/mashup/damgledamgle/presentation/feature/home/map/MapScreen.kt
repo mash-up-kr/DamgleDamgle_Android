@@ -84,6 +84,17 @@ fun MapContent(
             cameraPositionState.position.target.latitude,
             cameraPositionState.position.target.longitude
         )
+
+
+    } else {
+        if(cameraPositionState.contentBounds?.northLatitude != null && mapViewModel.movingBound != null) {
+            mapViewModel.getStoryFeedList(
+                top = cameraPositionState.contentBounds!!.northLatitude ,
+                bottom = cameraPositionState.contentBounds!!.southLatitude,
+                left = cameraPositionState.contentBounds!!.westLongitude,
+                right = cameraPositionState.contentBounds!!.eastLongitude
+            )
+        }
     }
 
     Box(Modifier.fillMaxSize()) {
