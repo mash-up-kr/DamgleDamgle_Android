@@ -23,9 +23,10 @@ import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.util.LocationUtil
 import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.*
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
+import kotlinx.coroutines.launch
 
 @Composable
 fun MapScreen(
@@ -174,6 +175,7 @@ fun MapContent(
                 openPaintExplainDialog = openPaintExplainDialog
             )
         }
+        val coroutineScope = rememberCoroutineScope()
         Column(
             Modifier
                 .align(Alignment.BottomEnd)
@@ -196,8 +198,16 @@ fun MapContent(
                     .paddingFromBaseline(10.dp)
                     .size(48.dp, 48.dp),
                 onClick = {
-                    LocationUtil.getMyLocation(mContext)?.let { latLng ->
-                            cameraPositionState.move(CameraUpdate.scrollTo(latLng))
+                    val animation = CameraAnimation.Fly
+                    val position = LocationUtil.getMyLocation(mContext)?.let { CameraPosition(it, 14.8) }
+                    coroutineScope.launch {
+                        position?.let { CameraUpdate.toCameraPosition(it) }?.let {
+                            cameraPositionState.animate(
+                                it,
+                                animation = animation,
+                                durationMs = 1000
+                            )
+                        }
                     }
                 }
             )
