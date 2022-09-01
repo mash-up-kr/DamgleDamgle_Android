@@ -32,6 +32,7 @@ class MapViewModel @Inject constructor(
     val timerStatus: StateFlow<Boolean> = _timerStatus
 
     private val _oneHourCheck = MutableLiveData(false)
+
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
 
     val showLoading = MutableLiveData(false)

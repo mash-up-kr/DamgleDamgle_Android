@@ -1,15 +1,19 @@
 package com.mashup.damgledamgle.presentation.feature.all_damgle_list
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.enumerate.Reaction
 import com.mashup.damgledamgle.presentation.component.reaction.MultiReaction
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryReactionState
+import com.mashup.damgledamgle.ui.theme.Gray600
 
 @Preview
 @Composable
@@ -31,7 +35,12 @@ fun DamgleStoryBoxReactionsDemo() {
 }
 
 @Composable
-fun DamgleStoryReactionBox(modifier: Modifier = Modifier, reactions: Map<Reaction, DamgleStoryReactionState>) {
+fun DamgleStoryReactionBox(
+    modifier: Modifier = Modifier,
+    reactions: Map<Reaction, DamgleStoryReactionState>,
+    isMine: Boolean = false,
+    onClickReport: () -> Unit = {}
+) {
     Box(
         modifier = modifier
             .height(160.dp)
@@ -60,6 +69,18 @@ fun DamgleStoryReactionBox(modifier: Modifier = Modifier, reactions: Map<Reactio
                 MultiReaction(modifier = Modifier.fillMaxSize(), reactions)
             }
         }
+        if (!isMine)
+            Text(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .offset(x = (-24).dp, y = (-16).dp)
+                    .clickable {
+                        onClickReport()
+                    },
+                text = "신고",
+                color = Gray600,
+                fontSize = 13.sp,
+            )
     }
 }
 

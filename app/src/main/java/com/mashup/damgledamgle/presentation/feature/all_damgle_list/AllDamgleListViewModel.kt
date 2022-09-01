@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.damgle.*
+import com.mashup.damgledamgle.domain.usecase.user.GetUserProfileUserCase
 import com.mashup.damgledamgle.enumerate.*
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.common.successOrNull
@@ -19,8 +20,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AllDamgleListViewModel @Inject constructor(
     private val getDamgleStoryUseCase: GetDamgleStoriesUseCase,
+    private val getUserProfileUserCase: GetUserProfileUserCase,
     private val createDamgleReactionUseCase: CreateDamgleReactionUseCase,
     private val deleteDamgleReactionUseCase: DeleteDamgleReactionUseCase,
+    private val reportDamgleUseCase: ReportDamgleUseCase
 ) : ViewModel() {
 
     private val _damgleSortStrategy = MutableStateFlow(DamgleStorySort.LATEST)
@@ -139,6 +142,29 @@ class AllDamgleListViewModel @Inject constructor(
     fun changeDamgleSortStrategy(damgleSortStrategy: DamgleStorySort) {
         viewModelScope.launch {
             _damgleSortStrategy.emit(damgleSortStrategy)
+        }
+    }
+
+    fun reportDamgle(storyId: String) {
+        viewModelScope.launch {
+            launchWithResult(
+                reportDamgleUseCase(storyId),
+                { damgle ->
+                    ViewState.Success(_damgleFeedState.value.successOrNull()
+                        ?.toMutableMap()
+                        ?.apply {
+                            this[storyId] = DamgleStoryBoxMapper.mapToModel(
+                                damgle,
+                                ReactionBoxState(null, false)
+                            )
+                        }
+                        ?.let {
+                            _damgleFeedState.emit(ViewState.Success(it))
+                        }
+                    )
+                },
+                { error -> _damgleFeedState.emit(ViewState.Error(error.toString())) }
+            )
         }
     }
 }

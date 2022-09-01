@@ -2,11 +2,13 @@ package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,6 +22,7 @@ import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleTimeCheckB
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.presentation.feature.home.model.Bound
 import com.mashup.damgledamgle.presentation.navigation.Screen
+import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.util.LocationUtil
 import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
@@ -29,7 +32,8 @@ import com.naver.maps.map.overlay.OverlayImage
 
 @Composable
 fun MapScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    bottomSheetSlide: Float,
 ) {
     val mContext = LocalContext.current
     val mapProperties by remember {
@@ -54,6 +58,7 @@ fun MapScreen(
         cameraPositionState = cameraPositionState,
         mapProperties = mapProperties,
         mapUiSettings = mapUiSettings,
+        bottomSheetSlide,
         mContext
     )
 }
@@ -62,14 +67,15 @@ fun MapScreen(
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapContent(
-    navController : NavHostController,
+    navController: NavHostController,
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
+    bottomSheetSlide: Float,
     mContext: Context
 ) {
-    val mapViewModel : MapViewModel = hiltViewModel()
-    val homeViewModel : HomeViewModel = hiltViewModel()
+    val mapViewModel: MapViewModel = hiltViewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val openNetworkDialog = remember { mutableStateOf(false) }
     val openPaintExplainDialog = remember { mutableStateOf(false) }
     StateDamglePaintExplain(openPaintExplainDialog)
@@ -91,7 +97,7 @@ fun MapContent(
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
             uiSettings = mapUiSettings
-        ){
+        ) {
             LocationUtil.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
                 Marker(
                     state = it,
@@ -114,9 +120,9 @@ fun MapContent(
                     right = right
                 )
             }
-            when(mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
+            when (mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
                 is ViewState.Success -> {
-                    val list =  mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
+                    val list = mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
                     list.data.forEach {
                         val latitude = it.position.latitude
                         val longitude = it.position.longitude
@@ -186,7 +192,7 @@ fun MapContent(
                     .size(48.dp, 48.dp),
                 onClick = {
                     LocationUtil.getMyLocation(mContext)?.let { latLng ->
-                            cameraPositionState.move(CameraUpdate.scrollTo(latLng))
+                        cameraPositionState.move(CameraUpdate.scrollTo(latLng))
                     }
                 }
             )
@@ -194,6 +200,12 @@ fun MapContent(
         if(showLoading.value == true) {
             LoadingLottie()
         }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(bottomSheetSlide)
+                .background(color = Black)
+        )
     }
 }
 

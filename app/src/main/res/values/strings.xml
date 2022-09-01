@@ -5,15 +5,15 @@
     <string name="common.toast.backpress">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
 
     // Home
-    <string name="home.leave_my_story">나의 이야기 남기기</string>
-    <string name="home.leave_story_on_this_place">이 장소에 이야기를\n남겨보세요"</string>
-    <string name="home.story_lefted_here_disappears_after_a_month">남긴 이야기는 한 달 뒤에 사라져요</string>
+    <string name="home.leave_my_story">나의 담글 남기기</string>
+    <string name="home.leave_story_on_this_place">이 장소에 나만의 글을\n남겨보세요"</string>
+    <string name="home.story_lefted_here_disappears_after_a_month">남긴 글은 한 달 뒤에 사라져요</string>
 
     // BottomSheet
     <string name="home.bottomsheet.leave_my_story">나의 담글 남기기</string>
     <string name="home.bottomsheet.leave_story_on_this_place">이 장소에 나만의 글을 남겨보세요.</string>
-    <string name="home.bottomsheet.story_left_here_disappears_after_a_month">남긴 글은 한 달 뒤에 사라져요.</string>
-    <string name="home.bottomsheet.leave_your_own_story">지도 담벼락에 나만의 글을 남겨보세요.</string>
+    <string name="home.bottomsheet.story_left_here_disappears_after_a_month">남긴 글은 한 달 뒤에 사라져요</string>
+    <string name="home.bottomsheet.leave_your_own_story">지도 담벼락에 나만의 글을 남겨보세요</string>
     <string name="home.bottomsheet.leave_a_story">담글 남기기</string>
     <string name="home.bottomsheet.you_can_enter_up_to_100_characters">100자까지만 입력할 수 있어요.</string>
     <string name="leave_story.now_leaving_a_story">지금은 담벼락\n칠해지는 시간…</string>
