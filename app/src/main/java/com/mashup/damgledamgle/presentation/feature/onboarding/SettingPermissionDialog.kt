@@ -31,7 +31,7 @@ fun SettingPermissionDialog(
     ) {
         DamgleDialogOuter {
             DamgleDialogTwoButtonInner(
-                title = "워치 권한이 필요해요",
+                title = "위치 권한이 필요해요",
                 description = "위치 권한에 동의해야 앱을 사용할 수 있어요\n설정 페이지로 이동한 후 위치 권한을 허용해주세요!",
                 firstButtonText = "설정하러 가기",
                 firstButtonAction = onMoveToSettingButton,

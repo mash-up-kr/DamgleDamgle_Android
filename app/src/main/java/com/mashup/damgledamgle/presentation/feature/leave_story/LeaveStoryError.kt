@@ -25,7 +25,7 @@ fun LeaveStoryError(onClickBottomButton: () -> Unit) {
                             .width(24.dp)
                             .offset(x = (-16).dp)
                             .clickable {
-                                // TODO 백스택 로직이 정해지면 수정
+                                onClickBottomButton()
                             }
                     )
                 }
@@ -34,8 +34,7 @@ fun LeaveStoryError(onClickBottomButton: () -> Unit) {
             LeaveStoryInner(
                 titleRes = R.string.leave_story_now_leaving_a_story_error,
                 subscriptionRes = R.string.leave_story_now_leaving_a_story_error_description,
-                // TODO 에러로 파일 교체
-                lottieRes = R.raw.paint
+                lottieRes = R.raw.write_fail
             )
         }
         LeaveStoryBottomButton("다시 담글 남기러 가기") { onClickBottomButton() }

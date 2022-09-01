@@ -29,6 +29,8 @@ val Gray400 = Color(0xFFE0E0E0)
 val White = Color(0xFFFFFFFF)
 val LottieBackGround = Color(0xFFCEC8C8)
 
+val BackgroundDim = Color(0x4D000000)
+
 // Error
 val SystemRed = Color(0xFFFF3B30)
 

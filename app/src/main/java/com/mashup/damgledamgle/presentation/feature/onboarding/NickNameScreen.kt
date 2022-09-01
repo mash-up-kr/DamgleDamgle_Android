@@ -34,6 +34,7 @@ fun NickNameScreen(
     val context = LocalContext.current
     val viewModel: OnboardingViewModel = hiltViewModel()
     val openNickNameErrorDialog = remember { mutableStateOf(false) }
+    val openNickNameQuestionDialog = remember { mutableStateOf(false) }
     val signUpLoadingState = remember { mutableStateOf(false) }
 
     Box(
@@ -61,15 +62,28 @@ fun NickNameScreen(
                         modifier = Modifier.padding(start = 20.dp)
                     )
 
-                    Text(
-                        text = context.getString(
-                            R.string.nickname_placeholder_count,
-                            viewModel.nickName.value.nth
-                        ),
-                        style = pretendardTextStyle.bodyMedium24,
-                        color = Orange500,
-                        modifier = Modifier.padding(top = 56.dp, start = 24.dp)
-                    )
+                    Row(
+                        modifier = Modifier.padding(top = 56.dp, start = 24.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = context.getString(
+                                R.string.nickname_placeholder_count,
+                                viewModel.nickName.value.nth
+                            ),
+                            style = pretendardTextStyle.bodyMedium24,
+                            color = Orange500,
+                        )
+
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_question),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .padding(start = 4.dp)
+                                .size(24.dp)
+                                .clickable { openNickNameQuestionDialog.value = true }
+                        )
+                    }
 
                     Row(
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp)
@@ -137,7 +151,19 @@ fun NickNameScreen(
     if (openNickNameErrorDialog.value) {
         NickNameErrorDialog(
             openNickNameErrorDialog = openNickNameErrorDialog,
-            onButtonClick = { openNickNameErrorDialog.value = false }
+            onButtonClick = {
+                openNickNameErrorDialog.value = false
+                if (viewModel.nickName.value.fullName.isEmpty()) {
+                    viewModel.getNickName()
+                }
+            }
+        )
+    }
+
+    if (openNickNameQuestionDialog.value) {
+        NickNameQuestionDialog(
+            nth = viewModel.nickName.value.nth,
+            openNickNameErrorDialog = openNickNameQuestionDialog
         )
     }
 

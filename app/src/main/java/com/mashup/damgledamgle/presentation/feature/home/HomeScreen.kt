@@ -22,12 +22,10 @@ import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.util.LocationUtil
-import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
-import com.naver.maps.map.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalNaverMapApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val homeViewModel: HomeViewModel = hiltViewModel()
@@ -52,7 +50,6 @@ fun HomeScreen(navController: NavHostController) {
     var locationTitle by remember {
         mutableStateOf("")
     }
-    val cameraPositionState = rememberCameraPositionState()
     val currentLocation = LocationUtil.getMyLocation(context)
     homeViewModel.getNaverGeocode(
         "${currentLocation?.longitude},${currentLocation?.latitude}"
@@ -63,9 +60,6 @@ fun HomeScreen(navController: NavHostController) {
             currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }.toString()
         }
     }
-
-    currentLocation?.let { CameraUpdate.scrollTo(it) }
-        ?.let { cameraPositionState.move(it) }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val bottomSheetSlide = (1 - getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)) * 0.7f
@@ -100,7 +94,6 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             MapScreen(
                 navController,
-                cameraPositionState,
                 bottomSheetSlide
             )
         }

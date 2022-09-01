@@ -9,12 +9,13 @@ import com.mashup.damgledamgle.domain.usecase.home.GetStoryFeedUseCase
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.feature.home.HomeViewModel
 import com.mashup.damgledamgle.presentation.feature.home.model.*
-import com.mashup.damgledamgle.util.ReactionUtil.getMainIcon
+import com.mashup.damgledamgle.util.ReactionUtil.getMainIconFromGroupList
 import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -27,12 +28,16 @@ class MapViewModel @Inject constructor(
     private var countDownTimer: CountDownTimer? = null
     private val _time = MutableLiveData("")
     val time: LiveData<String> = _time
+    private val _timerStatus = MutableStateFlow(false)
+    val timerStatus: StateFlow<Boolean> = _timerStatus
+
     private val _oneHourCheck = MutableLiveData(false)
 
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
-    val showLoading = MutableLiveData(false)
-    var bound : Bound? = null
 
+    val showLoading = MutableLiveData(false)
+    var currentBound : Bound? = null
+    var movingBound : LatLng? = null
     val storyFeedState = MutableStateFlow<ViewState<ArrayList<GroupMarkerInfo>>>(ViewState.Loading)
 
     fun homeRefreshBtnEvent(
@@ -43,12 +48,12 @@ class MapViewModel @Inject constructor(
             delay(2000)
             homeViewModel.getNaverGeocode(
                 "${updateLocation?.longitude},${updateLocation?.latitude}")
-            if(bound != null) {
+            if(currentBound != null) {
                 getStoryFeedList(
-                    bound!!.top,
-                    bound!!.bottom,
-                    bound!!.left,
-                    bound!!.right
+                    currentBound!!.top,
+                    currentBound!!.bottom,
+                    currentBound!!.left,
+                    currentBound!!.right
                 )
             }
             showLoading.value = false
@@ -138,7 +143,7 @@ class MapViewModel @Inject constructor(
     private fun mappingMarkerInfo(markerList: ArrayList<MarkerModel>): ArrayList<GroupMarkerInfo> {
         val mainMarkerInfoList: ArrayList<GroupMarkerInfo> = arrayListOf()
         markerList.forEach { groupList ->
-            val mainIcon = getMainIcon(groupList.damgle)
+            val mainIcon = getMainIconFromGroupList(groupList.damgle)
             val mainPosition = getMarkerRandomPosition(groupList.damgle)
             val markerListSize = groupList.damgle.size
             val isMine = isMyStoryCheck(groupList.damgle)
@@ -189,6 +194,7 @@ class MapViewModel @Inject constructor(
     fun startTimer() {
         countDownTimer = object : CountDownTimer(TimeUtil.getCalDiffTime(), 1000) {
             override fun onTick(millisRemaining: Long) {
+                _timerStatus.value = true
                 _oneHourCheck.value = TimeUnit.MILLISECONDS.toHours(millisRemaining) < 1
                 val hms = TimeUtil.formatTimerTime(millisRemaining)
                 _time.value = hms
@@ -202,6 +208,7 @@ class MapViewModel @Inject constructor(
     }
 
     private fun pauseTimer() {
+        _timerStatus.value = false
         countDownTimer?.cancel()
 
     }

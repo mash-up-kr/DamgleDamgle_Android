@@ -129,23 +129,24 @@ fun MyDamgleEmoji(emojiDrawableId: Int, count: Int, modifier: Modifier) {
             modifier = Modifier.matchParentSize()
         )
 
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .padding(4.dp)
-                .size(16.dp)
-        ) {
-            Image(
-                bitmap = yellowCircleBitmap,
-                contentDescription = "MyDamgle Emoji Count",
-            )
+        if (count > 0)
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .padding(4.dp)
+                    .size(16.dp)
+            ) {
+                Image(
+                    bitmap = yellowCircleBitmap,
+                    contentDescription = "MyDamgle Emoji Count",
+                )
 
-            Text(
-                text = count.toString(),
-                style = pretendardTextStyle.bodyMedium10,
-                color = Gray1000
-            )
-        }
+                Text(
+                    text = count.toString(),
+                    style = pretendardTextStyle.bodyMedium10,
+                    color = Gray1000
+                )
+            }
     }
 }
 

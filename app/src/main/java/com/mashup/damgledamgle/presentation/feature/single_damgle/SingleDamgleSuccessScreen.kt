@@ -66,5 +66,4 @@ fun SingleDamgleSuccessScreen(
             isMine = damgle.isMine
         )
     }
-
 }

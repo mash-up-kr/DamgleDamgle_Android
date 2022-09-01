@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">담글담글</string>
+    <string name="app_name">담글</string>
 
     // Common
     <string name="common.toast.backpress">뒤로가기 버튼을 한번 더 누르면 종료됩니다.</string>
@@ -28,13 +28,16 @@
     <string name="permission.alarm.maintext">우리 서비스를 이용하기 위해\n알람 동의가 꼭 필요해요!</string>
     <string name="permission.alarm.subtext">내 주변의 색다른 이야기가\n발견되면 알려드릴게요!</string>
 
-    <string name="home.map.paint_text">이번달 페인트칠</string>
+    <string name="home.map.paint_text">이번 달 페인트칠</string>
 
     // Nickname
-    <string name="nickname.maintext">이런 닉네임은\n어떠세요?</string>
-    <string name="nickname.subtext">마음껏 바꾸면서 나만의 이름을 정해보세요.</string>
+    <string name="nickname.maintext">반가워요!\n닉네임을 정해볼까요?</string>
+    <string name="nickname.subtext">가장 매력적인 닉네임을 찾아보세요.</string>
     <string name="nickname.placeholder.count">%d번째</string>
     <string name="nickname.button.start">시작하기</string>
+    <string name="nickname.nth.onboarding.title.nth">%d번째 </string>
+    <string name="nickname.nth.onboarding.title">는 나와 같은\n닉네임의 개수를 뜻해요.</string>
+    <string name="nickname.nth.onboarding.message">운이 좋다면 첫 번째 닉네임을 찾을 수 있어요.\n행운을 빌어요!</string>
 
     // MyPage
     <string name="mypage.delete.popup.title">정말 내 정보를 삭제하고\n서비스를 그만 사용하실건가요?</string>
@@ -50,4 +53,7 @@
     <string name="damgle.clear.complete">담벼락이 모두\n칠해졌어요!</string>
     <string name="damgle.subtext">이제 새로워진 담벼락에 마음껏 글을 남겨보세요!</string>
 
+    //Paint
+    <string name="damgle.paint.explain.title">이번 달 페인트칠이란?</string>
+    <string name="damgle.paint.explain.content">매월 마지막날, 담벼락을 새로\n페인트칠하면 모든 담글이 깨끗히 지워져요.\n해당 타이머를 보고 다음 페인트칠까지\n남은 시간을 확인하세요.</string>
 </resources>

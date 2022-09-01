@@ -21,8 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.presentation.component.ErrorText
-import com.mashup.damgledamgle.ui.theme.Gray600
-import com.mashup.damgledamgle.ui.theme.Gray900
+import com.mashup.damgledamgle.ui.theme.*
 
 @Preview
 @Composable
@@ -79,11 +78,7 @@ fun DamgleStoryBoxWriting(
                             }
                         }
                     },
-                    textStyle = TextStyle(
-                        color = textColor,
-                        fontSize = 16.sp,
-                        lineHeight = (16 * 1.55).sp,
-                    ),
+                    textStyle = pretendardTextStyle.bodyMedium16,
                     decorationBox = { innerTextField ->
                         Row(modifier = Modifier.fillMaxWidth()) {
                             if (text.isEmpty()) {
@@ -129,6 +124,8 @@ fun DamgleStoryBoxWriting(
                         .padding(16.dp)
                         .wrapContentWidth()
                         .align(Alignment.BottomEnd),
+                    color = Gray800,
+                    style = pretendardTextStyle.bodyMedium13,
                     text = "${text.count()}/100 자"
                 )
             }
