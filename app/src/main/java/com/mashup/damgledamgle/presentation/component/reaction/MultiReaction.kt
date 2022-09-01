@@ -39,7 +39,7 @@ private val specialReactionPositionCase = mapOf(
     (Reaction.LIKE to 4) to (-16 to 8),
     (Reaction.LIKE to 5) to (-13 to 4),
     (Reaction.BEST to 1) to (78 to 3),
-    (Reaction.BEST to 5) to (82 to 11),
+    (Reaction.BEST to 5) to (35 to -2),
     (Reaction.ANGRY to 3) to (-18 to 29),
     (Reaction.ANGRY to 4) to (-23 to 20),
     (Reaction.ANGRY to 5) to (-21 to -1),
