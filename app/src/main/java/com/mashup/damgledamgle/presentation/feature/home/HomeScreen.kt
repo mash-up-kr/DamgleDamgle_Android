@@ -15,6 +15,7 @@ import com.mashup.damgledamgle.presentation.feature.home.damgle.DamglePaintDialo
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
+import com.mashup.damgledamgle.ui.theme.Gray800
 import com.mashup.damgledamgle.util.LocationUtil
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.compose.ExperimentalNaverMapApi
@@ -79,6 +80,7 @@ fun HomeScreen(navController: NavHostController) {
             },
             sheetPeekHeight = 100.dp,
             scaffoldState = bottomSheetScaffoldState,
+            backgroundColor = Gray800
         ) {
             MapScreen(
                 navController,
