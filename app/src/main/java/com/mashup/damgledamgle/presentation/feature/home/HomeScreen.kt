@@ -3,7 +3,6 @@ package com.mashup.damgledamgle.presentation.feature.home
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -16,7 +15,7 @@ import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
 import com.mashup.damgledamgle.util.LocationUtil
-import com.naver.maps.map.compose.ExperimentalNaverMapApi
+import com.naver.maps.geometry.LatLng
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -37,22 +36,22 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             openDamglePaintDialog.value = false
             homeViewModel.setLastEntryDamgleDay()
-            navController.navigate("damgle_clear_time_screen")
+            navController.navigate("damgle_clear_complete_screen")
         }
     }
 
     var locationTitle by remember {
         mutableStateOf("")
     }
-    val currentLocation = LocationUtil.getMyLocation(context)
-    homeViewModel.getNaverGeocode(
-        "${currentLocation?.longitude},${currentLocation?.latitude}"
-    )
-    val current = homeViewModel.locationTitle.observeAsState()
-    if (current.value != null) {
-        locationTitle = current.value!!.ifEmpty {
-            currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }.toString()
-        }
+    LocationUtil.getLocation(context) { currentLocation ->
+        homeViewModel.getNaverGeocode(
+            "${currentLocation.latitude},${currentLocation.longitude}"
+        )
+        locationTitle =
+            LocationUtil.convertMyLocationToAddress(
+                LatLng(currentLocation.latitude ?: 0.0, currentLocation.longitude ?: 0.0),
+                context
+            )
     }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()

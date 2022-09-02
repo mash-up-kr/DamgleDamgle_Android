@@ -1,6 +1,5 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.home.*
@@ -21,7 +20,6 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _locationTitle = MutableLiveData("")
-    val locationTitle: LiveData<String> = _locationTitle
     private val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
 
 
@@ -42,12 +40,13 @@ class HomeViewModel @Inject constructor(
     }
 
     fun checkEntryAfterDamgleDay(): Boolean {
-        if(getLastEntryDamgleDayUseCase.invoke().isEmpty()) return true
+        if(getLastEntryDamgleDayUseCase.invoke().isEmpty()) {
+            setLastEntryDamgleDay()
+        }
         else {
             val lastEntryDay = dateFormat(getLastEntryDamgleDayUseCase.invoke())
             val today = dateFormat(getTodayDate())
             if(lastEntryDay != null && today != null) {
-                Log.d("Day", lastEntryDay.toString())
                 return lastEntryDay.year != today.year || lastEntryDay.month < today.month
             }
         }
@@ -56,7 +55,7 @@ class HomeViewModel @Inject constructor(
 
     fun getLastEntryDamgleDay(): String {
         val lastEntryDay = getLastEntryDamgleDayUseCase.invoke()
-        if(lastEntryDay != "") return getDateDiff(lastEntryDay)
+        if(lastEntryDay.isNotEmpty()) return getDateDiff(lastEntryDay)
         return ""
     }
 
