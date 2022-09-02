@@ -2,6 +2,7 @@ package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -63,7 +64,7 @@ fun MapScreen(
 @OptIn(ExperimentalNaverMapApi::class)
 @Composable
 fun MapContent(
-    navController : NavHostController,
+    navController: NavHostController,
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
@@ -80,17 +81,16 @@ fun MapContent(
         LocationUtil.getMyLocation(mContext)?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
     }
-    if(cameraPositionState.isMoving) {
+    if(!cameraPositionState.isMoving) {
         mapViewModel.movingBound = LatLng(
             cameraPositionState.position.target.latitude,
             cameraPositionState.position.target.longitude
         )
-
-
     } else {
-        if(cameraPositionState.contentBounds?.northLatitude != null && mapViewModel.movingBound != null) {
+        if(cameraPositionState.contentBounds != null && mapViewModel.movingBound != null) {
+            Log.d("refresh", "moving bound")
             mapViewModel.getStoryFeedList(
-                top = cameraPositionState.contentBounds!!.northLatitude ,
+                top = cameraPositionState.contentBounds!!.northLatitude,
                 bottom = cameraPositionState.contentBounds!!.southLatitude,
                 left = cameraPositionState.contentBounds!!.westLongitude,
                 right = cameraPositionState.contentBounds!!.eastLongitude
@@ -104,14 +104,16 @@ fun MapContent(
             properties = mapProperties,
             uiSettings = mapUiSettings
         ){
-            LocationUtil.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
+            LocationUtil.getLocation(mContext) {
+                mapViewModel.updateMyLocation(LatLng(it.latitude, it.longitude))
+            }
+            mapViewModel.myLocation.value?.let {
                 Marker(
-                    state = it,
+                    state = MarkerState(position = it),
                     zIndex = -1,
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker)
                 )
             }
-
             MapEffect { map ->
                 val top = map.contentBounds.northLatitude
                 val bottom = map.contentBounds.southLatitude
@@ -187,8 +189,9 @@ fun MapContent(
                 modifier = Modifier.size(48.dp, 48.dp),
                 onClick = {
                     mapViewModel.showLoading.value = true
-                    val updateLocation = LocationUtil.getMyLocation(mContext)
-                    mapViewModel.homeRefreshBtnEvent(homeViewModel, updateLocation)
+                    LocationUtil.getLocation(mContext) {
+                        mapViewModel.homeRefreshBtnEvent(homeViewModel, LatLng(it.latitude, it.longitude))
+                    }
                 }
             )
             FloatingActionButton(
@@ -199,14 +202,16 @@ fun MapContent(
                     .size(48.dp, 48.dp),
                 onClick = {
                     val animation = CameraAnimation.Fly
-                    val position = LocationUtil.getMyLocation(mContext)?.let { CameraPosition(it, 14.8) }
-                    coroutineScope.launch {
-                        position?.let { CameraUpdate.toCameraPosition(it) }?.let {
-                            cameraPositionState.animate(
-                                it,
-                                animation = animation,
-                                durationMs = 1000
-                            )
+                    LocationUtil.getLocation(mContext) {
+                        val position = CameraPosition(LatLng(it.latitude, it.longitude),16.0)
+                        coroutineScope.launch {
+                            position.let { CameraUpdate.toCameraPosition(it) }.let {
+                                cameraPositionState.animate(
+                                    it,
+                                    animation = animation,
+                                    durationMs = 1000
+                                )
+                            }
                         }
                     }
                 }
