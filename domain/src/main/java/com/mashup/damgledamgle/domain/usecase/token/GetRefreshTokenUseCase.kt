@@ -1,6 +1,7 @@
 package com.mashup.damgledamgle.domain.usecase.token
 
-import com.mashup.damgledamgle.domain.repository.TokenRepository
+import KEY_REFRESH_TOKEN
+import com.mashup.damgledamgle.domain.repository.SharedPreferenceRepository
 import javax.inject.Inject
 
 /**
@@ -11,9 +12,9 @@ import javax.inject.Inject
  */
 
 class GetRefreshTokenUseCase @Inject constructor(
-    private val tokenRepository: TokenRepository
+    private val sharedPreferenceRepository: SharedPreferenceRepository
 ) {
     operator fun invoke(): String {
-        return tokenRepository.getRefreshToken()
+        return sharedPreferenceRepository.getString(KEY_REFRESH_TOKEN)
     }
 }
