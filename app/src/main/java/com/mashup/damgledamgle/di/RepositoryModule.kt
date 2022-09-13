@@ -3,7 +3,7 @@ package com.mashup.damgledamgle.di
 import com.mashup.damgledamgle.domain.repository.*
 import com.mashup.damgledamgle.repository.datastore.repository.DataStoreRepositoryImpl
 import com.mashup.damgledamgle.repository.remote.*
-import com.mashup.damgledamgle.repository.token.SharedPreferenceRepositoryImpl
+import com.mashup.damgledamgle.repository.token.TokenPreferenceRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -30,7 +30,7 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindSharedPreferenceRepository(impl: SharedPreferenceRepositoryImpl): SharedPreferenceRepository
+    abstract fun bindTokenPreferenceRepository(impl: TokenPreferenceRepositoryImpl): TokenPreferenceRepository
 
     @Singleton
     @Binds
