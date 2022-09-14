@@ -40,8 +40,8 @@ class AllDamgleListViewModel @Inject constructor(
                         .toList()
                         .sortedBy { model ->
                             when (strategy) {
-                                DamgleStorySort.LATEST -> model.dateTime
-                                DamgleStorySort.POPULAR -> model.reactions.values.sumOf { it.count }.toLong()
+                                DamgleStorySort.LATEST -> -model.dateTime
+                                DamgleStorySort.POPULAR -> -model.reactions.values.sumOf { it.count }.toLong()
                             }
                         }
                 )
