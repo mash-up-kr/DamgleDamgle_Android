@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,44 +74,28 @@ fun TabMyDamglePage(
     } else {
         Box(
             contentAlignment = Alignment.TopCenter,
+            modifier = Modifier.fillMaxSize()
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.background_vertical_orange_gradient),
-                contentDescription = "Orange Gradient Background",
-                modifier = Modifier.fillMaxWidth()
-            )
+            Box {
+                Image(
+                    painter = painterResource(id = R.drawable.background_vertical_orange_gradient),
+                    contentDescription = "Orange Gradient Background",
+                    modifier = Modifier.matchParentSize(),
+                    contentScale = ContentScale.FillBounds
+                )
 
-            Column(
-                modifier = Modifier.fillMaxHeight()
-            ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(top = 20.dp)
-                        .fillMaxWidth()
-                ) {
-                    itemsIndexed(
-                        myDamgleList
-                    ) { index, item ->
-                        MyDamgleItem(navController, item)
-                    }
-                }
-
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.background_mydamgle_gray_gradient),
-                        contentDescription = "To hide Orange gradient when my damgle item count is small ",
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-
-                    Box(
+                Column(modifier = Modifier.padding(bottom = 20.dp)) {
+                    LazyColumn(
                         modifier = Modifier
+                            .padding(top = 20.dp, )
                             .fillMaxWidth()
-                            .height(2000.dp)
-                            .padding(20.dp)
-                            .background(color = Grey500)
-                    )
+                    ) {
+                        itemsIndexed(
+                            myDamgleList
+                        ) { index, item ->
+                            MyDamgleItem(navController, item)
+                        }
+                    }
                 }
             }
         }
