@@ -3,7 +3,6 @@ package com.mashup.damgledamgle.di
 import com.mashup.damgledamgle.domain.repository.*
 import com.mashup.damgledamgle.repository.datastore.repository.DataStoreRepositoryImpl
 import com.mashup.damgledamgle.repository.remote.*
-import com.mashup.damgledamgle.repository.token.TokenPreferenceRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,10 +26,6 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindOnboardingRepository(impl: OnboardingRepositoryImpl): OnboardingRepository
-
-    @Singleton
-    @Binds
-    abstract fun bindTokenPreferenceRepository(impl: TokenPreferenceRepositoryImpl): TokenPreferenceRepository
 
     @Singleton
     @Binds

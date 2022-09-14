@@ -20,41 +20,61 @@ import javax.inject.Inject
 class DataStoreRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : DataStoreRepository {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "DamgleDamgle_DataStore")
+    companion object {
+        private const val DATASTORE_FILE_NAME = "DamgleDamgle_DataStore"
 
-    override fun getIntPreference(key: String): Flow<Int?> {
+        private const val KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN"
+        private const val KEY_REFRESH_TOKEN = "KEY_REFRESH_TOKEN"
+    }
+
+    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_FILE_NAME)
+
+    override suspend fun setToken(accessToken: String, refreshToken: String) {
+        setStringPreference(KEY_ACCESS_TOKEN, accessToken)
+        setStringPreference(KEY_REFRESH_TOKEN, refreshToken)
+    }
+
+    override suspend fun getAccessToken(): String {
+        return getStringPreferenceOnce(KEY_ACCESS_TOKEN) ?: ""
+    }
+
+    override suspend fun getRefreshToken(): String {
+        return getStringPreferenceOnce(KEY_REFRESH_TOKEN) ?: ""
+    }
+
+    private fun getIntPreference(key: String): Flow<Int?> {
         return getDataStore(intPreferencesKey(key))
     }
 
-    override fun getBooleanPreference(key: String): Flow<Boolean?> {
+    private fun getBooleanPreference(key: String): Flow<Boolean?> {
         return getDataStore(booleanPreferencesKey(key))
     }
 
-    override fun getStringPreference(key: String): Flow<String?> {
+    private fun getStringPreference(key: String): Flow<String?> {
         return getDataStore(stringPreferencesKey(key))
     }
 
-    override suspend fun getIntPreferenceOnce(key: String): Int? {
+    private suspend fun getIntPreferenceOnce(key: String): Int? {
         return getDataStore(intPreferencesKey(key)).first()
     }
 
-    override suspend fun getBooleanPreferenceOnce(key: String): Boolean? {
+    private suspend fun getBooleanPreferenceOnce(key: String): Boolean? {
         return getDataStore(booleanPreferencesKey(key)).first()
     }
 
-    override suspend fun getStringPreferenceOnce(key: String): String? {
+    private suspend fun getStringPreferenceOnce(key: String): String? {
         return getDataStore(stringPreferencesKey(key)).first()
     }
 
-    override suspend fun setIntPreference(key: String, value: Int) {
+    private suspend fun setIntPreference(key: String, value: Int) {
         return setDataStore(intPreferencesKey(key), value)
     }
 
-    override suspend fun setBooleanPreference(key: String, value: Boolean) {
+    private suspend fun setBooleanPreference(key: String, value: Boolean) {
         return setDataStore(booleanPreferencesKey(key), value)
     }
 
-    override suspend fun setStringPreference(key: String, value: String) {
+    private suspend fun setStringPreference(key: String, value: String) {
         return setDataStore(stringPreferencesKey(key), value)
     }
 
