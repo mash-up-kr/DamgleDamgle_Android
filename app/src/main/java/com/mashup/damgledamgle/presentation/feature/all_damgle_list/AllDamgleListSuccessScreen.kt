@@ -6,8 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -62,6 +61,9 @@ fun AllDamgleListSuccessScreen(navController: NavController, viewModel: AllDamgl
                     item {
                         Spacer(modifier = Modifier.height(16.dp))
                         Row(modifier = Modifier.padding(horizontal = 20.dp)) {
+
+                            val strategy by viewModel.damgleSortStrategy.collectAsState()
+
                             DamgleStorySort.values().forEach {
                                 val interactionSource = remember { MutableInteractionSource() }
                                 Text(
@@ -72,8 +74,8 @@ fun AllDamgleListSuccessScreen(navController: NavController, viewModel: AllDamgl
                                             indication = null
                                         ) { viewModel.changeDamgleSortStrategy(it) },
                                     text = it.key,
-                                    color = if (viewModel.damgleSortStrategy.value == it) Black else Gray800,
-                                    fontWeight = if (viewModel.damgleSortStrategy.value == it) FontWeight.Bold else FontWeight.Normal,
+                                    color = if (strategy == it) Black else Gray800,
+                                    fontWeight = if (strategy == it) FontWeight.Bold else FontWeight.Normal,
                                 )
                             }
                         }

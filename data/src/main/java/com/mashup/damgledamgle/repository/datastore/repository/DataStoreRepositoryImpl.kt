@@ -25,6 +25,8 @@ class DataStoreRepositoryImpl @Inject constructor(
 
         private const val KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN"
         private const val KEY_REFRESH_TOKEN = "KEY_REFRESH_TOKEN"
+        private const val KEY_ID = "KEY_ID"
+
     }
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_FILE_NAME)
@@ -32,6 +34,14 @@ class DataStoreRepositoryImpl @Inject constructor(
     override suspend fun setToken(accessToken: String, refreshToken: String) {
         setStringPreference(KEY_ACCESS_TOKEN, accessToken)
         setStringPreference(KEY_REFRESH_TOKEN, refreshToken)
+    }
+
+    override suspend fun setId(id: Int) {
+        return setIntPreference(KEY_ID, id)
+    }
+
+    override suspend fun getId(): Int {
+        return getIntPreferenceOnce(KEY_ID) ?: -1
     }
 
     override suspend fun getAccessToken(): String {

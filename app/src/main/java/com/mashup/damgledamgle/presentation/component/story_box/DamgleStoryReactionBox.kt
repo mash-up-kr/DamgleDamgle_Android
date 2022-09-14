@@ -60,7 +60,9 @@ fun DamgleStoryReactionBox(
             enter = fadeIn(initialAlpha = 0.3f),
             exit = fadeOut()
         ) {
-            SingleReaction(reactions.entries.first().key, reactions.entries.first().value.count)
+            reactions.entries.firstOrNull()?.let {
+                SingleReaction(it.key, it.value.count)
+            }
         }
         AnimatedVisibility(
             visible = count > 1,
