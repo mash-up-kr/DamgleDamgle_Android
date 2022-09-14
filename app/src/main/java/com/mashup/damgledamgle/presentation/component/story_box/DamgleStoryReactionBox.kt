@@ -4,7 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,27 +47,29 @@ fun DamgleStoryReactionBox(
             .width(320.dp),
         contentAlignment = Alignment.Center
     ) {
-        var isOne by remember { mutableStateOf(false) }
-
-        when (reactions.filter { it.value.count > 0 }.count()) {
-            0 -> {
-                isOne = false
-                EmptyReaction()
+        val count = reactions.filter { it.value.count > 0 }.count()
+        AnimatedVisibility(
+            visible = count == 0,
+            enter = fadeIn(initialAlpha = 0.3f),
+            exit = fadeOut()
+        ) {
+            EmptyReaction()
+        }
+        AnimatedVisibility(
+            visible = count == 1,
+            enter = fadeIn(initialAlpha = 0.3f),
+            exit = fadeOut()
+        ) {
+            reactions.entries.firstOrNull()?.let {
+                SingleReaction(it.key, it.value.count)
             }
-            1 -> {
-                isOne = true
-                AnimatedVisibility(
-                    visible = isOne,
-                    enter = fadeIn(initialAlpha = 0.3f),
-                    exit = fadeOut()
-                ) {
-                    SingleReaction(reactions.entries.first().key, reactions.entries.first().value.count)
-                }
-            }
-            else -> {
-                isOne = false
-                MultiReaction(modifier = Modifier.fillMaxSize(), reactions)
-            }
+        }
+        AnimatedVisibility(
+            visible = count > 1,
+            enter = fadeIn(initialAlpha = 0.3f),
+            exit = fadeOut()
+        ) {
+            MultiReaction(modifier = Modifier.fillMaxSize(), reactions)
         }
         if (!isMine)
             Text(

@@ -28,6 +28,7 @@ object DamgleStoryBoxMapper {
                 }
                 map
             },
+            reports = entity.reports.map { it.userNo },
             myReaction = entity.reactionOfMine?.type?.toReaction(),
             reactionBoxState = reactionBoxState
         )

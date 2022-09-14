@@ -13,6 +13,7 @@ data class DamgleStoryBoxModel(
     val dateTime: Long,
     val content: String,
     val reactions: Map<Reaction, DamgleStoryReactionState>,
+    val reports: List<Int>,
     val myReaction: Reaction?,
     val reactionBoxState: ReactionBoxState
 )

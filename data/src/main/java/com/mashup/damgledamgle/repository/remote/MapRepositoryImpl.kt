@@ -15,16 +15,16 @@ import javax.inject.Inject
 
 class MapRepositoryImpl @Inject constructor(
     private val naverApi: NaverApi,
-    private val damgleApi : DamgleApi,
-    private val damgleMapper : DamgleMapper,
+    private val damgleApi: DamgleApi,
+    private val damgleMapper: DamgleMapper,
     @ApplicationContext private val context: Context
-    ) : MapRepository {
+) : MapRepository {
 
     private val prefs =
         context.getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE)
 
     override fun getLastEntryDamgleDay(): String {
-       return prefs.getString(LAST_ENTRY_DAY, "") ?: ""
+        return prefs.getString(LAST_ENTRY_DAY, "") ?: ""
     }
 
     override fun setLastEntryDamgleDay(date: String) {
@@ -32,14 +32,16 @@ class MapRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getReverseGeocoding(
-        coors: String): Result<GeoResult> {
+        coors: String
+    ): Result<GeoResult> {
         return try {
             val result = naverApi.getReverseGeocoding(
                 BuildConfig.NAVER_CLIENT_ID,
                 BuildConfig.NAVER_CLIENT_KEY,
                 coors,
                 "roadaddr",
-                "json")
+                "json"
+            )
             Result.Success(geocodeMapper(result))
         } catch (e: Exception) {
             Result.Error(e)
@@ -61,8 +63,9 @@ class MapRepositoryImpl @Inject constructor(
             )
             Result.Success(storyFeedResult.stories.map {
                 damgleMapper.mapToEntity(it)
-            })
-        } catch (e : Exception) {
+            }// TODO 임시로직
+                .filter { !it.address1.isNullOrEmpty() })
+        } catch (e: Exception) {
             Result.Error(e)
         }
     }

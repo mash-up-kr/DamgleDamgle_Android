@@ -1,11 +1,12 @@
 package com.mashup.damgledamgle.presentation.feature.all_damgle_list
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.damgledamgle.domain.entity.base.launchWithResult
 import com.mashup.damgledamgle.domain.usecase.damgle.*
-import com.mashup.damgledamgle.domain.usecase.user.GetUserProfileUserCase
+import com.mashup.damgledamgle.domain.usecase.user.GetMyIdUseCase
 import com.mashup.damgledamgle.enumerate.*
 import com.mashup.damgledamgle.presentation.common.ViewState
 import com.mashup.damgledamgle.presentation.common.successOrNull
@@ -20,30 +21,33 @@ import javax.inject.Inject
 @HiltViewModel
 class AllDamgleListViewModel @Inject constructor(
     private val getDamgleStoryUseCase: GetDamgleStoriesUseCase,
-    private val getUserProfileUserCase: GetUserProfileUserCase,
+    private val getMyIdUseCase: GetMyIdUseCase,
     private val createDamgleReactionUseCase: CreateDamgleReactionUseCase,
     private val deleteDamgleReactionUseCase: DeleteDamgleReactionUseCase,
     private val reportDamgleUseCase: ReportDamgleUseCase
 ) : ViewModel() {
+
+    private val myId = MutableStateFlow(-1)
 
     private val _damgleSortStrategy = MutableStateFlow(DamgleStorySort.LATEST)
     val damgleSortStrategy: StateFlow<DamgleStorySort> = _damgleSortStrategy
 
     private val _damgleFeedState = MutableStateFlow<ViewState<MutableMap<String, DamgleStoryBoxModel>>>(ViewState.Loading)
     val damgleFeedState: StateFlow<ViewState<List<DamgleStoryBoxModel>>> =
-        _damgleFeedState.combine(_damgleSortStrategy) { stories, strategy ->
+        combine(_damgleFeedState, _damgleSortStrategy, myId) { stories, strategy, id ->
             when (stories) {
                 is ViewState.Loading -> ViewState.Loading
-                is ViewState.Error -> stories
+                is ViewState.Error -> ViewState.Error(stories.error)
                 is ViewState.Success -> ViewState.Success(
                     stories.data.values
                         .toList()
                         .sortedBy { model ->
                             when (strategy) {
-                                DamgleStorySort.LATEST -> model.dateTime
-                                DamgleStorySort.POPULAR -> model.reactions.values.sumOf { it.count }.toLong()
+                                DamgleStorySort.LATEST -> -model.dateTime
+                                DamgleStorySort.POPULAR -> -model.reactions.values.sumOf { it.count }.toLong()
                             }
                         }
+                        .filter { !it.reports.contains(id) }
                 )
             }
         }.stateIn(viewModelScope, SharingStarted.Eagerly, ViewState.Loading)
@@ -55,6 +59,12 @@ class AllDamgleListViewModel @Inject constructor(
         right: Double
     ) {
         viewModelScope.launch {
+            // TODO 합쳐야함
+            launchWithResult(
+                getMyIdUseCase(),
+                { id -> myId.emit(id) },
+                {}
+            )
             launchWithResult(
                 getDamgleStoryUseCase(top, bottom, left, right),
                 { data ->
