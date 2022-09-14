@@ -13,7 +13,10 @@ import com.mashup.damgledamgle.presentation.feature.all_damgle_list.DamgleStoryR
 import com.mashup.damgledamgle.presentation.feature.all_damgle_list.model.DamgleStoryBoxModel
 
 @Composable
-fun DamgleStoryBoxInner(damgleStoryBoxState: DamgleStoryBoxModel) {
+fun DamgleStoryBoxInner(
+    damgleStoryBoxState: DamgleStoryBoxModel,
+    onClickReport: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .height(340.dp)
@@ -38,7 +41,9 @@ fun DamgleStoryBoxInner(damgleStoryBoxState: DamgleStoryBoxModel) {
             )
             DamgleStoryReactionBox(
                 modifier = Modifier,
-                damgleStoryBoxState.reactions
+                damgleStoryBoxState.reactions,
+                damgleStoryBoxState.isMine,
+                onClickReport = { onClickReport() }
             )
         }
     }

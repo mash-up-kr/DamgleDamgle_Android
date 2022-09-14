@@ -4,4 +4,8 @@
     <style name="Theme.DamgleDamgle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@color/purple_700</item>
     </style>
+
+    <style name="font_pretendard_medium">
+        <item name="fontFamily">@font/pretendard_medium</item>
+    </style>
 </resources>

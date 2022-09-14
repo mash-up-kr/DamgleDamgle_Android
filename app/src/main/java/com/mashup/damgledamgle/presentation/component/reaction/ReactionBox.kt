@@ -18,7 +18,7 @@ import com.mashup.damgledamgle.ui.theme.Gray400
 fun ReactionBox(
     reactionBoxState: ReactionBoxState,
     onClickNowReaction: () -> Unit,
-    onClickReaction: (Reaction) -> Unit,
+    onClickReaction: (Reaction) -> Unit
 ) {
 
     val offsetBetweenReactionHolder = 8.dp

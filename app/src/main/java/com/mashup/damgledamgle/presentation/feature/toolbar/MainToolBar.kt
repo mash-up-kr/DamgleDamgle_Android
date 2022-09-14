@@ -1,7 +1,6 @@
 package com.mashup.damgledamgle.presentation.feature.toolbar
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,18 +9,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.mashup.damgledamgle.R
 import com.mashup.damgledamgle.ui.theme.White
 import com.mashup.damgledamgle.ui.theme.pretendardTextStyle
 
 @Composable
-fun MainToolBar(title: String?, iconClickAction: () -> Unit,) {
+fun MainToolBar(title: String?, iconClickAction: () -> Unit) {
 
     TopAppBar(
+        modifier = Modifier.height(66.dp),
         backgroundColor = colorResource(id = R.color.damgle_default_black),
         title = {
-            Box(modifier = Modifier.fillMaxWidth(),
-                Alignment.Center) {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                Alignment.Center
+            ) {
                 if (title != null) {
                     Text(
                         text = title,
@@ -32,11 +35,13 @@ fun MainToolBar(title: String?, iconClickAction: () -> Unit,) {
                 }
                 IconButton(
                     onClick = iconClickAction,
-                    modifier = Modifier.align(Alignment.CenterEnd)) {
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                ) {
                     Icon(
                         painterResource(id = R.drawable.ic_mypage),
                         "MyPage",
-                        tint = White)
+                        tint = White
+                    )
                 }
             }
         }

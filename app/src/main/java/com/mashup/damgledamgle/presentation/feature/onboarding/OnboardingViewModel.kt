@@ -42,7 +42,7 @@ class OnboardingViewModel @Inject constructor(
         getNickName()
     }
 
-    private fun getNickName() {
+    fun getNickName() {
         viewModelScope.launch {
             _uiState.emit(ViewState.Loading)
             setNickName(getRandomNickNameUseCase())

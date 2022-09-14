@@ -60,7 +60,7 @@ fun BottomSheetExpandedContent(
                 text = stringResource(R.string.home_bottomsheet_story_left_here_disappears_after_a_month)
             )
             Spacer(modifier = Modifier.height(32.dp))
-            DamgleStoryBox(backGroundColor = Gray400, textColor = Gray600, text = text, onTextChange = { text = it })
+            DamgleStoryBoxWriting(textColor = Gray900, text = text, onTextChange = { text = it })
         }
         BottomSheetBottomButton(text = text) {
             openLeaveStoryDialog.value = true

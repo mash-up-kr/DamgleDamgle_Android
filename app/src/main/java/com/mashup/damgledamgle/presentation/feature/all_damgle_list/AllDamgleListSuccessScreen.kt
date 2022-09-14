@@ -92,7 +92,9 @@ fun AllDamgleListSuccessScreen(navController: NavController, viewModel: AllDamgl
                                         ToastUtil.show(context, "${reaction.toKorean()} 이모지로 수정되었어요!")
                                         viewModel.reactDamgle(boxState.id, reaction)
                                     }
-                                }
+                                },
+                                onClickReport = { viewModel.reportDamgle(boxState.id) },
+                                isMine = boxState.isMine
                             )
                         }
                     }

@@ -71,4 +71,13 @@ class DamgleRepositoryImpl @Inject constructor(
             Result.Error(e)
         }
     }
+
+    override suspend fun reportDamgle(storyId: String): Result<Damgle> {
+        return try {
+            val result = damgleApi.reportDamgle(storyId)
+            Result.Success(damgleMapper.mapToEntity(result))
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
 }

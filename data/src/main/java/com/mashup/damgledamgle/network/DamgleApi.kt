@@ -94,4 +94,10 @@ interface DamgleApi {
     @GET("v1/story/{id}")
     suspend fun getDamgle(@Path("id") id: String): DamgleResponse
 
+    /**
+     * Story : 담글 신고
+     */
+    @POST("v1/story/report/{storyId}")
+    suspend fun reportDamgle(@Path("storyId") storyId: String): DamgleResponse
+
 }

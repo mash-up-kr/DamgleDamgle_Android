@@ -1,6 +1,5 @@
 package com.mashup.damgledamgle.network
 
-import android.util.Log
 import com.mashup.damgledamgle.data.BuildConfig
 import com.mashup.damgledamgle.domain.usecase.token.GetRefreshTokenUseCase
 import com.mashup.damgledamgle.domain.usecase.token.GetTokenUseCase
@@ -42,8 +41,6 @@ object NetworkModule {
                 override fun intercept(chain: Interceptor.Chain): Response {
                     val token = getTokenUseCase()
                     val refreshToken = getRefreshTokenUseCase()
-
-                    Log.d("TAG", "TOKEN: $token, REFRESH_TOKEN: $refreshToken")
 
                     val request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer $token")
