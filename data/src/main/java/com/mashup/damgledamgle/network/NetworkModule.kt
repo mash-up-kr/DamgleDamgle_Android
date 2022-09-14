@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -28,7 +29,6 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         getTokenUseCase: GetTokenUseCase,
-        getRefreshTokenUseCase: GetRefreshTokenUseCase
     ): OkHttpClient {
         return OkHttpClient.Builder().apply {
             connectTimeout(TIME_OUT, TimeUnit.SECONDS)
@@ -39,8 +39,7 @@ object NetworkModule {
             })
             addInterceptor(object : Interceptor {
                 override fun intercept(chain: Interceptor.Chain): Response {
-                    val token = getTokenUseCase()
-                    val refreshToken = getRefreshTokenUseCase()
+                    val token = runBlocking { getTokenUseCase() }
 
                     val request = chain.request().newBuilder()
                         .addHeader("Authorization", "Bearer $token")
