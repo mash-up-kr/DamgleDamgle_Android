@@ -39,7 +39,10 @@ class DamgleRepositoryImpl @Inject constructor(
     override suspend fun getMyDamgleList(): Result<List<Damgle>> {
         return try {
             val resultData = damgleApi.getMyDamgleList()
-            Result.Success(resultData.stories.map { damgleMapper.mapToEntity(it) })
+            Result.Success(resultData.stories
+                .map { damgleMapper.mapToEntity(it) }
+                    // TODO 임시로직
+                .filter { !it.address1.isNullOrEmpty() })
         } catch (e: Exception) {
             Result.Error(e)
         }
