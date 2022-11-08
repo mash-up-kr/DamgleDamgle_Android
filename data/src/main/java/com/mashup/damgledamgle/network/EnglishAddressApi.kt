@@ -19,7 +19,7 @@ interface EnglishAddressApi {
  @GET("/addrlink/addrEngApi.do")
  suspend fun getEnglishAddress(
   @Query("keyword") keyword: String,
-  @Query("confmKey") confmKey: String = "devU01TX0FVVEgyMDIyMDgxNDE2MDgzNDExMjg4MTQ=",
+  @Query("confmKey") confmKey: String = "devU01TX0FVVEgyMDIyMTEwODIzMzMxMzExMzIwMzk=",
   @Query("resultType") resultType: String = "json"
  ): EnglishAddressResponse
 }

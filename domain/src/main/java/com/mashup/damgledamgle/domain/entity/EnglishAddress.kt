@@ -8,6 +8,6 @@ package com.mashup.damgledamgle.domain.entity
  */
 
 data class EnglishAddress(
-    val sggName: String,
-    val roadName: String,
+    val sggName: String,        // 시군구
+    val roadName: String,       // 도로명
 )
