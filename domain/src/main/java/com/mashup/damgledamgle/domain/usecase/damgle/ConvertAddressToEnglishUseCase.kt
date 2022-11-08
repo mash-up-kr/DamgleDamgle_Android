@@ -8,12 +8,14 @@ import javax.inject.Inject
 class ConvertAddressToEnglishUseCase @Inject constructor(
     private val englishAddressRepository: EnglishAddressRepository
 ) {
-    suspend operator fun invoke(x: String, y: String): EnglishAddress {
-        val address = "성동구 아차산로13길" // FIXME: feature/map 브랜치랑 합쳐지면 위도경도로 주소 찾아서 넣기
+    suspend operator fun invoke(address1: String, address2: String): EnglishAddress {
+        val address = "$address1 $address2"
 
-        return when (val result = englishAddressRepository.getEnglishAddress(address)) {
+        val result = englishAddressRepository.getEnglishAddress(address)
+
+        return when (result) {
             is Result.Success -> EnglishAddress(result.data.sggName, result.data.roadName)
-            is Result.Error -> EnglishAddress("", "") // TODO: 어떻게 처리할까
+            is Result.Error -> EnglishAddress(address1, address2) // TODO: 영문 주소 조회 실패했을 겅우 처리
         }
     }
 }
