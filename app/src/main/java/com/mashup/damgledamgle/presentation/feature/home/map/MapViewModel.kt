@@ -30,7 +30,6 @@ class MapViewModel @Inject constructor(
     val time: LiveData<String> = _time
     private val _timerStatus = MutableStateFlow(false)
     val timerStatus: StateFlow<Boolean> = _timerStatus
-
     private val _oneHourCheck = MutableLiveData(false)
 
     val oneHourCheck : LiveData<Boolean> = _oneHourCheck
@@ -39,6 +38,12 @@ class MapViewModel @Inject constructor(
     var currentBound : Bound? = null
     var movingBound : LatLng? = null
     val storyFeedState = MutableStateFlow<ViewState<ArrayList<GroupMarkerInfo>>>(ViewState.Loading)
+    private val _myLocation = MutableLiveData<LatLng?>(null)
+    val myLocation: LiveData<LatLng?> = _myLocation
+
+    fun updateMyLocation(latLng: LatLng?) {
+        _myLocation.value = latLng
+    }
 
     fun homeRefreshBtnEvent(
         homeViewModel: HomeViewModel,

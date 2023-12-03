@@ -2,13 +2,12 @@ package com.mashup.damgledamgle.presentation.feature.home.map
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.compose.foundation.background
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,18 +21,17 @@ import com.mashup.damgledamgle.presentation.feature.home.damgle.DamgleTimeCheckB
 import com.mashup.damgledamgle.presentation.feature.home.map.marker.makeCustomMarkerView
 import com.mashup.damgledamgle.presentation.feature.home.model.Bound
 import com.mashup.damgledamgle.presentation.navigation.Screen
-import com.mashup.damgledamgle.ui.theme.Black
 import com.mashup.damgledamgle.util.LocationUtil
 import com.mashup.damgledamgle.util.TimeUtil
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.*
 import com.naver.maps.map.compose.*
 import com.naver.maps.map.overlay.OverlayImage
+import kotlinx.coroutines.launch
 
 @Composable
 fun MapScreen(
-    navController: NavHostController,
-    bottomSheetSlide: Float,
+    navController: NavHostController
 ) {
     val mContext = LocalContext.current
     val mapProperties by remember {
@@ -58,7 +56,6 @@ fun MapScreen(
         cameraPositionState = cameraPositionState,
         mapProperties = mapProperties,
         mapUiSettings = mapUiSettings,
-        bottomSheetSlide,
         mContext
     )
 }
@@ -71,11 +68,10 @@ fun MapContent(
     cameraPositionState: CameraPositionState,
     mapProperties: MapProperties,
     mapUiSettings: MapUiSettings,
-    bottomSheetSlide: Float,
     mContext: Context
 ) {
-    val mapViewModel: MapViewModel = hiltViewModel()
-    val homeViewModel: HomeViewModel = hiltViewModel()
+    val mapViewModel : MapViewModel = hiltViewModel()
+    val homeViewModel : HomeViewModel = hiltViewModel()
     val openNetworkDialog = remember { mutableStateOf(false) }
     val openPaintExplainDialog = remember { mutableStateOf(false) }
     StateDamglePaintExplain(openPaintExplainDialog)
@@ -85,11 +81,21 @@ fun MapContent(
         LocationUtil.getMyLocation(mContext)?.let { CameraUpdate.scrollTo(it) }
         ?.let { cameraPositionState.move(it) }
     }
-    if(cameraPositionState.isMoving) {
+    if(!cameraPositionState.isMoving) {
         mapViewModel.movingBound = LatLng(
             cameraPositionState.position.target.latitude,
             cameraPositionState.position.target.longitude
         )
+    } else {
+        if(cameraPositionState.contentBounds != null && mapViewModel.movingBound != null) {
+            Log.d("refresh", "moving bound")
+            mapViewModel.getStoryFeedList(
+                top = cameraPositionState.contentBounds!!.northLatitude,
+                bottom = cameraPositionState.contentBounds!!.southLatitude,
+                left = cameraPositionState.contentBounds!!.westLongitude,
+                right = cameraPositionState.contentBounds!!.eastLongitude
+            )
+        }
     }
 
     Box(Modifier.fillMaxSize()) {
@@ -97,15 +103,17 @@ fun MapContent(
             cameraPositionState = cameraPositionState,
             properties = mapProperties,
             uiSettings = mapUiSettings
-        ) {
-            LocationUtil.getMyLocation(mContext)?.let { MarkerState(position = it) }?.let {
+        ){
+            LocationUtil.getLocation(mContext) {
+                mapViewModel.updateMyLocation(LatLng(it.latitude, it.longitude))
+            }
+            mapViewModel.myLocation.value?.let {
                 Marker(
-                    state = it,
+                    state = MarkerState(position = it),
                     zIndex = -1,
                     icon = OverlayImage.fromResource(R.drawable.ic_my_location_picker)
                 )
             }
-
             MapEffect { map ->
                 val top = map.contentBounds.northLatitude
                 val bottom = map.contentBounds.southLatitude
@@ -120,9 +128,9 @@ fun MapContent(
                     right = right
                 )
             }
-            when (mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
+            when(mapViewModel.storyFeedState.collectAsState(initial = ViewState.Loading).value) {
                 is ViewState.Success -> {
-                    val list = mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
+                    val list =  mapViewModel.storyFeedState.collectAsState().value as ViewState.Success
                     list.data.forEach {
                         val latitude = it.position.latitude
                         val longitude = it.position.longitude
@@ -169,6 +177,7 @@ fun MapContent(
                 openPaintExplainDialog = openPaintExplainDialog
             )
         }
+        val coroutineScope = rememberCoroutineScope()
         Column(
             Modifier
                 .align(Alignment.BottomEnd)
@@ -180,8 +189,9 @@ fun MapContent(
                 modifier = Modifier.size(48.dp, 48.dp),
                 onClick = {
                     mapViewModel.showLoading.value = true
-                    val updateLocation = LocationUtil.getMyLocation(mContext)
-                    mapViewModel.homeRefreshBtnEvent(homeViewModel, updateLocation)
+                    LocationUtil.getLocation(mContext) {
+                        mapViewModel.homeRefreshBtnEvent(homeViewModel, LatLng(it.latitude, it.longitude))
+                    }
                 }
             )
             FloatingActionButton(
@@ -191,8 +201,18 @@ fun MapContent(
                     .paddingFromBaseline(10.dp)
                     .size(48.dp, 48.dp),
                 onClick = {
-                    LocationUtil.getMyLocation(mContext)?.let { latLng ->
-                        cameraPositionState.move(CameraUpdate.scrollTo(latLng))
+                    val animation = CameraAnimation.Fly
+                    LocationUtil.getLocation(mContext) {
+                        val position = CameraPosition(LatLng(it.latitude, it.longitude),16.0)
+                        coroutineScope.launch {
+                            position.let { CameraUpdate.toCameraPosition(it) }.let {
+                                cameraPositionState.animate(
+                                    it,
+                                    animation = animation,
+                                    durationMs = 1000
+                                )
+                            }
+                        }
                     }
                 }
             )
@@ -200,12 +220,6 @@ fun MapContent(
         if(showLoading.value == true) {
             LoadingLottie()
         }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(bottomSheetSlide)
-                .background(color = Black)
-        )
     }
 }
 

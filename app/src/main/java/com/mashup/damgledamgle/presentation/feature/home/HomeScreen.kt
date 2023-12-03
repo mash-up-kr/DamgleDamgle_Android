@@ -1,34 +1,27 @@
 package com.mashup.damgledamgle.presentation.feature.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mashup.damgledamgle.presentation.common.BackPressInterceptor
 import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.BottomSheetContent
-import com.mashup.damgledamgle.presentation.feature.home.bottomsheet.getBottomSheetSlide
 import com.mashup.damgledamgle.presentation.feature.home.damgle.DamglePaintDialog
 import com.mashup.damgledamgle.presentation.feature.home.map.MapScreen
 import com.mashup.damgledamgle.presentation.feature.toolbar.MainToolBar
 import com.mashup.damgledamgle.presentation.navigation.Screen
-import com.mashup.damgledamgle.ui.theme.Black
-import com.mashup.damgledamgle.ui.theme.Grey500
 import com.mashup.damgledamgle.util.LocationUtil
-import com.naver.maps.map.compose.ExperimentalNaverMapApi
+import com.naver.maps.geometry.LatLng
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    val homeViewModel: HomeViewModel = hiltViewModel()
+    val homeViewModel : HomeViewModel = hiltViewModel()
     val context = LocalContext.current
     BackPressInterceptor(context)
 
@@ -43,45 +36,33 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             openDamglePaintDialog.value = false
             homeViewModel.setLastEntryDamgleDay()
-            navController.navigate("damgle_clear_time_screen")
+            navController.navigate("damgle_clear_complete_screen")
         }
     }
 
     var locationTitle by remember {
         mutableStateOf("")
     }
-    val currentLocation = LocationUtil.getMyLocation(context)
-    homeViewModel.getNaverGeocode(
-        "${currentLocation?.longitude},${currentLocation?.latitude}"
-    )
-    val current = homeViewModel.locationTitle.observeAsState()
-    if (current.value != null) {
-        locationTitle = current.value!!.ifEmpty {
-            currentLocation?.let { LocationUtil.convertMyLocationToAddress(it, context) }.toString()
-        }
+    LocationUtil.getLocation(context) { currentLocation ->
+        homeViewModel.getNaverGeocode(
+            "${currentLocation.latitude},${currentLocation.longitude}"
+        )
+        locationTitle =
+            LocationUtil.convertMyLocationToAddress(
+                LatLng(currentLocation.latitude ?: 0.0, currentLocation.longitude ?: 0.0),
+                context
+            )
     }
 
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
-    val bottomSheetSlide = (1 - getBottomSheetSlide(bottomSheetScaffoldState.bottomSheetState)) * 0.7f
-    Box {
+    Scaffold {
         BottomSheetScaffold(
             topBar = {
-                Box(
-                    Modifier.wrapContentSize()
-                ) {
-                    MainToolBar(
-                        title = locationTitle
-                    ) { navController.navigate(Screen.MyPage.route) }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(66.dp)
-                            .alpha(bottomSheetSlide)
-                            .background(color = Black)
-                    )
-                }
+                MainToolBar(
+                    title = locationTitle
+                ) { navController.navigate(Screen.MyPage.route) }
             },
-            sheetBackgroundColor = Grey500,
+            sheetBackgroundColor = Color.Gray,
             sheetShape = RoundedCornerShape(
                 topStart = 24.dp,
                 topEnd = 24.dp
@@ -92,10 +73,7 @@ fun HomeScreen(navController: NavHostController) {
             sheetPeekHeight = 100.dp,
             scaffoldState = bottomSheetScaffoldState,
         ) {
-            MapScreen(
-                navController,
-                bottomSheetSlide
-            )
+            MapScreen(navController)
         }
 
         val coroutineScope = rememberCoroutineScope()

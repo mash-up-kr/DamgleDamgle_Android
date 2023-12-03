@@ -20,7 +20,6 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _locationTitle = MutableLiveData("")
-    val locationTitle: LiveData<String> = _locationTitle
     private val locationGeocodeState = MutableStateFlow<ViewState<String>>(ViewState.Loading)
 
 
@@ -41,18 +40,22 @@ class HomeViewModel @Inject constructor(
     }
 
     fun checkEntryAfterDamgleDay(): Boolean {
-        if(getLastEntryDamgleDayUseCase.invoke() != "") {
+        if(getLastEntryDamgleDayUseCase.invoke().isEmpty()) {
+            setLastEntryDamgleDay()
+        }
+        else {
             val lastEntryDay = dateFormat(getLastEntryDamgleDayUseCase.invoke())
             val today = dateFormat(getTodayDate())
-            if(lastEntryDay != null && today != null)
+            if(lastEntryDay != null && today != null) {
                 return lastEntryDay.year != today.year || lastEntryDay.month < today.month
+            }
         }
         return false
     }
 
     fun getLastEntryDamgleDay(): String {
         val lastEntryDay = getLastEntryDamgleDayUseCase.invoke()
-        if(lastEntryDay != "") return getDateDiff(lastEntryDay)
+        if(lastEntryDay.isNotEmpty()) return getDateDiff(lastEntryDay)
         return ""
     }
 
